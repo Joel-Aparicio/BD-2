@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'BD2_Trabalhofinal.App',  # Certifique-se de que este é o caminho correto
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

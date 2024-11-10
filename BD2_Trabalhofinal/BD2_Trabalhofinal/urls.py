@@ -16,7 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .App import views 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('clubes/', views.lista_clubes, name='lista_clubes'),
+    path('clubes/adicionar/', views.adicionar_clube, name='adicionar_clube'),
+    path('clubes/<int:pk>/editar/', views.editar_clube, name='editar_clube'),
+    path('clubes/<int:pk>/deletar/', views.deletar_clube, name='deletar_clube'),
+    path('clubes/<int:pk>/', views.detalhes_clube, name='detalhes_clube'),
+    path('competicoes/', views.lista_competicoes, name='lista_competicoes'),
+    path('competicoes/adicionar/', views.adicionar_competicao, name='adicionar_competicao'),
+    path('competicoes/<int:pk>/editar/', views.editar_competicao, name='editar_competicao'),
+    path('competicoes/<int:pk>/deletar/', views.deletar_competicao, name='deletar_competicao'),
+    path('competicoes/<int:pk>/', views.detalhes_competicao, name='detalhes_competicao'),
+
 ]
+

@@ -1,0 +1,8 @@
+<h1>{{ clube.nome }}</h1>
+<h1>Adicionar Clube</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+</form>
+<a href="{% url 'lista_clubes' %}">Cancelar</a>
