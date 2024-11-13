@@ -1,5 +1,7 @@
-<h1>{{ clube.nome }}</h1>
-<p>Estádio: {{ clube.estadio }}</p>
-<p>Ano de Fundação: {{ clube.ano_fundacao }}</p>
-<p>Alcunha: {{ clube.alcunha }}</p>
-<a href="{% url 'lista_clubes' %}">Voltar</a>
+<h1>Apagar Clube</h1>
+<p>Tem certeza de que deseja apagar {{ clube.nome }} ({{ clube.ano_fundacao }})?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Apagar</button>
+</form>
+<a href="{% url 'lista_clubes' %}">Cancelar</a>
