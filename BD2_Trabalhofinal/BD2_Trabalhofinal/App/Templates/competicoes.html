@@ -1,5 +1,0 @@
-{% for competicao in competicoes %}
-    <h2>{{ competicao.nome }} ({{ competicao.ano }})</h2>
-    <p>Formato: {{ competicao.tipo_formato }}</p>
-    <a href="{% url 'detalhes_competicao' competicao.id %}">Ver detalhes</a>
-{% endfor %}
