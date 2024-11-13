@@ -3,6 +3,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Clube,Competicao
 from .forms import ClubeForm,CompeticaoForm
 
+def home(request):
+    return render(request, 'home.html')
+    
 def lista_clubes(request):
     clubes = Clube.objects.all()
     return render(request, 'clubes/lista_clubes.html', {'clubes': clubes})
