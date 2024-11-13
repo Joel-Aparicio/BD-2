@@ -1,7 +1,7 @@
-<h1>Deletar Competição</h1>
-<p>Tem certeza de que deseja deletar {{ competicao.nome }} ({{ competicao.ano }})?</p>
+<h1>Apagar Competição</h1>
+<p>Tem certeza de que deseja apagar {{ competicao.nome }} ({{ competicao.ano }})?</p>
 <form method="post">
     {% csrf_token %}
-    <button type="submit">Deletar</button>
+    <button type="submit">Apagar</button>
 </form>
 <a href="{% url 'lista_competicoes' %}">Cancelar</a>
