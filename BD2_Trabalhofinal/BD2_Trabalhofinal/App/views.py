@@ -1,7 +1,7 @@
 # views.py
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Clube,Competicao
-from .forms import ClubeForm,CompeticaoForm
+from .models import Clube,Competicao, Jogo
+from .forms import ClubeForm,CompeticaoForm, JogoForm
 
 def home(request):
     return render(request, 'home.html')
@@ -77,3 +77,38 @@ def deletar_competicao(request, pk):
         competicao.delete()
         return redirect('lista_competicoes')
     return render(request, 'competicoes/deletar_competicao.html', {'competicao': competicao})
+    
+    
+#JOGOS
+def lista_jogos(request):
+    jogos = Jogo.objects.all()
+    return render(request, 'jogos/lista_jogos.html', {'jogos': jogos})
+    
+def adicionar_jogo(request):
+    if request.method == 'POST':
+        form = JogoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_jogos')  # Ajuste para a página de lista de jogos
+    else:
+        form = JogoForm()
+    return render(request, 'jogos/adicionar_jogo.html', {'form': form})
+    
+def editar_jogo(request, pk):
+    jogo = get_object_or_404(Jogo, pk=pk)
+    if request.method == 'POST':
+        form = JogoForm(request.POST, instance=jogo)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_jogos')  # Redireciona para a lista de jogos
+    else:
+        form = JogoForm(instance=jogo)
+    return render(request, 'jogos/editar_jogo.html', {'form': form})
+
+# View para deletar um jogo
+def deletar_jogo(request, pk):
+    jogo = get_object_or_404(Jogo, pk=pk)
+    if request.method == 'POST':
+        jogo.delete()
+        return redirect('lista_jogos')  # Redireciona para a lista de jogos
+    return render(request, 'jogos/deletar_jogo.html', {'jogo': jogo})
