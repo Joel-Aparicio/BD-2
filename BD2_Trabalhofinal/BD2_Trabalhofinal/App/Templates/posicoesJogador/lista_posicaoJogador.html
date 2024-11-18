@@ -23,10 +23,32 @@
                     <td>{{ posicao.nome }}</td>
                     <td>
                         <a href="{% url 'editar_posicaoJogador' posicao.id %}" class="btn btn-warning btn-sm me-2">Editar</a>
-                        <form method="post" action="{% url 'deletar_posicaoJogador' posicao.id %}" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Apagar</button>
-                        </form>
+                        <!-- Botão para abrir o modal -->
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ posicao.id }}">
+                            Apagar
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal{{ posicao.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ posicao.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="deleteModalLabel{{ posicao.id }}">Confirmar Exclusão</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Tem certeza de que deseja apagar esta Posição Jogador <strong>({{ posicao.nome }})</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="post" action="{% url 'deletar_posicaoJogador' posicao.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Apagar</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
