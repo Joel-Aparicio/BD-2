@@ -1,0 +1,42 @@
+{% extends 'header.html' %}
+
+{% block title %}Posições de Jogadores{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Lista de Posições de Jogadores</h1>
+    <div class="text-end mb-3">
+        <a href="{% url 'adicionar_posicaoJogador' %}" class="btn btn-primary">Adicionar Posição</a>
+    </div>
+    {% if posicoes %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for posicao in posicoes %}
+                <tr>
+                    <td>{{ posicao.nome }}</td>
+                    <td>
+                        <a href="{% url 'editar_posicaoJogador' posicao.id %}" class="btn btn-warning btn-sm me-2">Editar</a>
+                        <form method="post" action="{% url 'deletar_posicaoJogador' posicao.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Apagar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        Nenhuma posição encontrada.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

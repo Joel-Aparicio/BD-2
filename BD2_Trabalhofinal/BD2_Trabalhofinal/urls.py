@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .App import views 
+from .App import views
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -35,6 +35,17 @@ urlpatterns = [
     path('jogos/adicionar/', views.adicionar_jogo, name='adicionar_jogo'),
     path('jogos/<int:pk>/editar/', views.editar_jogo, name='editar_jogo'),
     path('jogos/<int:pk>/deletar/', views.deletar_jogo, name='deletar_jogo'),
+    # Formatos de Competição
+    path('formatoCompeticao/', views.lista_formatoCompeticao, name='lista_formatoCompeticao'),
+    path('formatoCompeticao/adicionar/', views.adicionar_formatoCompeticao, name='adicionar_formatoCompeticao'),
+    path('formatoCompeticao/<int:pk>/editar/', views.editar_formatoCompeticao, name='editar_formatoCompeticao'),
+    path('formatoCompeticao/<int:pk>/deletar/', views.deletar_formatoCompeticao, name='deletar_formatoCompeticao'),
+    
+    # Posições de Jogador
+    path('posicoesJogador/', views.lista_posicaoJogador, name='lista_posicaoJogador'),
+    path('posicoesJogador/adicionar/', views.adicionar_posicaoJogador, name='adicionar_posicaoJogador'),
+    path('posicoesJogador/<int:pk>/editar/', views.editar_posicaoJogador, name='editar_posicaoJogador'),
+    path('posicoesJogador/<int:pk>/deletar/', views.deletar_posicaoJogador, name='deletar_posicaoJogador'),
 
 ]
 

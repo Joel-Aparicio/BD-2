@@ -31,3 +31,18 @@ class Jogo(models.Model):
 
     def __str__(self):
         return f"{self.clube_casa} vs {self.clube_fora} - {self.competicao.nome} ({self.dia})"
+     
+     
+class PosicaoJogador(models.Model):
+    nome = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nome
+
+
+class FormatoCompeticao(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+
+    def __str__(self):
+        return self.nome

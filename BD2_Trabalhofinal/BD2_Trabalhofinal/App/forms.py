@@ -1,5 +1,5 @@
 from django import forms
-from .models import Clube, Competicao, Jogo
+from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador
 
 class ClubeForm(forms.ModelForm):
     class Meta:
@@ -11,13 +11,11 @@ class CompeticaoForm(forms.ModelForm):
         model = Competicao
         fields = ['nome', 'descricao', 'ano']
 
-    # Definindo o estilo Bootstrap para os campos do formulário
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nome'].widget.attrs.update({'class': 'form-control'})
         self.fields['descricao'].widget.attrs.update({'class': 'form-control', 'rows': 4})
         self.fields['ano'].widget.attrs.update({'class': 'form-control'})
-
 
 class JogoForm(forms.ModelForm):
     dia = forms.DateField(
@@ -38,8 +36,28 @@ class JogoForm(forms.ModelForm):
         clube_casa = cleaned_data.get("clube_casa")
         clube_fora = cleaned_data.get("clube_fora")
 
-        # Verifica se o mesmo clube foi selecionado para casa e fora
         if clube_casa == clube_fora:
             raise forms.ValidationError("O clube casa e o clube fora não podem ser o mesmo.")
         
         return cleaned_data
+
+#Formato da Competição
+class FormatoCompeticaoForm(forms.ModelForm):
+    class Meta:
+        model = FormatoCompeticao
+        fields = ['nome', 'descricao']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nome'].widget.attrs.update({'class': 'form-control'})
+        self.fields['descricao'].widget.attrs.update({'class': 'form-control', 'rows': 4})
+
+#Posicao do Jogador
+class PosicaoJogadorForm(forms.ModelForm):
+    class Meta:
+        model = PosicaoJogador
+        fields = ['nome']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nome'].widget.attrs.update({'class': 'form-control'})
