@@ -46,6 +46,20 @@ urlpatterns = [
     path('posicoesJogador/adicionar/', views.adicionar_posicaoJogador, name='adicionar_posicaoJogador'),
     path('posicoesJogador/<int:pk>/editar/', views.editar_posicaoJogador, name='editar_posicaoJogador'),
     path('posicoesJogador/<int:pk>/deletar/', views.deletar_posicaoJogador, name='deletar_posicaoJogador'),
+    
+    #Jogadores
+    path('jogadores/', views.lista_jogadores, name='lista_jogadores'),
+    path('jogadores/adicionar/', views.adicionar_jogador, name='adicionar_jogador'),
+    path('jogadores/<int:pk>/editar/', views.editar_jogador, name='editar_jogador'),
+    path('jogadores/<int:pk>/deletar/', views.deletar_jogador, name='deletar_jogador'),
+    path('jogadores/<int:pk>/', views.detalhes_jogador, name='detalhes_jogador'),
+    
+    # Equipas
+    path('equipas/', views.lista_equipas, name='lista_equipas'),
+    path('equipas/adicionar/', views.adicionar_equipa, name='adicionar_equipa'),
+    path('equipas/<int:pk>/editar/', views.editar_equipa, name='editar_equipa'),
+    path('equipas/<int:pk>/deletar/', views.deletar_equipa, name='deletar_equipa'),
+
 
 ]
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador
-from .forms import ClubeForm, CompeticaoForm, JogoForm, FormatoCompeticaoForm, PosicaoJogadorForm
+from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa
+from .forms import ClubeForm, CompeticaoForm, JogoForm, FormatoCompeticaoForm, PosicaoJogadorForm, JogadorForm, EquipaForm
 
 # Página inicial
 def home(request):
@@ -41,7 +41,7 @@ def deletar_clube(request, pk):
     if request.method == 'POST':
         clube.delete()
         return redirect('lista_clubes')
-    return render(request, 'clubes/deletar_clube.html', {'clube': clube})
+    #return render(request, 'clubes/deletar_clube.html', {'clube': clube})
 
 # --- COMPETIÇÕES ---
 def lista_competicoes(request):
@@ -78,7 +78,7 @@ def deletar_competicao(request, pk):
     if request.method == 'POST':
         competicao.delete()
         return redirect('lista_competicoes')
-    return render(request, 'competicoes/deletar_competicao.html', {'competicao': competicao})
+    #return render(request, 'competicoes/deletar_competicao.html', {'competicao': competicao})
 
 # --- JOGOS ---
 def lista_jogos(request):
@@ -111,7 +111,7 @@ def deletar_jogo(request, pk):
     if request.method == 'POST':
         jogo.delete()
         return redirect('lista_jogos')
-    return render(request, 'jogos/deletar_jogo.html', {'jogo': jogo})
+    #return render(request, 'jogos/deletar_jogo.html', {'jogo': jogo})
 
 # --- FORMATOS DE COMPETIÇÃO ---
 def lista_formatoCompeticao(request):
@@ -144,7 +144,7 @@ def deletar_formatoCompeticao(request, pk):
     if request.method == 'POST':
         formato.delete()
         return redirect('lista_formatoCompeticao')
-    return render(request, 'formatoCompeticao/deletar_formatoCompeticao.html', {'formato': formato})
+    #return render(request, 'formatoCompeticao/deletar_formatoCompeticao.html', {'formato': formato})
 
 # --- POSIÇÕES DE JOGADOR ---
 def lista_posicaoJogador(request):
@@ -177,4 +177,75 @@ def deletar_posicaoJogador(request, pk):
     if request.method == 'POST':
         posicao.delete()
         return redirect('lista_posicaoJogador')
-    return render(request, 'posicoesJogador/deletar_posicaoJogador.html', {'posicao': posicao})
+    #return render(request, 'posicoesJogador/deletar_posicaoJogador.html', {'posicao': posicao})
+
+# --- JOGADORES ---
+def lista_jogadores(request):
+    jogadores = Jogador.objects.all()
+    return render(request, 'jogadores/lista_jogadores.html', {'jogadores': jogadores})
+
+def detalhes_jogador(request, pk):
+    jogador = get_object_or_404(Jogador, pk=pk)
+    return render(request, 'jogadores/detalhes_jogador.html', {'jogador': jogador})
+
+def adicionar_jogador(request):
+    if request.method == 'POST':
+        form = JogadorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_jogadores')
+    else:
+        form = JogadorForm()
+    return render(request, 'jogadores/adicionar_jogador.html', {'form': form})
+
+def editar_jogador(request, pk):
+    jogador = get_object_or_404(Jogador, pk=pk)
+    if request.method == 'POST':
+        form = JogadorForm(request.POST, instance=jogador)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_jogadores')
+    else:
+        form = JogadorForm(instance=jogador)
+    return render(request, 'jogadores/editar_jogador.html', {'form': form})
+
+def deletar_jogador(request, pk):
+    jogador = get_object_or_404(Jogador, pk=pk)
+    if request.method == 'POST':
+        jogador.delete()
+        return redirect('lista_jogadores')
+    #return render(request, 'jogadores/deletar_jogador.html', {'jogador': jogador})
+    
+    
+# --- EQUIPAS ---
+def lista_equipas(request):
+    equipas = Equipa.objects.all()
+    return render(request, 'equipas/lista_equipa.html', {'equipas': equipas})
+
+def adicionar_equipa(request):
+    if request.method == 'POST':
+        form = EquipaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_equipas')
+    else:
+        form = EquipaForm()
+    return render(request, 'equipas/adicionar_equipa.html', {'form': form})
+
+def editar_equipa(request, pk):
+    equipa = get_object_or_404(Equipa, pk=pk)
+    if request.method == 'POST':
+        form = EquipaForm(request.POST, instance=equipa)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_equipas')
+    else:
+        form = EquipaForm(instance=equipa)
+    return render(request, 'equipas/editar_equipa.html', {'form': form})
+
+def deletar_equipa(request, pk):
+    equipa = get_object_or_404(Equipa, pk=pk)
+    if request.method == 'POST':
+        equipa.delete()
+        return redirect('lista_equipas')
+    #return render(request, 'equipas/deletar_equipa.html', {'equipa': equipa})

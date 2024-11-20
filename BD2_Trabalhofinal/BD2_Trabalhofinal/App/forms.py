@@ -1,5 +1,5 @@
 from django import forms
-from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador
+from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa
 
 class ClubeForm(forms.ModelForm):
     class Meta:
@@ -9,13 +9,15 @@ class ClubeForm(forms.ModelForm):
 class CompeticaoForm(forms.ModelForm):
     class Meta:
         model = Competicao
-        fields = ['nome', 'descricao', 'ano']
+        fields = ['nome', 'descricao', 'ano', 'formato_competicao']  # Incluído o novo campo
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nome'].widget.attrs.update({'class': 'form-control'})
         self.fields['descricao'].widget.attrs.update({'class': 'form-control', 'rows': 4})
         self.fields['ano'].widget.attrs.update({'class': 'form-control'})
+        self.fields['formato_competicao'].widget.attrs.update({'class': 'form-control'})  # Estilo do campo
+
 
 class JogoForm(forms.ModelForm):
     dia = forms.DateField(
@@ -26,10 +28,15 @@ class JogoForm(forms.ModelForm):
         widget=forms.TimeInput(attrs={'type': 'time'}),
         label="Hora do Jogo"
     )
+    terminado = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        label="Jogo Terminado"
+    )
 
     class Meta:
         model = Jogo
-        fields = ['ano', 'dia', 'hora', 'clube_casa', 'clube_fora', 'competicao']
+        fields = ['ano', 'dia', 'hora', 'clube_casa', 'clube_fora', 'competicao', 'terminado']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -56,8 +63,35 @@ class FormatoCompeticaoForm(forms.ModelForm):
 class PosicaoJogadorForm(forms.ModelForm):
     class Meta:
         model = PosicaoJogador
-        fields = ['nome']
+        fields = ['nome', 'descricao']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nome'].widget.attrs.update({'class': 'form-control'})
+        self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
+
+class JogadorForm(forms.ModelForm):
+    class Meta:
+        model = Jogador
+        fields = ['nome', 'nacionalidade', 'situacao', 'idade', 'num_camisola', 'posicao']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nome'].widget.attrs.update({'class': 'form-control'})
+        self.fields['nacionalidade'].widget.attrs.update({'class': 'form-control'})
+        self.fields['situacao'].widget.attrs.update({'class': 'form-control'})
+        self.fields['idade'].widget.attrs.update({'class': 'form-control', 'type': 'number', 'min': '0'})
+        self.fields['num_camisola'].widget.attrs.update({'class': 'form-control', 'type': 'number', 'min': '0'})
+        self.fields['posicao'].widget.attrs.update({'class': 'form-control'})
+        
+class EquipaForm(forms.ModelForm):
+    class Meta:
+        model = Equipa
+        fields = ['nome', 'ativo', 'clube']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nome'].widget.attrs.update({'class': 'form-control'})
+        self.fields['ativo'].widget.attrs.update({'class': 'form-check-input'})  # Checkbox estilizado
+        self.fields['clube'].widget.attrs.update({'class': 'form-control'})
+
