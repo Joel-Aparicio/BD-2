@@ -1,0 +1,75 @@
+{% extends 'header_publico.html' %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Bem-vindo!</h1>
+    <p class="lead">Escolha uma das opções abaixo para navegar:</p>
+</div>
+<div class="row mt-4 justify-content-center">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Clubes</h5>
+                <p class="card-text">Gerencie a lista de clubes disponíveis.</p>
+                <a href="{% url 'lista_clubes' %}" class="btn btn-primary">Ver Clubes</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Competições</h5>
+                <p class="card-text">Veja e edite as competições disponíveis.</p>
+                <a href="{% url 'lista_competicoes' %}" class="btn btn-primary">Ver Competições</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Jogos</h5>
+                <p class="card-text">Explore e adicione jogos à lista.</p>
+                <a href="{% url 'lista_jogos' %}" class="btn btn-primary">Ver Jogos</a>
+            </div>
+        </div>
+    </div>
+	<div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Formato Copetições</h5>
+                <p class="card-text">Veja e edite os formatos de competições disponíveis.</p>
+                <a href="{% url 'lista_formatoCompeticao' %}" class="btn btn-primary">Ver Formatos Competições</a>
+            </div>
+        </div>
+    </div>
+	<div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Posições Jogadores</h5>
+                <p class="card-text">Veja e edite as posições dos Jogadores disponíveis.</p>
+                <a href="{% url 'lista_posicaoJogador' %}" class="btn btn-primary">Ver Posições</a>
+            </div>
+        </div>
+    </div>
+	<div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Jogadores</h5>
+                <p class="card-text">Veja e edite os Jogadores disponíveis.</p>
+                <a href="{% url 'lista_jogadores' %}" class="btn btn-primary">Ver Jogadores</a>
+            </div>
+        </div>
+    </div>
+	<div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Equipas</h5>
+                <p class="card-text">Veja e edite as Equipas disponíveis.</p>
+                <a href="{% url 'lista_equipas' %}" class="btn btn-primary">Ver Equipas</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

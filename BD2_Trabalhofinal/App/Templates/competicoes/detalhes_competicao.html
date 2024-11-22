@@ -1,0 +1,12 @@
+{% extends 'header.html' %}
+
+{% block title %}Detalhes Competição{% endblock %}
+
+{% block content %}
+
+<h1>{{ competicao.nome }} ({{ competicao.ano }})</h1>
+<p>{{ competicao.descricao }}</p>
+<a href="{% url 'lista_competicoes' %}">Voltar</a>
+
+
+{% endblock %}
