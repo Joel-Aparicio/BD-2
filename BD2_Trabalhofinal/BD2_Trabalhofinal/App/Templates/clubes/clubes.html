@@ -1,7 +1,0 @@
-{% for clube in clubes %}
-    <h2>{{ clube.nome }}</h2>
-    <p>Estádio: {{ clube.estadio }}</p>
-    <p>Ano de Fundação: {{ clube.ano_fundacao }}</p>
-    <p>Alcunha: {{ clube.alcunha }}</p>
-    <a href="{% url 'detalhes_clube' clube.id %}">Ver mais detalhes</a>
-{% endfor %}
