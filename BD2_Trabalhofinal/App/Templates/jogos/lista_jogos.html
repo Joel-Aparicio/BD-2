@@ -43,7 +43,10 @@
 						{% endif %}
 					</td>
                     <td>
-                        <a href="{% url 'editar_jogo' jogo.id %}" class="btn btn-warning btn-sm me-2">Editar</a>
+						<a href="{% url 'detalhes_jogo' jogo.id %}" class="btn btn-info btn-sm me-2">Ver</a>
+						<a href="{% url 'editar_jogo' jogo.id %}" class="btn btn-warning btn-sm me-2">Editar</a>
+						<a href="" class="btn btn-warning btn-sm me-2">Editar Estatísticas</a>
+                        
                         <!-- Botão para abrir o modal -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ jogo.id }}">
                             Apagar

@@ -1,11 +1,57 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa
-from .forms import ClubeForm, CompeticaoForm, JogoForm, FormatoCompeticaoForm, PosicaoJogadorForm, JogadorForm, EquipaForm
+from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa, AssociacaoFutebol
+from .forms import ClubeForm, CompeticaoForm, JogoForm, FormatoCompeticaoForm, PosicaoJogadorForm, JogadorForm, EquipaForm, AssociacaoFutebolForm
 
 # Página inicial
 def home(request):
     return render(request, 'home.html')
 
+
+# --- ASSOCIAÇÕES DE FUTEBOL ---
+def lista_associacaoFutebol(request):
+    associacao = AssociacaoFutebol.objects.all()
+    return render(request, 'associacaoFutebol/lista_associacaoFutebol.html', {'associacao': associacao})
+
+
+def detalhes_associacaoFutebol(request, pk):
+    associacao = get_object_or_404(AssociacaoFutebol, pk=pk)
+    return render(request, 'associacaoFutebol/detalhes_associacaoFutebol.html', {'associacao': associacao})
+
+
+def adicionar_associacaoFutebol(request):
+    if request.method == 'POST':
+        form = AssociacaoFutebolForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_associacaoFutebol')
+    else:
+        form = AssociacaoFutebolForm()
+    return render(request, 'associacaoFutebol/adicionar_associacaoFutebol.html', {'form': form})
+
+
+def editar_associacaoFutebol(request, pk):
+    associacao = get_object_or_404(AssociacaoFutebol, pk=pk)
+    if request.method == 'POST':
+        form = AssociacaoFutebolForm(request.POST, instance=associacao)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_associacaoFutebol')
+    else:
+        form = AssociacaoFutebolForm(instance=associacao)
+    return render(request, 'associacaoFutebol/editar_associacaoFutebol.html', {'form': form})
+
+
+def deletar_associacaoFutebol(request, pk):
+    associacao = get_object_or_404(AssociacaoFutebol, pk=pk)
+    if request.method == 'POST':
+        associacao.delete()
+        return redirect('lista_associacaoFutebol')
+    #return render(request, 'associacaoFutebol/deletar_associacao.html', {'associacao': associacao})
+
+def todos_associacaoFutebol(request):
+    associacao = AssociacaoFutebol.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
+    return render(request, 'associacaoFutebol/todos_associacaoFutebol.html', {'associacao': associacao})
+    
 # --- CLUBES ---
 def lista_clubes(request):
     clubes = Clube.objects.all()
@@ -42,6 +88,11 @@ def deletar_clube(request, pk):
         clube.delete()
         return redirect('lista_clubes')
     #return render(request, 'clubes/deletar_clube.html', {'clube': clube})
+
+def todos_clubes(request):
+    clubes = Clube.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
+    return render(request, 'clubes/todos_clubes.html', {'clubes': clubes})
+    
 
 # --- COMPETIÇÕES ---
 def lista_competicoes(request):
@@ -80,6 +131,10 @@ def deletar_competicao(request, pk):
         return redirect('lista_competicoes')
     #return render(request, 'competicoes/deletar_competicao.html', {'competicao': competicao})
 
+def todos_competicoes(request):
+    competicoes = Competicao.objects.all().order_by('ano', 'nome')  # Ordenar por Ano e Nome para melhor organização
+    return render(request, 'competicoes/todos_competicoes.html', {'competicoes': competicoes})
+
 # --- JOGOS ---
 def lista_jogos(request):
     jogos = Jogo.objects.all()
@@ -112,6 +167,16 @@ def deletar_jogo(request, pk):
         jogo.delete()
         return redirect('lista_jogos')
     #return render(request, 'jogos/deletar_jogo.html', {'jogo': jogo})
+
+def detalhes_jogo(request, pk):
+    jogo = get_object_or_404(Jogo, pk=pk)
+    return render(request, 'jogos/detalhes_jogo.html')
+    
+def todos_jogos(request):
+    jogos = Jogo.objects.all().order_by('dia', 'hora')  # Ordenar por data e hora para melhor organização
+    return render(request, 'jogos/todos_jogos.html', {'jogos': jogos})
+
+
 
 # --- FORMATOS DE COMPETIÇÃO ---
 def lista_formatoCompeticao(request):
@@ -215,7 +280,10 @@ def deletar_jogador(request, pk):
         jogador.delete()
         return redirect('lista_jogadores')
     #return render(request, 'jogadores/deletar_jogador.html', {'jogador': jogador})
-    
+
+def todos_jogadores(request):
+    jogadores = Jogador.objects.all().order_by('nome', 'num_camisola')  # Ordenar por Nome e Número Camisola para melhor organização
+    return render(request, 'jogadores/todos_jogadores.html', {'jogadores': jogadores})
     
 # --- EQUIPAS ---
 def lista_equipas(request):
@@ -249,3 +317,4 @@ def deletar_equipa(request, pk):
         equipa.delete()
         return redirect('lista_equipas')
     #return render(request, 'equipas/deletar_equipa.html', {'equipa': equipa})
+   

@@ -11,7 +11,7 @@
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">Não é ZeroZero.pt</a>
+            <a class="navbar-brand" href="{% url 'home' %}">FutebolStats</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -19,16 +19,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-                        <a class="nav-link" href="{% url 'lista_clubes' %}">Clubes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'lista_competicoes' %}">Competições</a>
-                    </li>                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'lista_jogos' %}">Jogos</a>
+                        <a class="nav-link" href="{% url 'todos_associacaoFutebol' %}">Associações Futebol</a>
                     </li>
 					<li class="nav-item">
-                        <a class="nav-link" href="{% url 'lista_jogadores' %}">Jogadores</a>
+                        <a class="nav-link" href="{% url 'todos_clubes' %}">Clubes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'todos_competicoes' %}">Competições</a>
+                    </li>                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'todos_jogos' %}">Jogos</a>
+                    </li>
+					<li class="nav-item">
+                        <a class="nav-link" href="{% url 'todos_jogadores' %}">Jogadores</a>
                     </li>
                 </ul>
                 <form class="d-flex">

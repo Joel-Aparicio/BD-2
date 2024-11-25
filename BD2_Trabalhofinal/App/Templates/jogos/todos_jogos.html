@@ -1,0 +1,61 @@
+{% extends 'header_publico.html' %}
+
+{% block title %}Todos os Jogos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Jogos Disponíveis</h1>
+    
+    {% if jogos %}
+    <div class="row g-4">
+        {% for jogo in jogos %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <!-- Equipes -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="text-center">
+                            <h5 class="card-title">{{ jogo.clube_casa.nome }}</h5>
+                            <p class="text-muted"><i>Casa</i></p>
+                        </div>
+                        <div class="text-center">
+                            <span class="badge bg-secondary">VS</span>
+                        </div>
+                        <div class="text-center">
+                            <h5 class="card-title">{{ jogo.clube_fora.nome }}</h5>
+                            <p class="text-muted"><i>Fora</i></p>
+                        </div>
+                    </div>
+
+                    <!-- Informações da partida -->
+                    <div class="mb-3 text-center">
+                        <p><b>Data:</b> {{ jogo.dia }}</p>
+                        <p><b>Hora:</b> {{ jogo.hora }}</p>
+                        <p>
+                            <strong>Status:</strong> 
+                            <span class="badge {% if jogo.terminado %}bg-danger{% else %}bg-success{% endif %}">
+                                {% if jogo.terminado %}
+									Terminado
+								{% else %}
+									Por Jogar
+								{% endif %}
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Ações -->
+                    <div class="text-center">
+                        <a href="{% url 'detalhes_jogo' jogo.id %}" class="btn btn-primary w-100">Ver Mais Detalhes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">Nenhum jogo disponível no momento.</div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

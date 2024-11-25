@@ -24,6 +24,8 @@
                     <td>{{ competicao.nome }}</td>
                     <td>{{ competicao.ano }}</td>
                     <td>
+						<a href="{% url 'detalhes_competicao' competicao.id %}" class="btn btn-info btn-sm me-2">Ver</a>
+						
                         <a href="{% url 'editar_competicao' competicao.id %}" class="btn btn-warning btn-sm me-2">Editar</a>
                         <!-- Botão para abrir o modal -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ competicao.id }}">

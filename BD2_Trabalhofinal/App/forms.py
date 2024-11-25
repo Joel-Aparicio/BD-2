@@ -1,5 +1,20 @@
 from django import forms
-from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa
+from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa, AssociacaoFutebol
+
+class AssociacaoFutebolForm(forms.ModelForm):
+    class Meta:
+        model = AssociacaoFutebol
+        fields = ['nome', 'pais', 'url']
+        labels = {
+            'nome': 'Nome',
+            'pais': 'País',
+            'url': 'Website',
+        }
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o nome da associação'}),
+            'pais': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o país'}),
+            'url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Digite a URL do site'}),
+        }
 
 class ClubeForm(forms.ModelForm):
     class Meta:
