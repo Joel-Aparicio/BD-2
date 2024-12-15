@@ -1,0 +1,65 @@
+{% extends 'header.html' %}
+
+{% block title %}Detalhes Jogador{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ jogador.nome }} - Detalhes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">{{jogador.num_camisola}}. {{ jogador.nome }}</h1>
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3>Detalhes do Jogador</h3>
+            </div>
+            <div class="card-body">
+                <p><b>Nacionalidade:</b> {{ jogador.nacionalidade }}</p>
+                <p><b>Situação:</b> {{ jogador.situacao }}</p>
+                <div class="text-center mt-3">
+                    <a href="{% url 'lista_jogadores' %}" class="btn btn-secondary">Voltar à Lista de Jogadores</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção para lista de Clubes -->
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3>Histórico Clubes</h3>
+            </div>
+            <div class="card-body">
+                {% comment %}
+                {% if clubes %}
+                <ul class="list-group">
+                    {% for clube in clubes %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ clube.nome }}
+                        <span class="badge bg-info">{{ clube.nome }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="alert alert-warning text-center">
+                    Nenhum clube encontrado para este jogador.
+                </div>
+                {% endif %}
+                {% endcomment %}
+                <!-- Mensagem para indicar que a funcionalidade ainda não está implementada -->
+                <div class="alert alert-secondary text-center">
+                    A lista de clubes será exibida aqui assim que a funcionalidade estiver disponível.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+{% endblock %}
