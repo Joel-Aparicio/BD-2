@@ -7,6 +7,9 @@
     <h1 class="display-4">Bem-vindo!</h1>
     <p class="lead">Escolha uma das opções abaixo para navegar:</p>
 </div>
+<p>Autenticado: {{ user.is_authenticated }}</p>
+<p>Utilizador: {{ user.username }}</p>
+
 <div class="container">
     <div class="row g-4 justify-content-center">
         <!-- Clubes -->
@@ -69,12 +72,12 @@
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="card shadow-sm h-100">
                 <div class="card-header bg-primary text-white text-center">
-                    <h5 class="mb-0">Posições Jogadores</h5>
+                    <h5 class="mb-0">Posições de Campo</h5>
                 </div>
                 <div class="card-body text-center">
                     <i class="fas fa-user-tag fa-3x text-primary mb-3"></i>
-                    <p class="card-text">Veja e edite as posições dos Jogadores disponíveis.</p>
-                    <a href="{% url 'lista_posicaoJogador' %}" class="btn btn-primary btn-sm">Ver Posições</a>
+                    <p class="card-text">Veja e edite as posições de Campo disponíveis.</p>
+                    <a href="{% url 'listar_posicoes' %}" class="btn btn-primary btn-sm">Ver Posições</a>
                 </div>
             </div>
         </div>

@@ -1,6 +1,22 @@
 from django import forms
 from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa, AssociacaoFutebol
+from .models import P_Posicao
 
+
+class P_PosicaoForm(forms.ModelForm):
+    class Meta:
+        model = P_Posicao
+        fields = ['nome', 'descricao']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o nome da posição'}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Digite a descrição'}),
+        }
+        labels = {
+            'nome': 'Nome da Posição',
+            'descricao': 'Descrição',
+        }
+           
+# --- TEMP ---
 class AssociacaoFutebolForm(forms.ModelForm):
     class Meta:
         model = AssociacaoFutebol
@@ -77,7 +93,7 @@ class FormatoCompeticaoForm(forms.ModelForm):
 #Posicao do Jogador
 class PosicaoJogadorForm(forms.ModelForm):
     class Meta:
-        model = PosicaoJogador
+        model = P_Posicao
         fields = ['nome', 'descricao']
 
     def __init__(self, *args, **kwargs):

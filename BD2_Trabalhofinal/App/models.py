@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from djongo import models
+from bson import ObjectId
 
 class Utilizador(models.Model):
     utilizador_id = models.AutoField(primary_key=True)
@@ -16,7 +18,138 @@ class Utilizador(models.Model):
     def __str__(self):
         return self.nome
 
+# MONGODB 
+class P_Associacao(models.Model):
+    nome = models.CharField(max_length=255)
+    url = models.URLField(blank=True, null=True)
+    pais = models.CharField(max_length=100)
+    imagem = models.URLField(blank=True, null=True)
 
+    class Meta:
+        db_table = "p_associacoes"
+        app_label = 'BD2_Trabalhofinal.App'
+
+class P_Estadio(models.Model):
+    nome = models.CharField(max_length=255)
+    localidade = models.CharField(max_length=255, blank=True, null=True)
+    clube = models.JSONField(blank=True, null=True)
+
+    class Meta:
+        db_table = "p_estadios"
+        app_label = 'BD2_Trabalhofinal.App'
+
+class P_Posicao(models.Model):
+    _id = models.ObjectIdField(primary_key=True, default=ObjectId)
+    nome = models.CharField(max_length=50)
+    descricao = models.TextField()
+    
+    class Meta:
+        db_table = "p_posicoes"
+        app_label = 'BD2_Trabalhofinal.App'
+        
+    def __str__(self):
+        return self.nome
+        
+    def get_id(self):
+        return str(self._id)
+        
+class P_Jogador(models.Model):
+    nome = models.CharField(max_length=255)
+    idade = models.IntegerField(blank=True, null=True)
+    altura = models.FloatField(blank=True, null=True)
+    peso = models.FloatField(blank=True, null=True)
+    nacionalidade = models.CharField(max_length=100, blank=True, null=True)
+    num_camisola = models.IntegerField()
+    valor_de_mercado = models.FloatField(blank=True, null=True)
+    num_jogos = models.IntegerField(blank=True, null=True)
+    num_golos = models.IntegerField(blank=True, null=True)
+    situacao = models.CharField(max_length=50)
+    posicao = models.JSONField(blank=True, null=True)
+    #historico = models.ArrayField(
+     #   model_container=models.JSONField(),
+      #  blank=True, null=True
+    #)
+
+    class Meta:
+        db_table = "p_jogadores"
+
+class P_Clube(models.Model):
+    nome = models.CharField(max_length=255)
+    ano_fundacao = models.DateField(blank=True, null=True)
+    #alcunhas = models.ArrayField(
+     #   model_container=models.CharField(max_length=255),
+      #  blank=True, null=True
+    #)
+    pais = models.CharField(max_length=100)
+    cidade = models.CharField(max_length=100, blank=True, null=True)
+    extinto = models.BooleanField()
+    associacao = models.JSONField(blank=True, null=True)
+    estadio = models.JSONField(blank=True, null=True)
+    #equipas = models.ArrayField(
+     #   model_container=models.JSONField(),
+      #  blank=True, null=True
+    #)
+
+    class Meta:
+        db_table = "p_clubes"
+        app_label = 'BD2_Trabalhofinal.App'
+
+class P_FormatoCompeticao(models.Model):
+    nome = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = "p_formatos_competicao"
+        app_label = 'BD2_Trabalhofinal.App'
+
+class P_Competicao(models.Model):
+    nome = models.CharField(max_length=255)
+    ano = models.IntegerField()
+    data_inicio = models.DateField(blank=True, null=True)
+    data_fim = models.DateField(blank=True, null=True)
+    formato = models.JSONField(blank=True, null=True)
+    vencedor = models.JSONField(blank=True, null=True)
+
+    class Meta:
+        db_table = "p_competicoes"
+        app_label = 'BD2_Trabalhofinal.App'
+
+class P_Jogo(models.Model):
+    duracao = models.CharField(max_length=50, blank=True, null=True)
+    prolongamento = models.BooleanField(blank=True, null=True)
+    penaltis = models.BooleanField(blank=True, null=True)
+    dia = models.DateField()
+    hora = models.TimeField()
+    estado = models.CharField(max_length=50)
+    estadio = models.JSONField(blank=True, null=True)
+    equipa_casa = models.JSONField(blank=True, null=True)
+    equipa_fora = models.JSONField(blank=True, null=True)
+    #golos = models.ArrayField(
+     #   model_container=models.JSONField(),
+      #  blank=True, null=True
+    #)
+    #faltas = models.ArrayField(
+     #   model_container=models.JSONField(),
+      #  blank=True, null=True
+    #)
+    #substituicoes = models.ArrayField(
+     #   model_container=models.JSONField(),
+      #  blank=True, null=True
+    #)
+
+    class Meta:
+        db_table = "p_jogos"
+        app_label = 'BD2_Trabalhofinal.App'
+
+class P_EquipaFavorita(models.Model):
+    utilizador_id = models.IntegerField()
+    equipa = models.JSONField()
+
+    class Meta:
+        db_table = "p_equipas_favoritas"
+        app_label = 'BD2_Trabalhofinal.App'
+
+
+# --- TEMP ---
 class AssociacaoFutebol(models.Model):
     nome = models.CharField(max_length=50)
     pais = models.CharField(max_length=50)

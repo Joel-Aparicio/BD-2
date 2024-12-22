@@ -21,8 +21,16 @@ from .App import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('bd/conectividade', views.lista_utilizadores, name='lista_utilizadores'),
-    path('login/', views.login, name='login'), 
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),
+    
+    # POSIÇÕES DE CAMPO DOS JOGADORES
+    path('admin/posicoes/', views.listar_posicoes, name='listar_posicoes'),
+    path('admin/posicoes/adicionar/', views.adicionar_posicao, name='adicionar_posicao'),
+    path('admin/posicoes/editar/<str:id>/', views.editar_posicao, name='editar_posicao'),
+    path('admin/posicoes/apagar/<str:id>/', views.apagar_posicao, name='apagar_posicao'),
+
     
     #Clubes
     path('admin/clubes/', views.lista_clubes, name='lista_clubes'),
@@ -53,12 +61,6 @@ urlpatterns = [
     path('admin/formatoCompeticao/adicionar/', views.adicionar_formatoCompeticao, name='adicionar_formatoCompeticao'),
     path('admin/formatoCompeticao/<int:pk>/editar/', views.editar_formatoCompeticao, name='editar_formatoCompeticao'),
     path('admin/formatoCompeticao/<int:pk>/deletar/', views.deletar_formatoCompeticao, name='deletar_formatoCompeticao'),
-    
-    # Posições de Jogador
-    path('admin/posicoesJogador/', views.lista_posicaoJogador, name='lista_posicaoJogador'),
-    path('admin/posicoesJogador/adicionar/', views.adicionar_posicaoJogador, name='adicionar_posicaoJogador'),
-    path('admin/posicoesJogador/<int:pk>/editar/', views.editar_posicaoJogador, name='editar_posicaoJogador'),
-    path('admin/posicoesJogador/<int:pk>/deletar/', views.deletar_posicaoJogador, name='deletar_posicaoJogador'),
     
     #Jogadores
     path('admin/jogadores/', views.lista_jogadores, name='lista_jogadores'),

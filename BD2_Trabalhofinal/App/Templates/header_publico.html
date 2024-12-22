@@ -35,8 +35,13 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <a href="{% url 'login' %}" class="btn btn-outline-light">Iniciar Sessão</a>
-                </form>
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn btn-outline-light">Terminar Sessão</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-outline-light">Iniciar Sessão</a>
+    {% endif %}
+</form>
+
             </div>
         </div>
     </nav>

@@ -1,13 +1,34 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login as auth_login
+#from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa, AssociacaoFutebol, Utilizador
 from .forms import ClubeForm, CompeticaoForm, JogoForm, FormatoCompeticaoForm, PosicaoJogadorForm, JogadorForm, EquipaForm, AssociacaoFutebolForm
 
+from django.contrib.auth import login, authenticate
+#from django.shortcuts import render, redirect
+#from django.contrib import messages
+#from .models import Utilizador  # Certifique-se de importar o seu modelo
+from django.contrib.auth import get_user_model
+
+#from django.shortcuts import render
+from django.http import HttpResponse
+#from django.contrib.auth import logout
+#from django.shortcuts import redirect
+
+from .models import P_Posicao
+from .forms import P_PosicaoForm
+from bson import ObjectId
+
+def dashboard(request):
+    if request.user.is_authenticated:  # Verifica se o usuário está autenticado
+        return render(request, 'dashboard.html', {'user': request.user})
+    else:
+        return HttpResponse("Você precisa fazer login!")
+
 # Página inicial
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html', {'user': request.user})
 
 # View para listar todos os utilizadores
 def lista_utilizadores(request):
@@ -15,31 +36,24 @@ def lista_utilizadores(request):
     return render(request, 'teste_conetividade.html', {'utilizadores': utilizadores})
 
 # --- LOGIN & REGISTER ---
-def login(request):
+def login_view(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        
-        try:
-            # Tenta encontrar o utilizador pelo email
-            user = Utilizador.objects.get(email=email)
-        except Utilizador.DoesNotExist:
-            messages.error(request, 'Credenciais inválidas.')
-            return render(request, 'login.html')
-
-        # Verifica se a senha fornecida corresponde ao hash da senha armazenada
-        if check_password(password, user.palavra_passe):  # Usa check_password para senhas hashadas
-            # Verifica se a conta está ativa
-            if user.is_active:  # Se a conta está ativa
-                auth_login(request, user)  # Inicia a sessão
-                messages.success(request, 'Sessão iniciada com sucesso!')
-                return redirect('home')  # Substitua 'home' pela página inicial da aplicação
-            else:
-                messages.warning(request, 'A sua conta está inativa.')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            print(f"Usuário {user.nome} autenticado com sucesso")
+            login(request, user)
+            print("Redirecionando para a home")
+            return redirect('home')
         else:
             messages.error(request, 'Credenciais inválidas.')
-
     return render(request, 'login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')  # Redireciona para a página de login
+
 
 def register(request):
     if request.method == 'POST':
@@ -66,6 +80,46 @@ def register(request):
             messages.error(request, f'Erro ao criar conta: {e}')
     
     return render(request, 'register.html')
+
+
+# --- MONGO DB ---
+def listar_posicoes(request):
+    posicoes = P_Posicao.objects.all()        
+    return render(request, 'posicoes/listar_posicoes.html', {'posicoes': posicoes})
+
+# View para adicionar um novo registro
+def adicionar_posicao(request):
+    if request.method == 'POST':
+        form = P_PosicaoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_posicoes')  # Nome da URL para listar posições
+    else:
+        form = P_PosicaoForm()
+    return render(request, 'posicoes/adicionar_posicao.html', {'form': form})
+
+# View para editar uma posição
+def editar_posicao(request, id):
+    posicao = get_object_or_404(P_Posicao, _id=ObjectId(id))  # Note the ObjectId conversion
+    if request.method == 'POST':
+        form = P_PosicaoForm(request.POST, instance=posicao)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_posicoes')
+    else:
+        form = P_PosicaoForm(instance=posicao)
+    return render(request, 'posicoes/editar_posicao.html', {'form': form}) 
+
+# View para apagar uma posição
+def apagar_posicao(request, id):
+    posicao = get_object_or_404(P_Posicao, _id=ObjectId(id))
+    if request.method == 'POST':
+        posicao.delete()
+        return redirect('listar_posicoes')
+    #return render(request, 'posicoes/apagar_posicao.html', {'posicao': posicao})
+
+
+# --- TEMP ---
 
 # --- ASSOCIAÇÕES DE FUTEBOL ---
 def lista_associacaoFutebol(request):
@@ -270,39 +324,6 @@ def deletar_formatoCompeticao(request, pk):
         formato.delete()
         return redirect('lista_formatoCompeticao')
     #return render(request, 'formatoCompeticao/deletar_formatoCompeticao.html', {'formato': formato})
-
-# --- POSIÇÕES DE JOGADOR ---
-def lista_posicaoJogador(request):
-    posicoes = PosicaoJogador.objects.all()
-    return render(request, 'posicoesJogador/lista_posicaoJogador.html', {'posicoes': posicoes})
-
-def adicionar_posicaoJogador(request):
-    if request.method == 'POST':
-        form = PosicaoJogadorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_posicaoJogador')
-    else:
-        form = PosicaoJogadorForm()
-    return render(request, 'posicoesJogador/adicionar_posicaoJogador.html', {'form': form})
-
-def editar_posicaoJogador(request, pk):
-    posicao = get_object_or_404(PosicaoJogador, pk=pk)
-    if request.method == 'POST':
-        form = PosicaoJogadorForm(request.POST, instance=posicao)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_posicaoJogador')
-    else:
-        form = PosicaoJogadorForm(instance=posicao)
-    return render(request, 'posicoesJogador/editar_posicaoJogador.html', {'form': form})
-
-def deletar_posicaoJogador(request, pk):
-    posicao = get_object_or_404(PosicaoJogador, pk=pk)
-    if request.method == 'POST':
-        posicao.delete()
-        return redirect('lista_posicaoJogador')
-    #return render(request, 'posicoesJogador/deletar_posicaoJogador.html', {'posicao': posicao})
 
 # --- JOGADORES ---
 def lista_jogadores(request):

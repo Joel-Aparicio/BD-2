@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'BD2_Trabalhofinal.App',  # Certifique-se de que este é o caminho correto
+    
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,10 +84,35 @@ DATABASES = {
         'PASSWORD': '12345',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+    },
     #mongoDB => Resto da Base de Dados
+    'mongodb': {
+        'ENGINE': 'djongo',
+        'NAME': 'projeto_BD2', #nome da base de dados no mongodb
+        'ENFORCE_SCHEMA': False,
+        'HOST': 'mongodb://localhost:27017',
+    },
 }
 
+# settings.py
+AUTHENTICATION_BACKENDS = [
+    'BD2_Trabalhofinal.App.authentication_backend.CustomAuthBackend',  # Adiciona seu backend personalizado aqui
+    'django.contrib.auth.backends.ModelBackend',  # O backend padrão também pode ser mantido, se necessário
+]
+
+DATABASE_ROUTERS = ['BD2_Trabalhofinal.App.routers.MultiDBRouter']
+
+# Backend de sessão
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Usa banco de dados para sessões
+
+# Opcional: tempo de duração da sessão (em segundos)
+SESSION_COOKIE_AGE = 1209600  # 2 semanas
+
+# Permitir que a sessão termine ao fechar o navegador (se necessário)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Domínio do cookie (se você estiver usando subdomínios, isso pode ser necessário)
+SESSION_COOKIE_DOMAIN = None
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
