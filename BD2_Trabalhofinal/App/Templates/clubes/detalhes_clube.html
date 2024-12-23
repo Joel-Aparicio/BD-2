@@ -20,7 +20,7 @@
             </div>
             <div class="card-body d-flex align-items-center">
                 <!-- Imagem do clube -->
-                <img src="https://via.placeholder.com/150" alt="Logo do Clube" class="rounded me-3" style="width: 150px; height: 150px;">
+                <img src="{{ clube.imagem }}" alt="Logo do Clube" class="rounded me-3" style="width: 150px; height: 150px;">
 
                 <!-- Informações do clube -->
                 <div>
@@ -31,17 +31,16 @@
             </div>
         </div>
 
-        <!-- Menu de seleção de clubes -->
+        <!-- Menu de seleção de Equipas -->
         <div class="card mb-4">
             <div class="card-header bg-secondary text-white">
-                <h3>Escolher Clube</h3>
+                <h3>Escolher uma Equipa</h3>
             </div>
             <div class="card-body">
-                <select class="form-select" aria-label="Selecione um clube">
+                <select class="form-select" aria-label="Selecione uma Equipa">
                     <option selected>Selecione um clube...</option>
-                    <option value="1"><p>Não implementado</p></option>
-                    <option value="2"><p>Não implementado</p></option>
-                    <option value="3"><p>Não implementado</p></option>
+                    <!--<option value="1"><p>Não implementado</p></option>-->
+                    
                     <!-- Adicione mais clubes conforme necessário -->
                 </select>
             </div>
@@ -74,11 +73,6 @@
                     <p>Não implementado</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Botão voltar -->
-        <div class="text-center mt-4">
-            <a href="{% url 'lista_clubes' %}" class="btn btn-secondary">Voltar à Lista de Clubes</a>
         </div>
     </div>
 

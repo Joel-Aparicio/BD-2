@@ -61,14 +61,19 @@ urlpatterns = [
     path('jogadores/', views.todos_jogadores, name='todos_jogadores'),
     path('jogadores/<str:id>/', views.detalhes_jogador, name='detalhes_jogador'),
 
-    
-    #Clubes
-    path('admin/clubes/', views.lista_clubes, name='lista_clubes'),
+    # CLUBES  
+    path('admin/clubes/', views.listar_clubes, name='listar_clubes'),
     path('admin/clubes/adicionar/', views.adicionar_clube, name='adicionar_clube'),
-    path('admin/clubes/<int:pk>/editar/', views.editar_clube, name='editar_clube'),
-    path('admin/clubes/<int:pk>/deletar/', views.deletar_clube, name='deletar_clube'),
-    path('clubes/<int:pk>/', views.detalhes_clube, name='detalhes_clube'),
+    path('admin/clubes/editar/<str:id>/', views.editar_clube, name='editar_clube'),
+    path('admin/clubes/apagar/<str:id>/', views.apagar_clube, name='apagar_clube'),
     path('clubes/', views.todos_clubes, name='todos_clubes'),
+    path('clubes/<str:id>/', views.detalhes_clube, name='detalhes_clube'),
+    
+    # EQUIPAS
+    path('admin/equipas/', views.listar_equipas, name='listar_equipas'),
+    path('admin/equipas/adicionar/', views.adicionar_equipa, name='adicionar_equipa'),
+    path('admin/equipas/editar/<str:id>/', views.editar_equipa, name='editar_equipa'),
+    path('admin/equipas/apagar/<str:id>/', views.apagar_equipa, name='apagar_equipa'),
     
     #Competições
     path('admin/competicoes/', views.lista_competicoes, name='lista_competicoes'),
@@ -85,12 +90,6 @@ urlpatterns = [
     path('admin/jogos/<int:pk>/deletar/', views.deletar_jogo, name='deletar_jogo'),
     path('jogos/<int:pk>/', views.detalhes_jogo, name='detalhes_jogo'),
     path('jogos/', views.todos_jogos, name='todos_jogos'),
-    
-    # Equipas
-    path('admin/equipas/', views.lista_equipas, name='lista_equipas'),
-    path('admin/equipas/adicionar/', views.adicionar_equipa, name='adicionar_equipa'),
-    path('admin/equipas/<int:pk>/editar/', views.editar_equipa, name='editar_equipa'),
-    path('admin/equipas/<int:pk>/deletar/', views.deletar_equipa, name='deletar_equipa'),
     
 
 ]

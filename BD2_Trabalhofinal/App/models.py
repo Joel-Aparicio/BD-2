@@ -71,7 +71,7 @@ class P_Posicao(models.Model): #FEITO
     def get_id(self):
         return str(self._id)
         
-class P_Jogador(models.Model):
+class P_Jogador(models.Model): #FEITO +-
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     nome = models.CharField(max_length=255)
     idade = models.IntegerField(blank=True, null=True)
@@ -85,7 +85,7 @@ class P_Jogador(models.Model):
     num_golos = models.IntegerField(blank=True, null=True)
     situacao = models.CharField(max_length=50)
     #posicao = models.CharField(max_length=24, blank=True, null=True)  # String para armazenar o ObjectId como texto
-    #posicao = models.ObjectIdField(blank=True, null=True)  # Apenas o ID da posição
+    #posicao = models.ObjectIdField(blank=True, null=True)
     #posicao = models.JSONField(blank=True, null=True)
     #historico = models.ArrayField(
      #   model_container=models.JSONField(),
@@ -100,14 +100,17 @@ class P_Jogador(models.Model):
     def get_id(self):
         return str(self._id)
 
-class P_Clube(models.Model):
+class P_Clube(models.Model): #FEITO +-
+    _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     nome = models.CharField(max_length=255)
-    ano_fundacao = models.DateField(blank=True, null=True)
+    imagem = models.URLField(blank=True, null=True, default='')
+    ano_fundacao = models.IntegerField(blank=True, null=True)
+    alcunhas = models.CharField(max_length=100)
     pais = models.CharField(max_length=100)
     cidade = models.CharField(max_length=100, blank=True, null=True)
     extinto = models.BooleanField()
-    associacao = models.JSONField(blank=True, null=True)  # Contém associacao_id e nome
-    estadio = models.JSONField(blank=True, null=True)     # Contém estadio_id e nome
+    #associacao = models.JSONField(blank=True, null=True)  # Contém associacao_id e nome
+    #estadio = models.JSONField(blank=True, null=True)     # Contém estadio_id e nome
 
     class Meta:
         db_table = "p_clubes"
@@ -115,7 +118,10 @@ class P_Clube(models.Model):
 
     def __str__(self):
         return self.nome
-
+    #ID DO MONGODB
+    def get_id(self):
+        return str(self._id)
+    
 class P_FormatoCompeticao(models.Model): # FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     nome = models.CharField(max_length=50)
@@ -137,8 +143,8 @@ class P_Competicao(models.Model):
     ano = models.IntegerField()
     data_inicio = models.DateField(blank=True, null=True)
     data_fim = models.DateField(blank=True, null=True)
-    formato = models.JSONField(blank=True, null=True)
-    vencedor = models.JSONField(blank=True, null=True)
+    #formato = models.JSONField(blank=True, null=True)
+    #vencedor = models.JSONField(blank=True, null=True)
 
     class Meta:
         db_table = "p_competicoes"
@@ -172,10 +178,11 @@ class P_Jogo(models.Model):
         app_label = 'BD2_Trabalhofinal.App'
 
 class P_Equipa(models.Model):
+    _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     clube = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="equipas")
     nome = models.CharField(max_length=255)
     ativa = models.BooleanField()
-    jogadores = models.JSONField(blank=True, null=True)  # Array contendo objetos de jogadores
+    #jogadores = models.JSONField(blank=True, null=True)  # Array contendo objetos de jogadores
 
     class Meta:
         db_table = "p_equipas"
@@ -183,6 +190,10 @@ class P_Equipa(models.Model):
 
     def __str__(self):
         return self.nome
+    
+    #ID DO MONGODB
+    def get_id(self):
+        return str(self._id)
         
 class P_EquipaFavorita(models.Model):
     utilizador_id = models.IntegerField()

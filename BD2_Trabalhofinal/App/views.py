@@ -16,8 +16,8 @@ from django.http import HttpResponse
 #from django.contrib.auth import logout
 #from django.shortcuts import redirect
 
-from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador
-from .forms import P_PosicaoForm, P_AssociacaoForm, P_FormatoCompeticaoForm, P_EstadioForm, P_JogadorForm
+from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa
+from .forms import P_PosicaoForm, P_AssociacaoForm, P_FormatoCompeticaoForm, P_EstadioForm, P_JogadorForm, P_ClubeForm, P_EquipaForm
 from bson import ObjectId
 
 def dashboard(request):
@@ -277,44 +277,83 @@ def detalhes_jogador(request, id):
     jogador = get_object_or_404(P_Jogador, _id=ObjectId(id))
     return render(request, 'jogadores/detalhes_jogador.html', {'jogador': jogador})
 
-# --- TEMP ---
+## --- Clubes ---
+def listar_clubes(request):
+    clubes = P_Clube.objects.all()
+    return render(request, 'clubes/listar_clubes.html', {'clubes': clubes})
     
-# --- CLUBES ---
-def lista_clubes(request):
-    clubes = Clube.objects.all()
-    return render(request, 'clubes/lista_clubes.html', {'clubes': clubes})
-
-def detalhes_clube(request, pk):
-    clube = get_object_or_404(Clube, pk=pk)
-    return render(request, 'clubes/detalhes_clube.html', {'clube': clube})
-
 def adicionar_clube(request):
     if request.method == 'POST':
-        form = ClubeForm(request.POST)
+        form = P_ClubeForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('lista_clubes')
+            clube = form.save(commit=False)
+            # Tratar de strings vazias para campos opcionais
+            if not clube.imagem:
+                clube.imagem = None
+            clube.save()
+            return redirect('listar_clubes')
     else:
-        form = ClubeForm()
+        form = P_ClubeForm()
     return render(request, 'clubes/adicionar_clube.html', {'form': form})
-
-def editar_clube(request, pk):
-    clube = get_object_or_404(Clube, pk=pk)
+    
+def editar_clube(request, id):
+    clube = get_object_or_404(P_Clube, _id=ObjectId(id))
     if request.method == 'POST':
-        form = ClubeForm(request.POST, instance=clube)
+        form = P_ClubeForm(request.POST, instance=clube)
         if form.is_valid():
             form.save()
-            return redirect('lista_clubes')
+            return redirect('listar_clubes')
     else:
-        form = ClubeForm(instance=clube)
+        form = P_ClubeForm(instance=clube)
     return render(request, 'clubes/editar_clube.html', {'form': form})
-
-def deletar_clube(request, pk):
-    clube = get_object_or_404(Clube, pk=pk)
+    
+def apagar_clube(request, id):
+    clube = get_object_or_404(P_Clube, _id=ObjectId(id))
     if request.method == 'POST':
         clube.delete()
-        return redirect('lista_clubes')
-    #return render(request, 'clubes/deletar_clube.html', {'clube': clube})
+        return redirect('listar_clubes')
+        
+def todos_clubes(request):
+    clube = P_Clube.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
+    return render(request, 'clubes/todos_clubes.html', {'clube': clube})
+    
+def detalhes_clube(request, id):
+    clube = get_object_or_404(P_Clube, _id=ObjectId(id))
+    return render(request, 'clubes/detalhes_clube.html', {'clube': clube})
+    
+## --- Equipas ---
+def listar_equipas(request):
+    equipas = P_Equipa.objects.all()
+    return render(request, 'equipas/listar_equipas.html', {'equipas': equipas})
+
+def adicionar_equipa(request):
+    if request.method == 'POST':
+        form = P_EquipaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_equipas')
+    else:
+        form = P_EquipaForm()
+    return render(request, 'equipas/adicionar_equipa.html', {'form': form})
+
+def editar_equipa(request, id):
+    equipa = get_object_or_404(P_Equipa, _id=ObjectId(id))
+    if request.method == 'POST':
+        form = P_EquipaForm(request.POST, instance=equipa)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_equipas')
+    else:
+        form = P_EquipaForm(instance=equipa)
+    return render(request, 'equipas/editar_equipa.html', {'form': form})
+    
+def apagar_equipa(request, id):
+    equipa = get_object_or_404(P_Equipa, _id=ObjectId(id))
+    if request.method == 'POST':
+        equipa.delete()
+        return redirect('listar_equipas')
+    
+# --- TEMP ---
 
 def todos_clubes(request):
     clubes = Clube.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
@@ -402,37 +441,4 @@ def detalhes_jogo(request, pk):
 def todos_jogos(request):
     jogos = Jogo.objects.all().order_by('dia', 'hora')  # Ordenar por data e hora para melhor organização
     return render(request, 'jogos/todos_jogos.html', {'jogos': jogos})
-    
-# --- EQUIPAS ---
-def lista_equipas(request):
-    equipas = Equipa.objects.all()
-    return render(request, 'equipas/lista_equipa.html', {'equipas': equipas})
-
-def adicionar_equipa(request):
-    if request.method == 'POST':
-        form = EquipaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_equipas')
-    else:
-        form = EquipaForm()
-    return render(request, 'equipas/adicionar_equipa.html', {'form': form})
-
-def editar_equipa(request, pk):
-    equipa = get_object_or_404(Equipa, pk=pk)
-    if request.method == 'POST':
-        form = EquipaForm(request.POST, instance=equipa)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_equipas')
-    else:
-        form = EquipaForm(instance=equipa)
-    return render(request, 'equipas/editar_equipa.html', {'form': form})
-
-def deletar_equipa(request, pk):
-    equipa = get_object_or_404(Equipa, pk=pk)
-    if request.method == 'POST':
-        equipa.delete()
-        return redirect('lista_equipas')
-    #return render(request, 'equipas/deletar_equipa.html', {'equipa': equipa})
    

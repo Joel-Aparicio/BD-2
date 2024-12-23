@@ -1,6 +1,6 @@
 from django import forms
 from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa, AssociacaoFutebol
-from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador
+from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa
 
 
 class P_PosicaoForm(forms.ModelForm):
@@ -122,8 +122,61 @@ class P_JogadorForm(forms.ModelForm):
         if 'imagem' in cleaned_data and cleaned_data['imagem'] == '':
             cleaned_data['imagem'] = None
         return cleaned_data
+
+class P_ClubeForm(forms.ModelForm):
+    class Meta:
+        model = P_Clube
+        fields = ['nome', 'imagem', 'ano_fundacao', 'alcunhas', 'pais', 'cidade', 'extinto']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escreva o nome do Clube'}),
+            'imagem': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Insira o url da imagem'}),
+            'ano_fundacao': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Fundação', 'min': 0}),
+            'alcunhas': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Insira as alcunhas'}),
+            'pais': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escreva o país'}),
+            'cidade': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escreva a cidade'}),         
+            'extinto': forms.CheckboxInput(attrs={'class': 'form-check-input'})  # Adiciona o checkbox para o campo 'extinto'
+        }
+        labels = {
+            'nome': 'Nome do Clube',
+            'imagem': 'Imagem do Clube',
+            'ano_fundacao': 'Ano Fundado',
+            'alcunhas': 'Alcunhas',
+            'pais': 'País',
+            'cidade': 'Cidade',
+            'extinto': 'Extinto?'  # Label do campo 'extinto'
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['ano_fundacao'].initial = 1900  # Define o valor padrão para 'ano_fundacao'
+        self.fields['extinto'].initial = False  # Define o valor padrão para 'extinto' como False (não extinto)
     
-    
+    def clean(self):
+        cleaned_data = super().clean()
+        # Converte Strings vazias em None para campos URL
+        if 'imagem' in cleaned_data and cleaned_data['imagem'] == '':
+            cleaned_data['imagem'] = None
+        return cleaned_data
+        
+        
+class P_EquipaForm(forms.ModelForm):
+    clube = forms.ModelChoiceField(
+        queryset=P_Clube.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o clube",
+    )
+
+    class Meta:
+        model = P_Equipa
+        fields = ['clube', 'nome', 'ativa']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escreva o nome da Equipa'}),
+            'ativa': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        labels = {
+            'nome': 'Nome da Equipa',
+            'ativa': 'Equipa Ativa',
+        }
     
 # --- TEMP ---
 class AssociacaoFutebolForm(forms.ModelForm):

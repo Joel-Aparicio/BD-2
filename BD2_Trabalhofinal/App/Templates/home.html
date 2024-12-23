@@ -7,8 +7,8 @@
     <h1 class="display-4">Bem-vindo!</h1>
     <p class="lead">Escolha uma das opções abaixo para navegar:</p>
 </div>
-<p>Autenticado: {{ user.is_authenticated }}</p>
-<p>Utilizador: {{ user.username }}</p>
+<!--<p>Autenticado: {{ user.is_authenticated }}</p>
+<p>Utilizador: {{ user.username }}</p>-->
 
 <div class="container">
     <div class="row g-4 justify-content-center">
@@ -35,7 +35,7 @@
                 <div class="card-body text-center">
                     <i class="fas fa-futbol fa-3x text-primary mb-3"></i>
                     <p class="card-text">Gerencie a lista de clubes disponíveis.</p>
-                    <a href="{% url 'lista_clubes' %}" class="btn btn-primary btn-sm">Ver Clubes</a>
+                    <a href="{% url 'listar_clubes' %}" class="btn btn-primary btn-sm">Ver Clubes</a>
                 </div>
             </div>
         </div>

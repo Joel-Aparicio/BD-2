@@ -31,23 +31,23 @@
 						{{ jogador.nacionalidade}}
 					</td>
 					<td>
-    {% if jogador.idade %}
-        Idade: {{ jogador.idade }}
-        <br>
-    {% endif %}
-    {% if jogador.altura %}
-        Altura: {{ jogador.altura }} cm
-        <br>
-    {% endif %}
-    {% if jogador.peso %}
-        Peso: {{ jogador.peso }} kg
-        <br>
-    {% endif %}
-    {% if jogador.posicao %}
-        Posição: {{ jogador.get_posicao_nome }}
-        <br>
-    {% endif %}
-</td>
+						{% if jogador.idade %}
+							Idade: {{ jogador.idade }}
+							<br>
+						{% endif %}
+						{% if jogador.altura %}
+							Altura: {{ jogador.altura }} cm
+							<br>
+						{% endif %}
+						{% if jogador.peso %}
+							Peso: {{ jogador.peso }} kg
+							<br>
+						{% endif %}
+						{% if jogador.posicao %}
+							Posição: {{ jogador.get_posicao_nome }}
+							<br>
+						{% endif %}
+					</td>
 					<td>
 						{{ jogador.situacao }}
 					</td>
