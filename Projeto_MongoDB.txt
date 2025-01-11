@@ -48,34 +48,76 @@ db.createCollection("p_posicoes", {
 db.createCollection("p_jogadores", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "num_camisola", "situacao"],
+         bsonType: "object",
+         required: [
+            "nome",
+            "num_camisola",
+            "situacao"
+         ],
          properties: {
-            nome: { type: "string" },
-            idade: { type: "number" },
-	    imagem: { type: "string" },
-            altura: { type: "number" },
-            peso: { type: "number" },
-            nacionalidade: { type: "string" },
-            num_camisola: { type: "number" },
-            valor_de_mercado: { type: "number" },
-            num_jogos: { type: "number" },
-            num_golos: { type: "number" },
-            situacao: { type: "string" },
-            posicao: { bsonType: 'objectId'},
+            nome: {
+               bsonType: "string"
+            },
+            idade: {
+               bsonType: "number"
+            },
+            altura: {
+               bsonType: "number"
+            },
+            peso: {
+               bsonType: "number"
+            },
+            nacionalidade: {
+               bsonType: "string"
+            },
+            num_camisola: {
+               bsonType: "number"
+            },
+            valor_de_mercado: {
+               bsonType: "number"
+            },
+            num_jogos: {
+               bsonType: "number"
+            },
+            num_golos: {
+               bsonType: "number"
+            },
+            situacao: {
+               bsonType: "string"
+            },
+            posicao: {
+               bsonType: "objectId"
+            },
+            equipa: {
+               bsonType: "objectId",
+               description: "ID da equipa à qual o jogador pertence, pode ser nulo."
+            },
             historico: {
-               type: "array",
+               bsonType: "array",
                items: {
-                  type: "object",
+                  bsonType: "object",
                   properties: {
-                     data_inicio: { bsonType: "date" },
-                     data_fim: { bsonType: "date" },
-                     situacao: { type: "string" },
-                     valor_contrato: { type: "number" },
+                     data_inicio: {
+                        bsonType: "date"
+                     },
+                     data_fim: {
+                        bsonType: "date"
+                     },
+                     situacao: {
+                        bsonType: "string"
+                     },
+                     valor_contrato: {
+                        bsonType: "number"
+                     },
                      clube: {
-                        type: "object",
+                        bsonType: "object",
                         properties: {
-                           clube_id: { bsonType: "objectId" },
-                           nome: { type: "string" }
+                           clube_id: {
+                              bsonType: "objectId"
+                           },
+                           nome: {
+                              bsonType: "string"
+                           }
                         }
                      }
                   }
@@ -122,26 +164,23 @@ db.createCollection("p_clubes", {
 db.createCollection("p_equipas", {
    validator: {
       $jsonSchema: {
+         bsonType: "object",
          required: ["clube_id", "nome", "ativa"],
          properties: {
-            clube_id: { bsonType: "objectId" },
-            nome: { type: "string" },
-            ativa: { type: "boolean" },
-            jogadores: {
-               type: "array",
-               items: {
-                  type: "object",
-                  properties: {
-                     jogador_id: { bsonType: "objectId" },
-                     nome: { type: "string" },
-                     num_camisola: { type: "number" }
-                  }
-               }
+            clube_id: {
+               bsonType: "objectId"
+            },
+            nome: {
+               bsonType: "string"
+            },
+            ativa: {
+               bsonType: "bool"
             }
          }
       }
    }
 });
+
 
 
 // Formato Competição Schema
