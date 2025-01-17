@@ -20,12 +20,15 @@ db.createCollection("p_associacoes", {
 db.createCollection("p_estadios", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "pais", "cidade", "inauguracao"],
+         required: ["nome", "pais", "cidade", "inauguracao", "ativo"],
          properties: {
             nome: { type: "string" },
+	    imagem: { type: "string" },
 	    pais: { type: "string" },
             cidade: { type: "string" },
 	    inauguracao: { type: "number" },
+	    ativo: { type: "boolean" },
+	    lotacao: { type: "number" }
          }
       }
    }
@@ -35,7 +38,7 @@ db.createCollection("p_estadios", {
 db.createCollection("p_posicoes", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "descricao"],
+         required: ["nome"],
          properties: {
             nome: { type: "string" },
             descricao: { type: "string" }
@@ -58,6 +61,9 @@ db.createCollection("p_jogadores", {
             nome: {
                bsonType: "string"
             },
+	    imagem: {
+		bsonType: "string"
+	    },
             idade: {
                bsonType: "number"
             },
@@ -92,6 +98,10 @@ db.createCollection("p_jogadores", {
                bsonType: "objectId",
                description: "ID da equipa à qual o jogador pertence, pode ser nulo."
             },
+	    clube: {
+        	bsonType: "objectId",
+        	description: "ID do clube associado ao jogador. Necessário se 'equipa' estiver definido."
+      	    },
             historico: {
                bsonType: "array",
                items: {
@@ -137,24 +147,19 @@ db.createCollection("p_clubes", {
             nome: { type: "string" },
 	    imagem: { type: "string" },
             ano_fundacao: { type: "number" },
+	    ano_extinto: { type: "number" },
             alcunhas: { type: "string" },
             pais: { type: "string" },
             cidade: { type: "string" },
             extinto: { type: "boolean" },
-            associacao: {
-               type: "object",
-               properties: {
-                  associacao_id: { bsonType: "objectId" },
-                  nome: { type: "string" }
-               }
+	    associacao: {
+               bsonType: "objectId",
+               description: "ID da Associação associado ao clube"
             },
             estadio: {
-               type: "object",
-               properties: {
-                  estadio_id: { bsonType: "objectId" },
-                  nome: { type: "string" }
-               }
-            }
+               bsonType: "objectId",
+               description: "ID da Estadio associado ao clube"
+            },
          }
       }
    }
@@ -190,7 +195,8 @@ db.createCollection("p_formatos_competicao", {
          required: ["nome", "descricao"],
          properties: {
             nome: { type: "string" },
-	    descricao: { type: "string" }
+	    descricao: { type: "string" },
+	    valor_de_mercado: { type: "number" }
          }
       }
    }
@@ -200,25 +206,23 @@ db.createCollection("p_formatos_competicao", {
 db.createCollection("p_competicoes", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "ano"],
+         required: ["nome", "data_inicio", "data_fim"],
          properties: {
             nome: { type: "string" },
-            ano: { type: "number" },
-	    imagem: { type: "string" },
+            imagem: { type: "string" },
             data_inicio: { bsonType: "date" },
             data_fim: { bsonType: "date" },
-            formato_id: { bsonType: "objectId" },
-            vencedor: {
-               type: "object",
-               properties: {
-                  clube_id: { bsonType: "objectId" },
-                  nome: { type: "string" }
-               }
+	    finalizado: { type: "boolean" },
+            formato: { bsonType: "objectId" },
+            vencedor: { 
+               bsonType: "objectId",
+               description: "ID do clube Vencedor"
             }
          }
       }
    }
 });
+
 
 // Jogo Schema
 db.createCollection("p_jogos", {
