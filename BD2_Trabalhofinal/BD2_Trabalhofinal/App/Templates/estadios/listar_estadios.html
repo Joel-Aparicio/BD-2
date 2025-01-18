@@ -15,7 +15,8 @@
                 <tr>
                     <th>Nome</th>
 					<th>Localidade</th>
-					<th>Ano de Inauguração</th>
+					<th>Dados</th>
+					<th>Estado</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -29,10 +30,24 @@
 						{{ estadio.pais}}, {{ estadio.cidade }}
 					</td>
 					<td>
-						{{ estadio.inauguracao }}
+						Inauguração: {{ estadio.inauguracao }}
+						<br>
+						Lotação:
+						{% if estadio.lotacao %}
+							{{ estadio.lotacao }}
+						{% else %}
+							Não Disponível
+						{% endif %}
+					</td>
+					<td>
+						{% if estadio.ativo %}
+							Ativo
+						{% else %}
+							Demolido
+						{% endif %}
 					</td>
                     <td>
-						<!--<a href="{% url 'detalhes_estadio' estadio.get_id %}" class="btn btn-info btn-sm me-2">Ver</a>-->
+						<a href="{% url 'detalhes_estadio' estadio.get_id %}" class="btn btn-info btn-sm me-2">Ver</a>
                         <a href="{% url 'editar_estadio' estadio.get_id %}" class="btn btn-warning btn-sm me-2">Editar</a>
                         <!-- Botão para abrir o modal -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ estadio.get_id }}">

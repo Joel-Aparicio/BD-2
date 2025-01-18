@@ -88,11 +88,26 @@ DATABASES = {
     #mongoDB => Resto da Base de Dados
     'mongodb': {
         'ENGINE': 'djongo',
-        'NAME': 'projeto_BD2', #nome da base de dados no mongodb
+        'NAME': 'projeto_BD2',
         'ENFORCE_SCHEMA': False,
-        'HOST': 'mongodb://localhost:27017',
+        'CLIENT': {
+            'host': 'localhost',
+            'port': 27017,
+        },
+        'LOGGING': {
+            'version': 1,
+            'loggers': {
+                'djongo': {
+                    'level': 'DEBUG',
+                    'propagate': False,
+                }
+            },
+        },
     },
 }
+
+# Adicione isto para gerenciar as rotas de database
+DATABASE_ROUTERS = ['BD2_Trabalhofinal.App.routers.AuthRouter']
 
 # settings.py
 AUTHENTICATION_BACKENDS = [

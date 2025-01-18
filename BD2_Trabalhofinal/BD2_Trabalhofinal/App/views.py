@@ -12,13 +12,17 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth import get_user_model
 
 #from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 #from django.contrib.auth import logout
 #from django.shortcuts import redirect
 
 from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao
 from .forms import P_PosicaoForm, P_AssociacaoForm, P_FormatoCompeticaoForm, P_EstadioForm, P_JogadorForm, P_ClubeForm, P_EquipaForm, P_CompeticaoForm
 from bson import ObjectId
+
+from django.db.models import Q
+from itertools import groupby
+from operator import attrgetter
 
 def dashboard(request):
     if request.user.is_authenticated:  # Verifica se o usuário está autenticado
@@ -179,12 +183,12 @@ def adicionar_formato(request):
 def editar_formato(request, id):
     formato = get_object_or_404(P_FormatoCompeticao, _id=ObjectId(id))
     if request.method == 'POST':
-        form = FormatoCompeticaoForm(request.POST, instance=formato)
+        form = P_FormatoCompeticaoForm(request.POST, instance=formato)
         if form.is_valid():
             form.save()
             return redirect('listar_formatos')
     else:
-        form = FormatoCompeticaoForm(instance=formato)
+        form = P_FormatoCompeticaoForm(instance=formato)
     return render(request, 'formatos/editar_formato.html', {'form': form})
 
 def apagar_formato(request, id):
@@ -195,17 +199,21 @@ def apagar_formato(request, id):
 
 ## --- Estádios ---
 def listar_estadios(request):
-    estadios = P_Estadio.objects.all()
+    estadios = P_Estadio.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
     return render(request, 'estadios/listar_estadios.html', {'estadios': estadios})
 
 def adicionar_estadio(request):
     if request.method == 'POST':
         form = P_EstadioForm(request.POST)
         if form.is_valid():
-            form.save()
+            estadio = form.save(commit=False)
+            # Tratar de strings vazias para campos opcionais
+            if not estadio.imagem:
+                estadio.imagem = None
+            estadio.save()
             return redirect('listar_estadios')
     else:
-        form = P_EstadioForm()
+        form = P_EstadiosForm()
     return render(request, 'estadios/adicionar_estadio.html', {'form': form})
 
 def editar_estadio(request, id):
@@ -235,7 +243,7 @@ def detalhes_estadio(request, id):
     
 ## --- Jogadores ---
 def listar_jogadores(request):
-    jogadores = P_Jogador.objects.all()
+    jogadores = P_Jogador.objects.all().order_by('nome', 'num_camisola')  # Ordenar por Nome e Número de Camisola para melhor organização
     return render(request, 'jogadores/listar_jogadores.html', {'jogadores': jogadores})
 
 def adicionar_jogador(request):
@@ -279,19 +287,25 @@ def detalhes_jogador(request, id):
 
 ## --- Clubes ---
 def listar_clubes(request):
-    clubes = P_Clube.objects.all()
+    clubes = P_Clube.objects.all().order_by('nome') # Ordenar por Nome
     return render(request, 'clubes/listar_clubes.html', {'clubes': clubes})
     
 def adicionar_clube(request):
     if request.method == 'POST':
+        print("=== POST DATA ===")
+        print(request.POST)
         form = P_ClubeForm(request.POST)
         if form.is_valid():
             clube = form.save(commit=False)
-            # Tratar de strings vazias para campos opcionais
             if not clube.imagem:
                 clube.imagem = None
             clube.save()
             return redirect('listar_clubes')
+        else:
+            print("=== FORM ERRORS ===")
+            print(form.errors)
+            print("=== FORM CLEANED DATA ===")
+            print(form.cleaned_data if hasattr(form, 'cleaned_data') else "No cleaned data")
     else:
         form = P_ClubeForm()
     return render(request, 'clubes/adicionar_clube.html', {'form': form})
@@ -319,7 +333,26 @@ def todos_clubes(request):
     
 def detalhes_clube(request, id):
     clube = get_object_or_404(P_Clube, _id=ObjectId(id))
-    return render(request, 'clubes/detalhes_clube.html', {'clube': clube})
+    equipas = P_Equipa.objects.filter(clube=clube)
+    jogadores = P_Jogador.objects.filter(equipa__clube=clube).order_by('posicao__nome', 'nome')
+    
+    # Agrupar jogadores por posição
+    jogadores_por_posicao = {}
+    for jogador in jogadores:
+        posicao_nome = jogador.posicao.nome if jogador.posicao else "Sem Posição"
+        if posicao_nome not in jogadores_por_posicao:
+            jogadores_por_posicao[posicao_nome] = []
+        jogadores_por_posicao[posicao_nome].append(jogador)
+    
+    return render(request, 'clubes/detalhes_clube.html', {
+        'clube': clube,
+        'equipas': equipas,
+        'jogadores_por_posicao': dict(sorted(jogadores_por_posicao.items()))
+    })
+
+def todos_clubes(request):
+    clubes = P_Clube.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
+    return render(request, 'clubes/todos_clubes.html', {'clubes': clubes})
     
 ## --- Equipas ---
 def listar_equipas(request):
@@ -359,9 +392,7 @@ def apagar_equipa(request, id):
         equipa.delete()
         return redirect('listar_equipas')
         
-def todos_clubes(request):
-    clubes = P_Clube.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
-    return render(request, 'clubes/todos_clubes.html', {'clubes': clubes})
+
 
 ## --- Competições ---
 def listar_competicoes(request):
@@ -406,6 +437,30 @@ def todas_competicoes(request):
 def detalhes_competicao(request, id):
     competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
     return render(request, 'competicoes/detalhes_competicao.html', {'competicao': competicao})
+    
+ # --- OUTROS ---
+def get_equipas_por_clube(request, clube_id):
+    try:
+        print(f"Buscando equipas para o clube ID: {clube_id}")  # Debug
+        clube = P_Clube.objects.get(_id=ObjectId(clube_id))
+        print(f"Clube encontrado: {clube.nome}")  # Debug
+        
+        equipas = P_Equipa.objects.filter(clube=clube)
+        print(f"Equipas encontradas: {list(equipas)}")  # Debug
+        
+        data = [{
+            'id': str(equipa._id),
+            'nome': equipa.nome
+        } for equipa in equipas]
+        
+        print(f"Dados retornados: {data}")  # Debug
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        print(f"Erro: {str(e)}")  # Debug
+        return JsonResponse({'error': str(e)}, status=400)
+        
+        
+        
 # --- TEMP ---
 
 

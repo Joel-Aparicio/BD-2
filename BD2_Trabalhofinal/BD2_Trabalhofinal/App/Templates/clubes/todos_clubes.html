@@ -21,7 +21,11 @@
 
             <!-- Informações do Clube -->
             <div class="flex-grow-1">
-                <h5 class="mb-1">{{ clube.nome }}</h5>
+                <h5 class="mb-1">{{ clube.nome }}
+					{% if clube.extinto == True %}
+						- <span class="text-danger">Extinto</span>
+                    {% endif %}
+				</h5>
                 <p class="mb-0 text-muted">
                     <i class="bi bi-calendar3"><!--Icon Calendario--></i> Fundado em: {{ clube.ano_fundacao }}
                 </p.>

@@ -75,6 +75,9 @@ urlpatterns = [
     path('admin/equipas/editar/<str:id>/', views.editar_equipa, name='editar_equipa'),
     path('admin/equipas/apagar/<str:id>/', views.apagar_equipa, name='apagar_equipa'),
     
+    # EQUIPAS - CLUBES
+    path('api/equipas-por-clube/<str:clube_id>/', views.get_equipas_por_clube, name='equipas_por_clube'),
+    
     # COMPETIÇÕES
     path('admin/competicoes/', views.listar_competicoes, name='listar_competicoes'),
     path('admin/competicoes/adicionar/', views.adicionar_competicao, name='adicionar_competicao'),

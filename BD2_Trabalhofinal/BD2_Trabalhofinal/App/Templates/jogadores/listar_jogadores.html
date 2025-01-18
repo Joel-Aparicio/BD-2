@@ -17,6 +17,8 @@
                     <th>Nome</th>
 					<th>Nacionalidade</th>
 					<th>Dados Pessoais</th>
+					<th>Clube</th>
+					<th>Posição</th>
 					<th>Situação</th>
                     <th>Ações</th>
                 </tr>
@@ -43,9 +45,30 @@
 							Peso: {{ jogador.peso }} kg
 							<br>
 						{% endif %}
+					</td>
+					<td>
+						{% if jogador.clube %}
+							{{ jogador.clube.nome }}
+						{% else %}
+							Sem Clube
+						{% endif %}
+						<br>
+						{% if jogador.equipa %}
+							({{ jogador.equipa.nome }})
+						{% else %}
+							(Sem Equipa)
+						{% endif %}
+					</td>
+					<td>
 						{% if jogador.posicao %}
-							Posição: {{ jogador.get_posicao_nome }}
-							<br>
+						
+							{{ jogador.posicao.nome }}
+							{% if jogador.posicao.descricao %}
+								</br>
+								({{ jogador.posicao.descricao }})
+							{% endif %}
+						{% else %}
+							Sem Posição
 						{% endif %}
 					</td>
 					<td>

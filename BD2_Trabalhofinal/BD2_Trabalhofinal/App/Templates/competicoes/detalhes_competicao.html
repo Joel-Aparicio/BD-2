@@ -20,14 +20,17 @@
             </div>
             <div class="card-body d-flex align-items-center">
                 <!-- Imagem da Competição -->
-                <img src="https://via.placeholder.com/150" alt="Logo da Competição" class="rounded me-3" style="width: 150px; height: 150px;">
+                <img src="{{ competicao.imagem }}" alt="Logo da Competição" class="rounded me-3" style="width: 150px; height: 150px;">
 
                 <!-- Informações da Competição -->
                 <div>
                     <h1 class="mb-1">{{ competicao.nome }}</h1>
-                    <p class="mb-0"><b>País: </b> {{ competicao.pais }}</p>
+                    <p class="mb-0"><b>Formato: </b> {{ competicao.formato.nome }}</p>
                     <p class="mb-0"><b>Data de Início: </b> {{ competicao.data_inicio }}</p>
                     <p class="mb-0"><b>Data de Fim: </b> {{ competicao.data_fim }}</p>
+					{% if competicao.formato.valor_de_mercado %}
+						<p class="mb-0"><b>Valor de Mercado: </b> {{ competicao.formato.valor_de_mercado }}M€</p>
+					{% endif %}
                 </div>
             </div>
         </div>

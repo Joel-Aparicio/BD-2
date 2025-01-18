@@ -7,6 +7,7 @@
     <h1 class="text-center">Lista de Competições</h1>
     <div class="text-end mb-3">
         <a href="{% url 'adicionar_competicao' %}" class="btn btn-primary">Adicionar Competição</a>
+		<a href="{% url 'listar_formatos' %}" class="btn btn-info">Ver Formatos</a>
     </div>
     {% if competicoes %}
     <div class="table-responsive">
@@ -14,7 +15,9 @@
             <thead class="table-dark">
                 <tr>
                     <th>Nome</th>
-                    <th>Ano</th>
+					<th>Formato</th>
+					<th>Data</th>
+                    <th>Vencedor</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -22,7 +25,18 @@
                 {% for competicao in competicoes %}
                 <tr>
                     <td>{{ competicao.nome }}</td>
-                    <td>{{ competicao.ano }}</td>
+                    <td>{{ competicao.formato.nome }}</td>
+					<td>
+						{{ competicao.data_inicio }} a {{ competicao.data_fim }}
+					</td>
+					<td>
+						{% if competicao.finalizado == True %}
+							Vencedor: 
+							<a href="{% url 'detalhes_clube' competicao.vencedor.get_id %}">{{ competicao.vencedor.nome }}</a>
+						{% else %}
+							Não Terminado
+						{% endif %}
+					</td>
                     <td>
 						<a href="{% url 'detalhes_competicao' competicao.get_id %}" class="btn btn-info btn-sm me-2">Ver</a>
 						

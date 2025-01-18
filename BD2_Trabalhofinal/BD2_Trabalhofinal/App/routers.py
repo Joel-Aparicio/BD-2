@@ -23,3 +23,5 @@ class MultiDBRouter:
         if app_label == 'BD2_Trabalhofinal.App': #Nome app
             return db == 'mongodb'
         return db == 'default'
+
+

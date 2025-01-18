@@ -18,6 +18,7 @@
                     <th>Ano Fundação</th>
                     <th>Localidade</th>
 					<th>Extinto?</th>
+					<th>Associação & Estádio</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -29,9 +30,28 @@
                     <td>{{ clube.pais }}, {{ clube.cidade }}</td>
 					<td>
 						{% if clube.extinto %}
-							Sim
+							{% if clube.ano_extinto == 0 %}
+								Sim
+							{% else %}
+								{{ clube.ano_extinto }}
+							{% endif %}
 						{% else %}
 							Não
+						{% endif %}
+					</td>
+					<td>
+						{% if clube.associacao %}
+							{{ clube.associacao.nome }}  <!-- Mostra o nome da associação -->
+							{% if clube.estadio %} 
+								<br> <!-- Quebra de linha entre associação e estádio -->
+							{% endif %}
+						{% endif %}
+						{% if clube.estadio %}
+							{{ clube.estadio.nome }}  <!-- Mostra o nome do estádio -->
+						{% else %}
+							{% if not clube.associacao %}
+								Sem associação nem estádio
+							{% endif %}
 						{% endif %}
 					</td>
                     <td>

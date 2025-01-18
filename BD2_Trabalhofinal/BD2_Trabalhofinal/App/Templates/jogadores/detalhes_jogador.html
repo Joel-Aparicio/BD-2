@@ -25,10 +25,17 @@
                 <!-- Informações do jogador -->
                 <div class="flex-grow-1">
                     <h1 class="mb-1">{{ jogador.num_camisola }}. {{ jogador.nome }}</h1>
-                    <p class="mb-0"><b>Nacionalidade: </b> {{ jogador.nacionalidade }}</p>
-                    {% if jogador.valor_de_mercado %}
+                    <p class="mb-0"><b>Nacionalidade: </b> {{ jogador.nacionalidade }}</p>    
+					<p class="mb-0"><b>Clube: </b>
+						{% if jogador.clube %}
+							{{ jogador.clube.nome }}
+						{% else %}
+							Nenhum
+						{% endif %}
+					</p>
+					{% if jogador.valor_de_mercado %}
                         <p><b>Valor de Mercado:</b> {{ jogador.valor_de_mercado }} M€</p>
-                    {% endif %}
+                    {% endif %}	
                 </div>
 
                 <!-- Caixa com dados pessoais -->
@@ -54,6 +61,7 @@
                     <b>Número de Camisola:</b> {{ jogador.num_camisola }}<br>
 					<b>Número de Jogos: </b> {{ jogador.num_jogos }} <br>
 					<b>Número de Golos: </b> {{ jogador.num_golos }} <br>
+					<b>Equipa: </b> {{ jogador.equipa.nome }} <br>
 					<b>Situação: </b> {{ jogador.situacao }} <br>
                 </p>
             </div>
