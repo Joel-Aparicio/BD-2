@@ -241,7 +241,7 @@ db.createCollection("p_jogos", {
           bsonType: "string"
         },
         duracao: {
-          bsonType: "string"
+          bsonType: "number"
         },
         prolongamento: {
           bsonType: "bool"
@@ -378,6 +378,33 @@ db.createCollection("p_penaltis", {
         golo: {
           type: "boolean"
         }
+      }
+    }
+  }
+});
+
+
+db.createCollection("p_historico_clubeEquipa", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["clube", "jogador", "data_inicio", "situacao", "valor_contrato"],
+      properties: {
+        clube: {
+          bsonType: "objectId",
+          description: "ID do clube ao qual o jogador pertenceu"
+        },
+        jogador: {
+          bsonType: "objectId",
+          description: "ID do jogador relacionado"
+        },
+        data_inicio: { bsonType: "date" },
+        data_fim: { bsonType: "date" },
+        situacao: { 
+	  type: "string",
+          description: "Situação atual do vínculo (e.g., ativo, encerrado)"
+        },
+        valor_contrato: { type: "number" }
       }
     }
   }
