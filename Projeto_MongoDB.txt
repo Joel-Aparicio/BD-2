@@ -226,106 +226,163 @@ db.createCollection("p_competicoes", {
 
 // Jogo Schema
 db.createCollection("p_jogos", {
-   validator: {
-      $jsonSchema: {
-         required: ["dia", "hora", "estado"],
-         properties: {
-            duracao: { type: "string" },
-            prolongamento: { type: "boolean" },
-            penaltis: { type: "boolean" },
-            dia: { bsonType: "date" },
-            hora: { type: "string" },
-            estado: { type: "string" },
-            estadio: {
-               type: "object",
-               properties: {
-                  estadio_id: { bsonType: "objectId" },
-                  nome: { type: "string" }
-               }
-            },
-            equipa_casa: {
-               type: "object",
-               properties: {
-                  equipa_id: { bsonType: "objectId" },
-                  nome: { type: "string" },
-                  clube: {
-                     type: "object",
-                     properties: {
-                        clube_id: { bsonType: "objectId" },
-                        nome: { type: "string" }
-                     }
-                  }
-               }
-            },
-            equipa_fora: {
-               type: "object",
-               properties: {
-                  equipa_id: { bsonType: "objectId" },
-                  nome: { type: "string" },
-                  clube: {
-                     type: "object",
-                     properties: {
-                        clube_id: { bsonType: "objectId" },
-                        nome: { type: "string" }
-                     }
-                  }
-               }
-            },
-            golos: {
-               type: "array",
-               items: {
-                  type: "object",
-                  properties: {
-                     jogador_id: { bsonType: "objectId" },
-                     nome_jogador: { type: "string" },
-                     penalti: { type: "boolean" },
-                     minuto: { type: "string" },
-                     compensacao: { type: "string" }
-                  }
-               }
-            },
-            faltas: {
-               type: "array",
-               items: {
-                  type: "object",
-                  properties: {
-                     jogador_id: { bsonType: "objectId" },
-                     nome_jogador: { type: "string" },
-                     cartao: { type: "boolean" },
-                     cor_cartao: { type: "string" },
-                     minuto: { type: "string" },
-                     compensacao: { type: "string" }
-                  }
-               }
-            },
-            substituicoes: {
-               type: "array",
-               items: {
-                  type: "object",
-                  properties: {
-                     jogador_sai: {
-                        type: "object",
-                        properties: {
-                           jogador_id: { bsonType: "objectId" },
-                           nome: { type: "string" }
-                        }
-                     },
-                     jogador_entra: {
-                        type: "object",
-                        properties: {
-                           jogador_id: { bsonType: "objectId" },
-                           nome: { type: "string" }
-                        }
-                     },
-                     tempo_jogo: { bsonType: "date" },
-                     entrar: { type: "boolean" }
-                  }
-               }
-            }
-         }
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["dia", "hora", "estado", "clube_casa", "clube_fora", "estadio", "competicao"],
+      properties: {
+        dia: {
+          bsonType: "date"
+        },
+        hora: {
+          bsonType: "string"
+        },
+        estado: {
+          bsonType: "string"
+        },
+        duracao: {
+          bsonType: "string"
+        },
+        prolongamento: {
+          bsonType: "bool"
+        },
+        penaltis: {
+          bsonType: "bool"
+        },
+        competicao: {
+          bsonType: "objectId"
+        },
+        estadio: {
+          bsonType: "objectId"
+        },
+        clube_casa: {
+          bsonType: "objectId"
+        },
+        clube_fora: {
+          bsonType: "objectId"
+        },
+        equipa_casa: {
+          bsonType: "objectId"
+        },
+        equipa_fora: {
+          bsonType: "objectId"
+        }
       }
-   }
+    }
+  }
 });
+
+//GOLOS
+db.createCollection("p_golos", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["jogo", "jogador", "minuto"],
+      properties: {
+        jogo: {
+          bsonType: "objectId"
+        },
+        jogador: {
+          bsonType: "objectId"
+        },
+	clube: { bsonType: "objectId" },
+        penalti: {
+          type: "boolean"
+        },
+        minuto: {
+          type: "number"
+        },
+        compensacao: {
+          type: "number"
+        }
+      }
+    }
+  }
+});
+
+//Faltas
+db.createCollection("p_faltas", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["jogo", "jogador", "minuto"],
+      properties: {
+        jogo: {
+          bsonType: "objectId"
+        },
+        jogador: {
+          bsonType: "objectId"
+        },
+	clube: { bsonType: "objectId" },
+        cartao: {
+          type: "boolean"
+        },
+        cor_cartao: {
+          type: "string"
+        },
+        minuto: {
+          type: "number"
+        },
+        compensacao: {
+          type: "number"
+        }
+      }
+    }
+  }
+});
+
+//Substituições
+db.createCollection("p_substituicoes", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["jogo", "jogador_sai", "jogador_entra", "minuto"],
+      properties: {
+        jogo: {
+          bsonType: "objectId"
+        },
+        jogador_sai: {
+          bsonType: "objectId",
+        },
+        jogador_entra: {
+          bsonType: "objectId",
+        },
+	clube: { bsonType: "objectId" },
+        minuto: {
+          type: "number"
+        },
+        entrar: {
+          type: "boolean"
+        }
+      }
+    }
+  }
+});
+
+//Penaltis
+db.createCollection("p_penaltis", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["jogo", "jogador", "clube", "golo"],
+      properties: {
+        jogo: {
+          bsonType: "objectId"
+        },
+        jogador: {
+          bsonType: "objectId"
+        },
+        clube: {
+          bsonType: "objectId"
+        },
+        golo: {
+          type: "boolean"
+        }
+      }
+    }
+  }
+});
+
 
 //Equipas Favoritas Schema
 db.createCollection("p_equipas_favoritas", {
