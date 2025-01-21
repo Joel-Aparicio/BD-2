@@ -229,13 +229,10 @@ db.createCollection("p_jogos", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["dia", "hora", "estado", "clube_casa", "clube_fora", "estadio", "competicao"],
+      required: ["dia", "estado"],
       properties: {
         dia: {
           bsonType: "date"
-        },
-        hora: {
-          bsonType: "string"
         },
         estado: {
           bsonType: "string"
