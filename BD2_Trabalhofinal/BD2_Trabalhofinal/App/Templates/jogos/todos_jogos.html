@@ -1,0 +1,64 @@
+{% extends 'header_publico.html' %}
+
+{% block title %}Todos os Jogos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Lista de Jogos</h1>
+    
+    {% if jogos %}
+    <div class="list-group">
+        {% for jogo in jogos %}
+        <div class="list-group-item list-group-item-action d-flex align-items-center py-3">
+            <!-- Imagem do time da casa -->
+            <div class="d-flex align-items-center me-4">
+                {% if jogo.clube_casa.imagem %}
+                    <img src="{{ jogo.clube_casa.imagem }}" alt="{{ jogo.clube_casa.nome }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                {% else %}
+                    <div class="rounded-circle me-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+                        ⚽
+                    </div>
+                {% endif %}
+                <h5 class="mb-0">{{ jogo.clube_casa.nome }}</h5>
+            </div>
+
+            <!-- Estado, Dia, Hora e Botão -->
+            <div class="flex-grow-1 text-center">
+                <h5 class="mb-1">
+                    <span class="text-muted">{{ jogo.estado }}</span>
+                </h5>
+                <p class="mb-0 text-muted">
+                    <i class="bi bi-calendar3"></i> {{ jogo.dia|date:"d/m/Y" }}
+                    <i class="bi bi-clock"></i>{{ jogo.hora }}
+                </p>
+                
+                <!-- Botão de Ver Detalhes-->
+                <a href="{% url 'detalhes_jogo' jogo.get_id %}" class="btn btn-primary btn-sm mt-2">
+                    <i class="bi bi-info-circle"></i> Ver Detalhes
+                </a>
+            </div>
+
+            <!-- Imagem do time fora -->
+            <div class="d-flex align-items-center ms-4">
+                <h5 class="mb-0">{{ jogo.clube_fora.nome }}</h5>
+                {% if jogo.clube_fora.imagem %}
+                    <img src="{{ jogo.clube_fora.imagem }}" alt="{{ jogo.clube_fora.nome }}" class="rounded-circle ms-3" style="width: 50px; height: 50px; object-fit: cover;">
+                {% else %}
+                    <div class="rounded-circle ms-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+                        ⚽
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="alert alert-info text-center mt-4">Nenhum jogo disponível no momento.</div>
+    {% endif %}
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

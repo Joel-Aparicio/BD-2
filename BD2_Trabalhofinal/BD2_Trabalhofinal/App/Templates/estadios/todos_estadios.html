@@ -1,0 +1,54 @@
+{% extends 'header_publico.html' %}
+
+{% block title %}Todos os Estadios{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Lista de Estádios</h1>
+    
+    {% if estadio %}
+    <div class="list-group">
+        {% for estadio in estadio %}
+        <div class="list-group-item list-group-item-action d-flex align-items-center py-3">
+            <!-- Logo ou Ícone -->
+            {% if estadio.imagem %}
+				<img src="{{ estadio.imagem }}" alt="{{ estadio.nome }}" class="rounded-circle me-4 shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
+            {% else %}
+				<div class="rounded-circle me-4 bg-secondary text-light text-center shadow-sm" style="width: 60px; height: 60px; line-height: 60px; font-size: 18px;">
+					⚽
+				</div>
+            {% endif %}
+
+            <!-- Informações do Estádio -->
+            <div class="flex-grow-1">
+                <h5 class="mb-1">{{ estadio.nome }}
+					{% if estadio.ativo == False %}
+                        - <span class="text-danger">Demolido</span>
+                    {% endif %}
+				</h5>
+                <p class="mb-0 text-muted">
+                    <i class="bi bi-calendar3"><!--Icon Calendario--></i> Fundado em: {{ estadio.inauguracao }}
+                </p.>
+                {% if estadio.pais %}
+					<p class="mb-0 text-muted">
+						<i class="bi bi-geo-alt-fill"><!--Icon GPS--></i> Localização: {{ estadio.pais }}, {{ estadio.cidade}}
+					</p>
+                {% endif %}
+            </div>
+
+            <!-- Botão de Ação -->
+            <a href="{% url 'detalhes_estadio' estadio.get_id %}" class="btn btn-primary">
+                <i class="bi bi-info-circle"><!--Icon Informação--></i> Ver Detalhes
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+		<div class="alert alert-info text-center mt-4">Nenhum estadio disponível no momento.</div>
+    {% endif %}
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
