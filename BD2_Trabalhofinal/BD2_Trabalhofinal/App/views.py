@@ -2,8 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 #from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
-from .models import Clube, Competicao, Jogo, FormatoCompeticao, PosicaoJogador, Jogador, Equipa, AssociacaoFutebol, Utilizador
-from .forms import ClubeForm, CompeticaoForm, JogoForm, FormatoCompeticaoForm, PosicaoJogadorForm, JogadorForm, EquipaForm, AssociacaoFutebolForm
 
 from django.contrib.auth import login, authenticate
 #from django.shortcuts import render, redirect
@@ -16,13 +14,16 @@ from django.http import HttpResponse, JsonResponse
 #from django.contrib.auth import logout
 #from django.shortcuts import redirect
 
-from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao
-from .forms import P_PosicaoForm, P_AssociacaoForm, P_FormatoCompeticaoForm, P_EstadioForm, P_JogadorForm, P_ClubeForm, P_EquipaForm, P_CompeticaoForm
+from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao, P_Jogo
+from .models import Utilizador
+from .forms import P_PosicaoForm, P_AssociacaoForm, P_FormatoCompeticaoForm, P_EstadioForm, P_JogadorForm, P_ClubeForm, P_EquipaForm, P_CompeticaoForm, P_JogoForm
 from bson import ObjectId
 
 from django.db.models import Q
 from itertools import groupby
 from operator import attrgetter
+
+
 
 def dashboard(request):
     if request.user.is_authenticated:  # Verifica se o usuário está autenticado
@@ -58,31 +59,47 @@ def logout_view(request):
     logout(request)
     return redirect('login')  # Redireciona para a página de login
 
+import logging
+
+logger = logging.getLogger(__name__)
 
 def register(request):
     if request.method == 'POST':
-        nome = request.POST['nome']
-        email = request.POST['email']
-        password = request.POST['password']
-        ser_admin = 'ser_admin' in request.POST  # Verifica se foi selecionado
-        
-        # Define ativo como False se o usuário é admin
+        nome = request.POST.get('nome', '').strip()
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password', '').strip()
+        confirm_password = request.POST.get('confirm_password', '').strip()
+        ser_admin = 'ser_admin' in request.POST
         is_active = not ser_admin
 
-        # Cria um novo utilizador com a senha hash
+        # Verificar se os campos obrigatórios estão preenchidos
+        if not nome or not email or not password:
+            messages.error(request, 'Por favor, preencha todos os campos obrigatórios.')
+            return render(request, 'register.html')
+
+        # Validar se as senhas coincidem
+        if password != confirm_password:
+            messages.error(request, 'As senhas não coincidem!')
+            return render(request, 'register.html')
+
+        logger.debug(f"Dados recebidos: nome={nome}, email={email}, ser_admin={ser_admin}")
+
         try:
+            # Criação do utilizador na base de dados
             user = Utilizador.objects.create(
                 nome=nome,
                 email=email,
-                palavra_passe=make_password(password),  # Armazena a senha de forma segura
+                palavra_passe=make_password(password),
                 ser_admin=ser_admin,
                 is_active=is_active
             )
+            logger.debug(f"Utilizador criado: {user}")
             messages.success(request, 'Conta criada com sucesso! Faça login.')
             return redirect('login')
         except Exception as e:
+            logger.error(f"Erro ao criar utilizador: {e}")
             messages.error(request, f'Erro ao criar conta: {e}')
-    
+
     return render(request, 'register.html')
 
 
@@ -438,6 +455,81 @@ def detalhes_competicao(request, id):
     competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
     return render(request, 'competicoes/detalhes_competicao.html', {'competicao': competicao})
     
+    
+ # --- JOGOS ---
+def listar_jogos(request):
+    jogos = P_Jogo.objects.all()
+    return render(request, 'jogos/listar_jogos.html', {'jogos': jogos})
+
+def adicionar_jogo(request):
+    if request.method == 'POST':
+        print("=== DEBUG VIEW ===")
+        print("POST data:", request.POST)
+        form = P_JogoForm(request.POST)
+        
+        if form.is_valid():
+            print("Form is valid")
+            print("Cleaned data:", form.cleaned_data)
+            try:
+                # Tentar criar o documento diretamente no MongoDB para debug
+                from django.db import connections
+                from bson import ObjectId
+                
+                jogo = form.save(commit=False)
+                print("Jogo object before save:", jogo.__dict__)
+                
+                # Preparar o documento para o MongoDB
+                doc = {
+                    '_id': ObjectId(),
+                    'estado': form.cleaned_data['estado'],
+                    'duracao': form.cleaned_data['duracao'],
+                    'prolongamento': form.cleaned_data['prolongamento'],
+                    'penaltis': form.cleaned_data['penaltis']
+                }
+                print("MongoDB document to be inserted:", doc)
+                
+                # Tentar salvar
+                jogo.save()
+                print("Jogo saved successfully")
+                return redirect('listar_jogos')
+                
+            except Exception as e:
+                print("Save error:", str(e))
+                print("Error type:", type(e))
+                print("Error details:", e.__dict__ if hasattr(e, '__dict__') else "No additional details")
+                form.add_error(None, f"Erro ao salvar: {str(e)}")
+        else:
+            print("Form errors:", form.errors)
+    else:
+        form = P_JogoForm()
+    
+    return render(request, 'jogos/adicionar_jogo.html', {'form': form})
+
+def editar_jogo(request, id):
+    competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
+    if request.method == 'POST':
+        form = P_CompeticaoForm(request.POST, instance=competicao)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_competicoes')
+    else:
+        form = P_CompeticaoForm(instance=competicao)
+    return render(request, 'competicoes/editar_competicao.html', {'form': form})
+
+def apagar_jogo(request, id):
+    competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
+    if request.method == 'POST':
+        competicao.delete()
+        return redirect('listar_competicoes')
+        
+def todos_jogos(request):
+    competicoes = P_Competicao.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
+    return render(request, 'competicoes/todas_competicoes.html', {'competicoes': competicoes})
+    
+def detalhes_jogo(request, id):
+    competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
+    return render(request, 'competicoes/detalhes_competicao.html', {'competicao': competicao})
+
  # --- OUTROS ---
 def get_equipas_por_clube(request, clube_id):
     try:
@@ -459,50 +551,4 @@ def get_equipas_por_clube(request, clube_id):
         print(f"Erro: {str(e)}")  # Debug
         return JsonResponse({'error': str(e)}, status=400)
         
-        
-        
-# --- TEMP ---
-
-
-
-# --- JOGOS ---
-def lista_jogos(request):
-    jogos = Jogo.objects.all()
-    return render(request, 'jogos/lista_jogos.html', {'jogos': jogos})
-
-def adicionar_jogo(request):
-    if request.method == 'POST':
-        form = JogoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_jogos')
-    else:
-        form = JogoForm()
-    return render(request, 'jogos/adicionar_jogo.html', {'form': form})
-
-def editar_jogo(request, pk):
-    jogo = get_object_or_404(Jogo, pk=pk)
-    if request.method == 'POST':
-        form = JogoForm(request.POST, instance=jogo)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_jogos')
-    else:
-        form = JogoForm(instance=jogo)
-    return render(request, 'jogos/editar_jogo.html', {'form': form})
-
-def deletar_jogo(request, pk):
-    jogo = get_object_or_404(Jogo, pk=pk)
-    if request.method == 'POST':
-        jogo.delete()
-        return redirect('lista_jogos')
-    #return render(request, 'jogos/deletar_jogo.html', {'jogo': jogo})
-
-def detalhes_jogo(request, pk):
-    jogo = get_object_or_404(Jogo, pk=pk)
-    return render(request, 'jogos/detalhes_jogo.html')
-    
-def todos_jogos(request):
-    jogos = Jogo.objects.all().order_by('dia', 'hora')  # Ordenar por data e hora para melhor organização
-    return render(request, 'jogos/todos_jogos.html', {'jogos': jogos})
    
