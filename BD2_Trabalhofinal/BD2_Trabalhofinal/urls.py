@@ -25,6 +25,11 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),
     
+    # PERFIL
+    path('perfil/', views.ver_perfil, name='perfil'),
+    path('perfil/editar/dados', views.editar_perfil, name='editar_perfil'),
+    path("perfil/editar/senha/", views.editar_senha, name="editar_senha"),
+    
     # POSIÇÕES DE CAMPO DOS JOGADORES
     path('admin/posicoes/', views.listar_posicoes, name='listar_posicoes'),
     path('admin/posicoes/adicionar/', views.adicionar_posicao, name='adicionar_posicao'),
@@ -96,6 +101,10 @@ urlpatterns = [
     
     # ESTATISTICAS JOGOS
     path('admin/jogos/estatisticas/<str:id>/', views.listar_estatisticas, name='listar_estatisticas'),
+    
+    # CLUBES FAVORITOS
+    path('adicionar_clubeFavorito/<str:clube_id>/', views.adicionar_clubeFavorito, name='adicionar_clubeFavorito'),
+    path('remover_clubeFavorito/<str:clube_id>/', views.remover_clubeFavorito, name='remover_clubeFavorito'),
 
 ]
 

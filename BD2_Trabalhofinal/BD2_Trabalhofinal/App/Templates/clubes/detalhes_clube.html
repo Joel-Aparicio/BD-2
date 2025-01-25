@@ -24,11 +24,14 @@
 
                 <!-- Informações do clube -->
                 <div>
-                    <h1 class="mb-1">{{ clube.nome }}
-						{% if clube.extinto == True %}
-							- <span class="text-danger">EXTINTO</span>
-						{% endif %}
-					</h1>
+                    <h1 class="mb-1 d-flex align-items-center">
+    {{ clube.nome }}
+    {% if clube.extinto == False %}
+        <button class="{% if clube_favorito %}btn-success{% else %}btn-outline-success{% endif %}">
+    Botão
+</button>
+    {% endif %}
+</h1>
                     <p class="mb-0"><b>Localização:</b> {{ clube.pais }}, {{ clube.cidade }}</p>
                     <p class="mb-0"><b>Ano de Fundação:</b> {{ clube.ano_fundacao }}</p>
 					{% if clube.extinto == True %}

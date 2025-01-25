@@ -17,32 +17,55 @@
             </button>
 			
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-                        <a class="nav-link" href="{% url 'listar_associacoes' %}">Associações Futebol</a>
-                    </li>
-					<li class="nav-item">
-                        <a class="nav-link" href="{% url 'listar_estadios' %}">Estadios</a>
-                    </li>
-					<li class="nav-item">
-                        <a class="nav-link" href="{% url 'listar_clubes' %}">Clubes</a>
-                    </li>
-					<li class="nav-item">
-                        <a class="nav-link" href="{% url 'listar_competicoes' %}">Competições</a>
-                    </li>                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'listar_jogos' %}">Jogos</a>
-                    </li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'listar_jogadores' %}" class="btn btn-primary btn-sm">Jogadores</a>
-                    </li>
-                </ul>
+				{% if user.is_authenticated and user.is_staff %}
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'listar_associacoes' %}">Associações Futebol</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'listar_estadios' %}">Estadios</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'listar_clubes' %}">Clubes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'listar_competicoes' %}">Competições</a>
+						</li>                    
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'listar_jogos' %}">Jogos</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'listar_jogadores' %}" class="btn btn-primary btn-sm">Jogadores</a>
+						</li>
+					</ul>
+				{% else %}
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'todas_associacoes' %}">Associações Futebol</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'todos_estadios' %}">Estádios</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'todos_clubes' %}">Clubes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'todas_competicoes' %}">Competições</a>
+						</li>                    
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'todos_jogos' %}">Jogos</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'todos_jogadores' %}">Jogadores</a>
+						</li>
+					</ul>
+				{% endif %}
                 <form class="d-flex">
                     {% if user.is_authenticated %}
                         <a href="{% url 'logout' %}" class="btn btn-outline-light">Terminar Sessão</a>
                     {% else %}
-                        <!-- Se não estiver autenticado, o botão de login ou outro pode ser colocado aqui -->
-                        <a href="{% url 'login' %}" class="btn btn-outline-light">Iniciar SessãoA</a>
+                        <!-- Se não estiver autenticado-->
+                        <a href="{% url 'login' %}" class="btn btn-outline-light">Iniciar Sessão</a>
                     {% endif %}
                 </form>
             </div>

@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from django.contrib.auth import login, authenticate , logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 #from django.shortcuts import render, redirect
 #from django.contrib import messages
 #from .models import Utilizador  # Certifique-se de importar o seu modelo
@@ -16,8 +17,9 @@ from django.http import HttpResponse, JsonResponse
 #from django.shortcuts import redirect
 
 from .models import Utilizador
-from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao, P_Jogo, P_Golo, P_Falta, P_Penalti, P_Substituicao
+from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao, P_Jogo, P_Golo, P_Falta, P_Penalti, P_Substituicao, P_ClubeFavorito
 from .forms import P_PosicaoForm, P_AssociacaoForm, P_FormatoCompeticaoForm, P_EstadioForm, P_JogadorForm, P_ClubeForm, P_EquipaForm, P_CompeticaoForm, P_JogoForm
+from .forms import P_PerfilForm, P_SenhaForm
 from bson import ObjectId
 
 from django.db.models import Q
@@ -62,9 +64,9 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.success(request, 'Sessão encerrada com sucesso.')
-    return redirect('login')
+    return redirect('home')
 
-# Registro de utilizadores
+# Registo de utilizadores
 def register(request):
     if request.method == 'POST':
         nome = request.POST.get('nome', '').strip()
@@ -89,7 +91,59 @@ def register(request):
 
     return render(request, 'register.html')
 
+# --- PERFIL ---
+def ver_perfil(request):
+    if request.user.is_authenticated:
+        # Obter o utilizador logado
+        utilizador = request.user
 
+        # Buscar clubes favoritos do utilizador
+        clubes_favoritos = P_ClubeFavorito.objects.filter(utilizador_id=utilizador.utilizador_id).select_related('clube')
+
+        # Renderizar o template com os dados do utilizador
+        return render(request, 'perfil/perfil.html', {
+            'utilizador': utilizador,
+            'clubes_favoritos': clubes_favoritos
+        })
+    else:
+        # Redirecionar para login caso não esteja autenticado
+        return redirect('login')
+        
+def editar_perfil(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    utilizador = request.user
+    if request.method == 'POST':
+        form = P_PerfilForm(request.POST, instance=utilizador)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Perfil atualizado com sucesso.")
+            return redirect('perfil')  # Redirecionar para a página de perfil
+        else:
+            messages.error(request, "Por favor, corrija os erros abaixo.")
+    else:
+        form = P_PerfilForm(instance=utilizador)
+
+    return render(request, 'perfil/editar_perfil.html', {'form': form})
+
+@login_required
+def editar_senha(request):
+    if request.method == "POST":
+        form = P_SenhaForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Atualiza a sessão para que o utilizador não seja desconectado após alterar a senha
+            update_session_auth_hash(request, user)
+            messages.success(request, "Sua senha foi alterada com sucesso!")
+            return redirect("perfil")  # Redireciona para a página de perfil
+        else:
+            messages.error(request, "Por favor, corrija os erros abaixo.")
+    else:
+        form = P_SenhaForm(user=request.user)
+    
+    return render(request, "perfil/editar_senha.html", {"form": form})
+        
 # --- MONGO DB ---
 ## --- Posições de Campo ---
 def listar_posicoes(request):
@@ -541,4 +595,22 @@ def listar_estatisticas(request, id):
         'substituicoes_detalhadas': substituicoes
     }
     return render(request, 'estatisticas/listar_estatisticas.html', context)
+    
+# --- Clubes Favoritos ---
+def adicionar_clubeFavorito(request, clube_id):
+    if request.method == 'POST':
+        clube = get_object_or_404(P_Clube, _id=clube_id)
+        P_ClubeFavorito.objects.get_or_create(utilizador_id=request.user.id, clube=clube)
+        return JsonResponse({"message": "Clube adicionado aos favoritos com sucesso!"}, status=200)
+    return JsonResponse({"error": "Método não permitido"}, status=405)
+
+def remover_clubeFavorito(request, clube_id):
+    if request.method == 'POST':
+        clube = get_object_or_404(P_Clube, _id=clube_id)
+        favorito = P_ClubeFavorito.objects.filter(utilizador_id=request.user.id, clube=clube)
+        if favorito.exists():
+            favorito.delete()
+            return JsonResponse({"message": "Clube removido dos favoritos com sucesso!"}, status=200)
+        return JsonResponse({"error": "Clube não está nos favoritos"}, status=400)
+    return JsonResponse({"error": "Método não permitido"}, status=405)
    

@@ -2,8 +2,45 @@ from django import forms
 from django.core.exceptions import ValidationError
 from bson import ObjectId  # Adicione esta importação!
 from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao, P_Jogo
+from .models import Utilizador
+from django.contrib.auth.forms import PasswordChangeForm
+
+# --- Utilizador ---
+class P_PerfilForm(forms.ModelForm):
+    class Meta:
+        model = Utilizador
+        fields = ['nome', 'email']  # Campos que podem ser editados
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+        }
+        labels = {
+            'nome': 'Nome',
+            'email': 'Email',
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if Utilizador.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
+            raise forms.ValidationError("Este email já está em uso por outro utilizador.")
+        return email
+               
+class P_SenhaForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label="Senha Atual",
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Digite sua senha atual"}),
+    )
+    new_password1 = forms.CharField(
+        label="Nova Senha",
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Digite sua nova senha"}),
+    )
+    new_password2 = forms.CharField(
+        label="Confirme a Nova Senha",
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Confirme sua nova senha"}),
+    )
 
 
+# --- Website ---
 class P_PosicaoForm(forms.ModelForm):
     class Meta:
         model = P_Posicao

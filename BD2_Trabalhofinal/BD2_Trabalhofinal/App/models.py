@@ -227,16 +227,21 @@ class P_Jogador(models.Model): #FEITO +- => Falta Historico
     def get_id(self):
         return str(self._id)
         
-class P_EquipaFavorita(models.Model):
+class P_ClubeFavorito(models.Model):
+    _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB => Só para o caso de ser preciso
     utilizador_id = models.IntegerField()
-    equipa = models.ForeignKey(P_Equipa, on_delete=models.CASCADE, related_name="favoritos")
+    clube = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="favoritos")
 
     class Meta:
-        db_table = "p_equipas_favoritas"
+        db_table = "p_clubes_favoritos"
         app_label = 'BD2_Trabalhofinal.App'
 
     def __str__(self):
         return f"Favorita do Utilizador {self.utilizador_id}: {self.equipa.nome}"
+    
+    #ID DO MONGODB
+    def get_id(self):
+        return str(self._id)
         
 # --- ESTATÍSTICAS JOGOS
 class P_Golo(models.Model):
