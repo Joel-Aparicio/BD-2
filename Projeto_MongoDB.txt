@@ -415,14 +415,14 @@ db.createCollection("p_historico_clubeEquipa", {
 });
 
 
-//Equipas Favoritas Schema
-db.createCollection("p_equipas_favoritas", {
+//Clubes Favoritos Schema
+db.createCollection("p_clubes_favoritos", {
    validator: {
       $jsonSchema: {
-         required: ["utilizador_id", "equipa_id"],
+         required: ["utilizador_id"],
          properties: {
             utilizador_id: { type: "number" },
-            equipa_id: { bsonType: "objectId" },
+            clube_id: { bsonType: "objectId" },
          }
       }
    }
