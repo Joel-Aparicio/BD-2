@@ -103,8 +103,7 @@ urlpatterns = [
     path('admin/jogos/estatisticas/<str:id>/', views.listar_estatisticas, name='listar_estatisticas'),
     
     # CLUBES FAVORITOS
-    path('adicionar_favorito/<str:clube_id>/', views.adicionar_clubeFavorito, name='adicionar_favorito'),
-    path('remover_favorito/<str:clube_id>/', views.remover_clubeFavorito, name='remover_favorito'),
+    
 
 ]
 
