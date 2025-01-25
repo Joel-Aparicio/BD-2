@@ -267,6 +267,10 @@ db.createCollection("p_jogos", {
         },
         equipa_fora: {
           bsonType: "objectId"
+        },
+	vencedor: {
+          bsonType: 'objectId',
+          description: 'ID do clube Vencedor.'
         }
       }
     }
