@@ -597,20 +597,3 @@ def listar_estatisticas(request, id):
     return render(request, 'estatisticas/listar_estatisticas.html', context)
     
 # --- Clubes Favoritos ---
-def adicionar_clubeFavorito(request, clube_id):
-    if request.method == 'POST':
-        clube = get_object_or_404(P_Clube, _id=clube_id)
-        P_ClubeFavorito.objects.get_or_create(utilizador_id=request.user.id, clube=clube)
-        return JsonResponse({"message": "Clube adicionado aos favoritos com sucesso!"}, status=200)
-    return JsonResponse({"error": "Método não permitido"}, status=405)
-
-def remover_clubeFavorito(request, clube_id):
-    if request.method == 'POST':
-        clube = get_object_or_404(P_Clube, _id=clube_id)
-        favorito = P_ClubeFavorito.objects.filter(utilizador_id=request.user.id, clube=clube)
-        if favorito.exists():
-            favorito.delete()
-            return JsonResponse({"message": "Clube removido dos favoritos com sucesso!"}, status=200)
-        return JsonResponse({"error": "Clube não está nos favoritos"}, status=400)
-    return JsonResponse({"error": "Método não permitido"}, status=405)
-   

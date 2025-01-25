@@ -24,14 +24,11 @@
 
                 <!-- Informações do clube -->
                 <div>
-                    <h1 class="mb-1 d-flex align-items-center">
-    {{ clube.nome }}
-    {% if clube.extinto == False %}
-        <button class="{% if clube_favorito %}btn-success{% else %}btn-outline-success{% endif %}">
-    Botão
-</button>
-    {% endif %}
-</h1>
+                    <h1 class="mb-1">{{ clube.nome }}
+						{% if clube.extinto == True %}
+							- <span class="text-danger">EXTINTO</span>
+						{% endif %}
+					</h1>
                     <p class="mb-0"><b>Localização:</b> {{ clube.pais }}, {{ clube.cidade }}</p>
                     <p class="mb-0"><b>Ano de Fundação:</b> {{ clube.ano_fundacao }}</p>
 					{% if clube.extinto == True %}
@@ -98,100 +95,100 @@
 		</div>
 	{% endif %}
 	<script>
-    // Dados dos jogadores agrupados por posição (renderizados do Django)
-    const jogadoresPorEquipa = {
-        {% for equipa in equipas %}
-            "{{ equipa.get_id }}": {
-                {% for posicao, jogadores in jogadores_por_posicao.items %}
-                    "{{ posicao }}": [
-                        {% for jogador in jogadores %}
-                            {% if jogador.equipa.get_id == equipa.get_id %}
-                                {
-                                    nome: "{{ jogador.nome }}",
-                                    imagem: "{{ jogador.imagem|default:'/static/images/default-player.png' }}",
-                                    situacao: "{{ jogador.situacao }}"
-                                },
-                            {% endif %}
-                        {% endfor %}
-                    ],
-                {% endfor %}
-            },
-        {% endfor %}
-    };
+		// Dados dos jogadores agrupados por posição (renderizados do Django)
+		const jogadoresPorEquipa = {
+			{% for equipa in equipas %}
+				"{{ equipa.get_id }}": {
+					{% for posicao, jogadores in jogadores_por_posicao.items %}
+						"{{ posicao }}": [
+							{% for jogador in jogadores %}
+								{% if jogador.equipa.get_id == equipa.get_id %}
+									{
+										nome: "{{ jogador.nome }}",
+										imagem: "{{ jogador.imagem|default:'/static/images/default-player.png' }}",
+										situacao: "{{ jogador.situacao }}"
+									},
+								{% endif %}
+							{% endfor %}
+						],
+					{% endfor %}
+				},
+			{% endfor %}
+		};
 
-    // Função para atualizar a lista de jogadores
-    function atualizarJogadores(equipaId) {
-        const container = document.getElementById('jogadores-grid');
-        container.innerHTML = ''; // Limpa o conteúdo atual
+		// Função para atualizar a lista de jogadores
+		function atualizarJogadores(equipaId) {
+			const container = document.getElementById('jogadores-grid');
+			container.innerHTML = ''; // Limpa o conteúdo atual
 
-        if (!equipaId) {
-            return;
-        }
+			if (!equipaId) {
+				return;
+			}
 
-        const jogadoresPorPosicao = jogadoresPorEquipa[equipaId] || {};
-        
-        // Verifica se há jogadores em alguma posição
-        const temJogadores = Object.values(jogadoresPorPosicao).some(arr => arr.length > 0);
-        
-        if (!temJogadores) {
-            container.innerHTML = '<div class="text-center p-3">Nenhum jogador encontrado nesta equipa.</div>';
-            return;
-        }
+			const jogadoresPorPosicao = jogadoresPorEquipa[equipaId] || {};
+			
+			// Verifica se há jogadores em alguma posição
+			const temJogadores = Object.values(jogadoresPorPosicao).some(arr => arr.length > 0);
+			
+			if (!temJogadores) {
+				container.innerHTML = '<div class="text-center p-3">Nenhum jogador encontrado nesta equipa.</div>';
+				return;
+			}
 
-        // Para cada posição
-        for (const [posicao, jogadores] of Object.entries(jogadoresPorPosicao)) {
-            if (jogadores.length > 0) {
-                // Cria seção da posição
-                const posicaoSection = document.createElement('div');
-                posicaoSection.className = 'mb-4';
-                
-                // Título da posição
-                const posicaoTitle = document.createElement('h4');
-                posicaoTitle.className = 'mb-3 border-bottom pb-2';
-                posicaoTitle.textContent = posicao;
-                posicaoSection.appendChild(posicaoTitle);
+			// Para cada posição
+			for (const [posicao, jogadores] of Object.entries(jogadoresPorPosicao)) {
+				if (jogadores.length > 0) {
+					// Cria seção da posição
+					const posicaoSection = document.createElement('div');
+					posicaoSection.className = 'mb-4';
+					
+					// Título da posição
+					const posicaoTitle = document.createElement('h4');
+					posicaoTitle.className = 'mb-3 border-bottom pb-2';
+					posicaoTitle.textContent = posicao;
+					posicaoSection.appendChild(posicaoTitle);
 
-                // Grid de jogadores
-                const jogadoresGrid = document.createElement('div');
-                jogadoresGrid.className = 'row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3';
+					// Grid de jogadores
+					const jogadoresGrid = document.createElement('div');
+					jogadoresGrid.className = 'row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3';
 
-                // Adiciona cada jogador
-                jogadores.forEach(jogador => {
-                    const jogadorCard = document.createElement('div');
-                    jogadorCard.className = 'col text-center';
-                    jogadorCard.innerHTML = `
-                        <div class="card h-100">
-                            <img src="${jogador.imagem}" 
-                                 class="card-img-top" 
-                                 alt="${jogador.nome}"
-                                 style="height: 150px; object-fit: cover;">
-                            <div class="card-body">
-                                <h6 class="card-title mb-0">${jogador.nome}</h6>
-                            </div>
-                        </div>
-                    `;
-                    jogadoresGrid.appendChild(jogadorCard);
-                });
+					// Adiciona cada jogador
+					jogadores.forEach(jogador => {
+						const jogadorCard = document.createElement('div');
+						jogadorCard.className = 'col text-center';
+						jogadorCard.innerHTML = `
+							<div class="card h-100">
+								<img src="${jogador.imagem}" 
+									 class="card-img-top" 
+									 alt="${jogador.nome}"
+									 style="height: 150px; object-fit: cover;">
+								<div class="card-body">
+									<h6 class="card-title mb-0">${jogador.nome}</h6>
+								</div>
+							</div>
+						`;
+						jogadoresGrid.appendChild(jogadorCard);
+					});
 
-                posicaoSection.appendChild(jogadoresGrid);
-                container.appendChild(posicaoSection);
-            }
-        }
-    }
+					posicaoSection.appendChild(jogadoresGrid);
+					container.appendChild(posicaoSection);
+				}
+			}
+		}
 
-    // Adiciona o evento de mudança ao select
-    document.getElementById('equipa-select').addEventListener('change', (e) => {
-        atualizarJogadores(e.target.value);
-    });
+		// Adiciona o evento de mudança ao select
+		document.getElementById('equipa-select').addEventListener('change', (e) => {
+			atualizarJogadores(e.target.value);
+		});
 
-    // Inicializa com a primeira equipa (se houver)
-    window.onload = function() {
-        const select = document.getElementById('equipa-select');
-        if (select.value) {
-            atualizarJogadores(select.value);
-        }
-    };
-</script>
+		// Inicializa com a primeira equipa (se houver)
+		window.onload = function() {
+			const select = document.getElementById('equipa-select');
+			if (select.value) {
+				atualizarJogadores(select.value);
+			}
+		};
+	</script>
 	
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
