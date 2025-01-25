@@ -101,9 +101,11 @@ urlpatterns = [
     
     # ESTATISTICAS JOGOS
     path('admin/jogos/estatisticas/<str:id>/', views.listar_estatisticas, name='listar_estatisticas'),
+    path('admin/jogos/estatisticas/golo/adicionar/<str:id>/', views.adicionar_golo, name='adicionar_golo'),
     
     # CLUBES FAVORITOS
-    
+    path('favorito_clube/<str:clube_id>/', views.favorito_clube, name='favorito_clube'),
+    path('remover_favorito/<str:clube_id>/', views.remover_favorito, name='remover_favorito'),
 
 ]
 
