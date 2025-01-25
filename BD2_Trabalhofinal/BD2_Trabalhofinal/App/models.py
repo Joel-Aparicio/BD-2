@@ -187,6 +187,7 @@ class P_Jogo(models.Model):
     clube_fora = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="jogos")
     equipa_casa = models.ForeignKey(P_Equipa, on_delete=models.CASCADE, related_name="jogos")
     equipa_fora = models.ForeignKey(P_Equipa, on_delete=models.CASCADE, related_name="jogos")
+    vencedor = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="jogos")
     
     class Meta:
         db_table = "p_jogos"
