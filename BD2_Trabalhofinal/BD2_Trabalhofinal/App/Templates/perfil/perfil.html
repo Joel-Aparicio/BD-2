@@ -12,25 +12,30 @@
     </h1>
 
     <!-- Card de Informações do Utilizador -->
-    <div class="card shadow-lg border-0 rounded-4 mb-5">
-        <div class="card-header bg-primary text-light rounded-top-4">
-            <h5 class="mb-0">Informações do Utilizador</h5>
-        </div>
-        <div class="card-body">
-            <p><strong>Nome:</strong> {{ utilizador.nome }}</p>
-            <p><strong>Email:</strong> {{ utilizador.email }}</p>
-        </div>
-        <div class="card-footer d-flex justify-content-end gap-2">
-            <!-- Botão para editar perfil -->
-            <a href="{% url 'editar_perfil' %}" class="btn btn-warning">
-                <i class="bi bi-pencil-square"></i> Editar Perfil
-            </a>
-            <!-- Botão para alterar senha -->
-            <a href="{% url 'editar_senha' %}" class="btn btn-secondary">
-                <i class="bi bi-key"></i> Alterar Senha
-            </a>
-        </div>
-    </div>
+	<div class="card shadow-lg border-0 rounded-4 mb-5">
+		<div class="card-header bg-primary text-light rounded-top-4">
+			<h5 class="mb-0">Informações do Utilizador</h5>
+		</div>
+		<div class="card-body">
+			<p><strong>Nome:</strong> {{ utilizador.nome }}</p>
+			<p><strong>Email:</strong> {{ utilizador.email }}</p>
+		</div>
+		<div class="card-footer d-flex justify-content-end gap-2">
+			<!-- Botão para editar perfil -->
+			<a href="{% url 'editar_perfil' %}" class="btn btn-warning">
+				<i class="bi bi-pencil-square"></i> Editar Perfil
+			</a>
+			<!-- Botão para alterar senha -->
+			<a href="{% url 'editar_senha' %}" class="btn btn-secondary">
+				<i class="bi bi-key"></i> Alterar Senha
+			</a>
+			<!-- Botão para terminar sessão -->
+			<a href="{% url 'logout' %}" class="btn btn-danger">
+				<i class="bi bi-box-arrow-right"></i> Terminar Sessão
+			</a>
+		</div>
+	</div>
+
 
     {% if not user.is_staff %}
         <!-- Lista de Clubes Favoritos -->
@@ -65,9 +70,14 @@
                                 </div>
 
                                 <!-- Botão Ver Detalhes -->
-                                <a href="{% url 'detalhes_clube' favorito.clube.get_id %}" class="btn btn-outline-primary">
-                                    <i class="bi bi-info-circle"></i> Ver Detalhes
-                                </a>
+								<a href="{% url 'detalhes_clube' favorito.clube.get_id %}" class="btn btn-primary me-2">
+									<i class="bi bi-info-circle"></i> Ver Detalhes
+								</a>
+
+								<!-- Botão Remover Favorito com ícone de lixo -->
+								<a href="{% url 'remover_favorito' favorito.clube.get_id %}" class="btn btn-danger">
+									<i class="bi bi-trash"></i> <!-- Ícone de lixo -->
+								</a>
                             </div>
                         {% endfor %}
                     </div>

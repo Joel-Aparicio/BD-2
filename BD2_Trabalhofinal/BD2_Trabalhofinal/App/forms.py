@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from bson import ObjectId  # Adicione esta importação!
 from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao, P_Jogo
+from .models import P_Golo
 from .models import Utilizador
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -487,6 +488,14 @@ class P_CompeticaoForm(forms.ModelForm):
         
         
 class P_JogoForm(forms.ModelForm):
+
+    # VENCEDOR
+    vencedor = forms.ModelChoiceField(
+        queryset=P_Clube.objects.none(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Sem Vencedor",
+        required=False
+    )
     
     # CASA
     clube_casa = forms.ModelChoiceField(
@@ -597,6 +606,20 @@ class P_JogoForm(forms.ModelForm):
         # ESTADIO
         self.fields['estadio'].label_from_instance = lambda obj: f"{obj.nome}"
         self.fields['estadio'].to_python = self.convert_to_estadio
+        # VENCEDOR
+        self.fields['vencedor'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['vencedor'].to_python = self.convert_to_clube
+        
+        # Preencher o campo 'vencedor' apenas com os clubes do jogo (casa e fora)
+        if self.instance and self.instance.pk:  # Verifica se é edição
+            clube_casa = self.instance.clube_casa
+            clube_fora = self.instance.clube_fora
+            if clube_casa and clube_fora:
+                self.fields['vencedor'].queryset = P_Clube.objects.filter(pk__in=[clube_casa.pk, clube_fora.pk])
+            else:
+                self.fields['vencedor'].queryset = P_Clube.objects.none()
+        else:  # No caso de adição, exibe todos os clubes
+            self.fields['vencedor'].queryset = P_Clube.objects.all()
         
     # FUNÇÕES
     def convert_to_clube(self, value):
@@ -649,7 +672,7 @@ class P_JogoForm(forms.ModelForm):
 
     class Meta:
         model = P_Jogo
-        fields = ['dia', 'hora', 'competicao', 'estadio', 'clube_casa', 'equipa_casa', 'clube_fora', 'equipa_fora', 'estado', 'duracao', 'prolongamento', 'penaltis']
+        fields = ['dia', 'hora', 'competicao', 'estadio', 'clube_casa', 'equipa_casa', 'clube_fora', 'equipa_fora', 'estado', 'duracao', 'prolongamento', 'penaltis', 'vencedor']
         widgets = {
             'estado': forms.TextInput(attrs={
                 'class': 'form-control', 
@@ -671,3 +694,9 @@ class P_JogoForm(forms.ModelForm):
             'prolongamento': 'Houve Prolongamento?',
             'penaltis': 'Houve Penáltis?'
         }
+
+# ESTATISTICAS
+class P_GoloForm(forms.ModelForm):
+    class Meta:
+        model = P_Golo
+        fields = ['jogador', 'clube', 'penalti', 'minuto', 'compensacao']

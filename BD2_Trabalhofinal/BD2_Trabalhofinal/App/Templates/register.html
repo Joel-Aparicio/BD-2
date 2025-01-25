@@ -21,32 +21,32 @@
                     </div>
                     <div class="card-body">
                         <form method="post" action="{% url 'register' %}" onsubmit="return validatePassword()">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="nome" class="form-label">Nome:</label>
-                                <input type="text" id="nome" name="nome" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email:</label>
-                                <input type="email" id="email" name="email" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Palavra-Passe:</label>
-                                <input type="password" id="password" name="password" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirm_password" class="form-label">Confirmar Palavra-Passe:</label>
-                                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
-                            </div>
-                            <div class="form-check mb-3">
-                                <input type="checkbox" id="ser_admin" name="ser_admin" class="form-check-input" onchange="toggleAdminAlert()">
-                                <label for="ser_admin" class="form-check-label">Sou Administrador</label>
-                            </div>
-                            <div id="admin-alert" class="alert alert-warning" role="alert">
-                                A sua conta precisará ser ativada!
-                            </div>
-                            <button type="submit" class="btn btn-success w-100">Criar Conta</button>
-                        </form>
+							{% csrf_token %}
+							<div class="mb-3">
+								<label for="nome" class="form-label">Nome:</label>
+								<input type="text" id="nome" name="nome" class="form-control" required>
+							</div>
+							<div class="mb-3">
+								<label for="email" class="form-label">Email:</label>
+								<input type="email" id="email" name="email" class="form-control" required>
+							</div>
+							<div class="mb-3">
+								<label for="password" class="form-label">Palavra-Passe:</label>
+								<input type="password" id="password" name="password" class="form-control" required>
+							</div>
+							<div class="mb-3">
+								<label for="confirm_password" class="form-label">Confirmar Palavra-Passe:</label>
+								<input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+							</div>
+							<div class="form-check mb-3">
+								<input type="checkbox" id="ser_admin" name="ser_admin" class="form-check-input" onchange="toggleAdminAlert()">
+								<label for="ser_admin" class="form-check-label">Sou Administrador</label>
+							</div>
+							<div id="admin-alert" class="alert alert-warning" role="alert">
+								A sua conta precisará ser ativada!
+							</div>
+							<button type="submit" class="btn btn-success w-100">Criar Conta</button>
+						</form>
                     </div>
                     <div class="card-footer text-center">
                         <p>Já tem conta? <a href="{% url 'login' %}">Inicie Sessão</a></p>

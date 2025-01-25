@@ -2,6 +2,8 @@ from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.hashers import check_password
 from BD2_Trabalhofinal.App.models import Utilizador
 
+
+
 class CustomAuthBackend(BaseBackend):
     def authenticate(self, request, email=None, password=None, **kwargs):
         print(f"Tentando autenticar o usuário com o email: {email}")

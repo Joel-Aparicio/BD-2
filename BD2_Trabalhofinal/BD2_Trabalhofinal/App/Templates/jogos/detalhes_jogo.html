@@ -1,7 +1,3 @@
-{% extends 'header.html' %}
-
-{% block title %}Detalhes do Jogo{% endblock %}
-
 {% block content %}
 <!DOCTYPE html>
 <html lang="pt">
@@ -27,12 +23,23 @@
 
                 <!-- Resultado do jogo -->
                 <div class="text-center">
-					<p>	{{ jogo.dia }}	</p>
+                    {% if jogo.vencedor %}
+                    <!-- Bloco do Vencedor -->
+                    <div class="bg-light py-3 px-4 rounded mb-3" style="box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);">
+                        <h5 class="text-dark mb-3">Vencedor</h5>
+                        <a href="{% url 'detalhes_clube' jogo.vencedor.get_id %}" class="text-decoration-none">
+                            <div class="d-flex flex-column align-items-center">
+                                <img src="{{ jogo.vencedor.imagem }}" alt="Logo do {{ jogo.vencedor.nome }}" class="img-fluid mb-2" style="height: 80px; object-fit: contain;">
+                                <h6 class="text-dark">{{ jogo.vencedor.nome }}</h6>
+                            </div>
+                        </a>
+                    </div>
+                    {% endif %}
                     <h2 class="display-4">
                         <span id="resultado_casa">0</span> - <span id="resultado_fora">0</span>
                     </h2>
-					<br>
-					{{ jogo.estado }}
+                    <br>
+                    <p>{{ jogo.estado }}</p>
                 </div>
 
                 <!-- Imagem do Clube Fora -->
@@ -67,14 +74,12 @@
                             <div class="col-md-6">
                                 <h5 class="text-center">Equipa Casa</h5>
                                 <ul class="list-group">
-                                    <!-- Placeholder -->
                                     <li class="list-group-item">#10 João (15')</li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
                                 <h5 class="text-center">Equipa Fora</h5>
                                 <ul class="list-group">
-                                    <!-- Placeholder -->
                                     <li class="list-group-item">#9 Pedro (23')</li>
                                 </ul>
                             </div>
@@ -86,7 +91,6 @@
                             <div class="col-md-6">
                                 <h5 class="text-center">Equipa Casa</h5>
                                 <ul class="list-group">
-                                    <!-- Placeholder -->
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>#7 Miguel (30')</span>
                                         <span><img src="https://via.placeholder.com/20/ffff00" alt="Cartão Amarelo"></span>
@@ -96,7 +100,6 @@
                             <div class="col-md-6">
                                 <h5 class="text-center">Equipa Fora</h5>
                                 <ul class="list-group">
-                                    <!-- Placeholder -->
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>#8 Lucas (42')</span>
                                         <span><img src="https://via.placeholder.com/20/ff0000" alt="Cartão Vermelho"></span>
@@ -111,7 +114,6 @@
                             <div class="col-md-6">
                                 <h5 class="text-center">Equipa Casa</h5>
                                 <ul class="list-group">
-                                    <!-- Placeholder -->
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>#11 André (60')</span>
                                         <span><i class="bi bi-arrow-up-circle text-success"></i></span>
@@ -121,7 +123,6 @@
                             <div class="col-md-6">
                                 <h5 class="text-center">Equipa Fora</h5>
                                 <ul class="list-group">
-                                    <!-- Placeholder -->
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>#14 Felipe (75')</span>
                                         <span><i class="bi bi-arrow-down-circle text-danger"></i></span>

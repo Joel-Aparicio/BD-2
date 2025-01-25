@@ -25,39 +25,54 @@
                 <!-- Informações do clube -->
                 <div>
                     <h1 class="mb-1">{{ clube.nome }}
-						{% if clube.extinto == True %}
-							- <span class="text-danger">EXTINTO</span>
-						{% endif %}
-					</h1>
+                        {% if clube.extinto == True %}
+                            - <span class="text-danger">EXTINTO</span>
+                        {% endif %}
+                    </h1>
                     <p class="mb-0"><b>Localização:</b> {{ clube.pais }}, {{ clube.cidade }}</p>
                     <p class="mb-0"><b>Ano de Fundação:</b> {{ clube.ano_fundacao }}</p>
-					{% if clube.extinto == True %}
-						<p class="mb-0"><b>Extinto Em:</b> {{ clube.ano_extinto }}</p>
-					{% endif %}
-					{% if clube.alcunhas %}
-						<p class="mb-0"><b>Alcunhas:</b> {{ clube.alcunhas }}</p>
-					{% endif %}
-				</div>
-				
-				<!-- Caixa com Outras Informações -->
+                    {% if clube.extinto == True %}
+                        <p class="mb-0"><b>Extinto Em:</b> {{ clube.ano_extinto }}</p>
+                    {% endif %}
+                    {% if clube.alcunhas %}
+                        <p class="mb-0"><b>Alcunhas:</b> {{ clube.alcunhas }}</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Caixa com Outras Informações -->
                 <div class="card bg-light ms-auto" style="width: 250px;">
                     <div class="card-body">
                         <h5 class="card-title">Outras Informações</h5>
                         <p class="card-text">
                             <b>Associação:</b> 
-								{% if clube.associacao %}
-									<a href="{% url 'detalhes_associacao' clube.associacao.get_id %}"> {{ clube.associacao.nome }} </a>
-								{% else %}
-									Sem Associação
-								{% endif %} 
-								<br>
+                                {% if clube.associacao %}
+                                    <a href="{% url 'detalhes_associacao' clube.associacao.get_id %}"> {{ clube.associacao.nome }} </a>
+                                {% else %}
+                                    Sem Associação
+                                {% endif %} 
+                                <br>
                             <b>Estádio:</b> 
-								{% if clube.estadio %}
-									<a href="{% url 'detalhes_estadio' clube.estadio.get_id %}"> {{ clube.estadio.nome }} </a>
+                                {% if clube.estadio %}
+                                    <a href="{% url 'detalhes_estadio' clube.estadio.get_id %}"> {{ clube.estadio.nome }} </a>
+                                {% else %}
+                                    Sem Estádio
+                                {% endif %} 
+                                <br>
+
+                            <!-- Botão Favorito -->
+                            {% if user.is_authenticated and not user.is_staff %}
+								{% if is_favorito %}
+									<a href="{% url 'favorito_clube' clube.get_id %}" class="btn btn-danger w-100 mt-3">Remover dos Favoritos</a>
 								{% else %}
-									Sem Estádio
-								{% endif %} 
-								<br>
+									<a href="{% url 'favorito_clube' clube.get_id %}" class="btn btn-primary w-100 mt-3">Adicionar aos Favoritos</a>
+								{% endif %}
+							{% else %}
+								{% if user.is_authenticated %}
+									<p class="text-warning mt-3">Como Administrador, não pode adicionar clubes aos favoritos</p>
+								{% else %}
+									<p class="text-warning mt-3">Por favor, faça login para adicionar aos favoritos.</p>
+								{% endif %}
+							{% endif %}
                         </p>
                     </div>
                 </div>
@@ -94,6 +109,7 @@
 			</div>
 		</div>
 	{% endif %}
+	
 	<script>
 		// Dados dos jogadores agrupados por posição (renderizados do Django)
 		const jogadoresPorEquipa = {
