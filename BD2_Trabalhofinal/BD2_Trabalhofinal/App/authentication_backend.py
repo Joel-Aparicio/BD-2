@@ -8,14 +8,14 @@ class CustomAuthBackend(BaseBackend):
         try:
             user = Utilizador.objects.get(email=email)
             print(f"Usuário encontrado: {user.nome}")
-            if check_password(password, user.palavra_passe):
+            if check_password(password, user.password):  # Alterado para user.password
                 print("Palavra passe válida, autenticando usuário")
                 return user
             else:
                 print("Palavra passe inválida")
                 return None
         except Utilizador.DoesNotExist:
-            print("Utilziador não encontrado")
+            print("Utilizador não encontrado")
             return None
 
     def get_user(self, user_id):

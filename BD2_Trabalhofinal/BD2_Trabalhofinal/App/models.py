@@ -2,15 +2,37 @@ from django.db import models
 from django.utils import timezone
 from djongo import models
 from bson import ObjectId
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 
-class Utilizador(models.Model):
+
+class UtilizadorManager(BaseUserManager):
+    def create_user(self, email, nome, palavra_passe=None, **extra_fields):
+        if not email:
+            raise ValueError('O utilizador deve ter um email.')
+        email = self.normalize_email(email)
+        user = self.model(email=email, nome=nome, **extra_fields)
+        user.set_password(palavra_passe)  # Usa hashing para a palavra-passe
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, nome, palavra_passe=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        return self.create_user(email, nome, palavra_passe, **extra_fields)
+
+class Utilizador(AbstractBaseUser, PermissionsMixin):
     utilizador_id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=50)
     email = models.EmailField(max_length=200, unique=True)
-    palavra_passe = models.CharField(max_length=200)
-    ser_admin = models.BooleanField(default=False)
-    last_login = models.DateTimeField(null=True, blank=True)  # Coluna para armazenar o último login
-    is_active = models.BooleanField(default=True)  # Substitui o campo 'ativo'
+    is_active = models.BooleanField(default=True)  # Substitui 'ativo'
+    is_staff = models.BooleanField(default=False)  # Necessário para admins
+
+    objects = UtilizadorManager()
+
+    USERNAME_FIELD = 'email'  # Campo único usado para login
+    REQUIRED_FIELDS = ['nome']  # Campos obrigatórios além do `USERNAME_FIELD`
 
     class Meta:
         db_table = 'p_utilizador'  # Nome exato da tabela no banco de dados

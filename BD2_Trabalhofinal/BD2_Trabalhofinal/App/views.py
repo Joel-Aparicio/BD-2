@@ -3,7 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate , logout
+from django.contrib.auth.decorators import login_required
 #from django.shortcuts import render, redirect
 #from django.contrib import messages
 #from .models import Utilizador  # Certifique-se de importar o seu modelo
@@ -27,75 +28,63 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Dashboard com proteção de login
+@login_required
 def dashboard(request):
-    if request.user.is_authenticated:  # Verifica se o usuário está autenticado
-        return render(request, 'dashboard.html', {'user': request.user})
-    else:
-        return HttpResponse("Você precisa fazer login!")
+    return render(request, 'dashboard.html', {'user': request.user})
 
 # Página inicial
 def home(request):
-    return render(request, 'home.html', {'user': request.user})
+    return render(request, 'home.html')
 
-# View para listar todos os utilizadores
+# Lista de utilizadores
+@login_required
 def lista_utilizadores(request):
-    utilizadores = Utilizador.objects.all()  # Busca todos os utilizadores no banco de dados
+    utilizadores = Utilizador.objects.all()
     return render(request, 'teste_conetividade.html', {'utilizadores': utilizadores})
 
-# --- LOGIN & REGISTER ---
+# View de login
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(request, email=email, password=password)
-        if user is not None:
-            print(f"Usuário {user.nome} autenticado com sucesso")
+        if user:
             login(request, user)
-            print("Redirecionando para a home")
+            messages.success(request, f'Bem-vindo, {user.nome}!')
             return redirect('home')
         else:
             messages.error(request, 'Credenciais inválidas.')
+
     return render(request, 'login.html')
 
+# View de logout
 def logout_view(request):
     logout(request)
-    return redirect('login')  # Redireciona para a página de login
+    messages.success(request, 'Sessão encerrada com sucesso.')
+    return redirect('login')
 
+# Registro de utilizadores
 def register(request):
     if request.method == 'POST':
         nome = request.POST.get('nome', '').strip()
         email = request.POST.get('email', '').strip()
         password = request.POST.get('password', '').strip()
         confirm_password = request.POST.get('confirm_password', '').strip()
-        ser_admin = 'ser_admin' in request.POST
-        is_active = not ser_admin
 
-        # Verificar se os campos obrigatórios estão preenchidos
         if not nome or not email or not password:
             messages.error(request, 'Por favor, preencha todos os campos obrigatórios.')
             return render(request, 'register.html')
 
-        # Validar se as senhas coincidem
         if password != confirm_password:
             messages.error(request, 'As senhas não coincidem!')
             return render(request, 'register.html')
 
-        logger.debug(f"Dados recebidos: nome={nome}, email={email}, ser_admin={ser_admin}")
-
         try:
-            # Criação do utilizador na base de dados
-            user = Utilizador.objects.create(
-                nome=nome,
-                email=email,
-                palavra_passe=make_password(password),
-                ser_admin=ser_admin,
-                is_active=is_active
-            )
-            logger.debug(f"Utilizador criado: {user}")
+            user = Utilizador.objects.create_user(email=email, nome=nome, palavra_passe=password)
             messages.success(request, 'Conta criada com sucesso! Faça login.')
             return redirect('login')
         except Exception as e:
-            logger.error(f"Erro ao criar utilizador: {e}")
             messages.error(request, f'Erro ao criar conta: {e}')
 
     return render(request, 'register.html')
