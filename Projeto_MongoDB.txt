@@ -359,9 +359,6 @@ db.createCollection("p_substituicoes", {
 	compensacao: {
           bsonType: 'number'
       	},
-        entrar: {
-          type: "boolean"
-        }
       }
     }
   }
