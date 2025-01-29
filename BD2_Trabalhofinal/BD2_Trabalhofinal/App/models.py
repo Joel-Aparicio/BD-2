@@ -289,7 +289,7 @@ class P_Falta(models.Model):
     jogador = models.ForeignKey(P_Jogador, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
     clube = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
     cartao = models.BooleanField(default=False)
-    cor_cartao = models.CharField(max_length=10, blank=True), # Vermelho ou Amarelo
+    cartao_cor = models.CharField(max_length=10) # Vermelho ou Amarelo
     minuto = models.IntegerField(blank=True)
     compensacao = models.IntegerField(blank=True)
 
@@ -310,7 +310,6 @@ class P_Substituicao(models.Model):
     jogador_entra = models.ForeignKey(P_Jogador, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
     jogador_sai = models.ForeignKey(P_Jogador, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
     clube = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
-    entrar = models.BooleanField(default=False) # Entra ou sai do jogo
     minuto = models.IntegerField(blank=True)
     compensacao = models.IntegerField(blank=True)
 

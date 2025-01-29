@@ -20,7 +20,7 @@ from .models import Utilizador
 from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao, P_Jogo, P_Golo, P_Falta, P_Penalti, P_Substituicao, P_ClubeFavorito
 from .forms import P_PosicaoForm, P_AssociacaoForm, P_FormatoCompeticaoForm, P_EstadioForm, P_JogadorForm, P_ClubeForm, P_EquipaForm, P_CompeticaoForm, P_JogoForm
 from .forms import P_PerfilForm, P_SenhaForm
-from .forms import P_GoloForm
+from .forms import P_GoloForm, P_PenaltiForm, P_SubstituicaoForm, P_FaltaForm
 from bson import ObjectId
 
 from django.db.models import Q
@@ -557,56 +557,228 @@ def todos_jogos(request):
 def detalhes_jogo(request, id):
     jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))
     return render(request, 'jogos/detalhes_jogo.html', {'jogo': jogo})
-
- # --- OUTROS ---
-def get_equipas_por_clube(request, clube_id):
-    try:
-        clube = P_Clube.objects.get(_id=ObjectId(clube_id))
-        # Filtrar apenas equipas ativas do clube
-        equipas = P_Equipa.objects.filter(clube=clube, ativa=True)
-        
-        data = [{
-            'id': str(equipa._id),
-            'nome': equipa.nome
-        } for equipa in equipas]
-        
-        return JsonResponse(data, safe=False)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=400)
         
 # --- ESTATISTICAS ---
 def listar_estatisticas(request, id):
     try:
         jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))
+
         estatisticas = {
-            'golos': P_Golo.objects.filter(jogo=jogo),
+            'golos': P_Golo.objects.filter(jogo=jogo).order_by('minuto', 'compensacao' ), # Ordenar pelo minuto e compensacao
             'penaltis': P_Penalti.objects.filter(jogo=jogo),
             'faltas': P_Falta.objects.filter(jogo=jogo),
-            'substituicoes': P_Substituicao.objects.filter(jogo=jogo),
+            'substituicoes': P_Substituicao.objects.filter(jogo=jogo).order_by('minuto', 'compensacao' ), # Ordenar pelo minuto e compensacao,
         }
+
         return render(request, 'estatisticas/listar_estatisticas.html', {'jogo': jogo, 'estatisticas': estatisticas})
-    except Http404:
-        return JsonResponse({'error': 'Jogo não encontrado'}, status=404)
     except Exception as e:
-        # Adicione logging aqui, se necessário
-        return JsonResponse({'error': 'Ocorreu um erro inesperado'}, status=500)
+        return JsonResponse({'error': str(e)}, status=400)
 
 #Golos
 def adicionar_golo(request, id):
-    jogo = get_object_or_404(P_Jogo, _id=id)
+    try:
+        jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))  # Converte o id para ObjectId
 
-    if request.method == 'POST':
-        form = P_GoloForm(request.POST)
-        if form.is_valid():
-            golo = form.save(commit=False)
-            golo.jogo = jogo  # Associar o gol ao jogo
-            golo.save()
-            return redirect('listar_estatisticas', id=str(jogo._id))
+        if request.method == 'POST':
+            form = P_GoloForm(request.POST)
+            if form.is_valid():
+                golo = form.save(commit=False)
+                golo.jogo = jogo  # Associa o gol ao jogo
+                golo.save()
+                return redirect('listar_estatisticas', id=str(jogo._id))
+            else:
+                return JsonResponse({'error': form.errors}, status=400)
+
+        form = P_GoloForm()
+        return render(request, 'estatisticas/adicionar_golo.html', {'form': form, 'jogo': jogo})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+def editar_golo(request, id):
+    try:
+        golo = get_object_or_404(P_Golo, _id=ObjectId(id))
+        jogo = golo.jogo
+
+        if request.method == 'POST':
+            form = P_GoloForm(request.POST, instance=golo)
+            if form.is_valid():
+                form.save()
+                return redirect('listar_estatisticas', id=str(jogo._id))
+            else:
+                return JsonResponse({'error': form.errors}, status=400)
+
+        form = P_GoloForm(instance=golo)
+        return render(request, 'estatisticas/editar_golo.html', {'form': form, 'golo': golo, 'jogo': jogo})
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+
+def apagar_golo(request, id):
+    try:
+        # Verificar se o método é POST
+        if request.method == 'POST':
+            # Buscar o gol usando o ID
+            golo = get_object_or_404(P_Golo, _id=ObjectId(id))
+            # Apagar o registro do gol
+            golo.delete()
+            # Redirecionar para a listagem de estatísticas ou página anterior
+            return redirect('listar_estatisticas', id=golo.jogo.get_id())
         else:
-            return JsonResponse({'error': form.errors}, status=400)
+            return JsonResponse({'error': 'Método não permitido'}, status=405)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+        
+#Penáltis
+def adicionar_penalti(request, id):
+    try:
+        jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))  # Converte o id para ObjectId
 
-    form = P_GoloForm()
-    return render(request, 'estatisticas/adicionar_golo.html', {'jogo': jogo, 'form': form})
+        if request.method == 'POST':
+            form = P_PenaltiForm(request.POST)
+            if form.is_valid():
+                penalti = form.save(commit=False)
+                penalti.jogo = jogo  # Associa o penalti ao jogo
+                penalti.save()
+                return redirect('listar_estatisticas', id=str(jogo._id))
+            else:
+                return JsonResponse({'error': form.errors}, status=400)
+
+        form = P_PenaltiForm()
+        return render(request, 'estatisticas/adicionar_penalti.html', {'form': form, 'jogo': jogo})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+def editar_penalti(request, id):
+    try:
+        penalti = get_object_or_404(P_Penalti, _id=ObjectId(id))
+        jogo = penalti.jogo
+
+        if request.method == 'POST':
+            form = P_PenaltiForm(request.POST, instance=penalti)
+            if form.is_valid():
+                form.save()
+                return redirect('listar_estatisticas', id=str(jogo._id))
+            else:
+                return JsonResponse({'error': form.errors}, status=400)
+
+        form = P_PenaltiForm(instance=penalti)
+        return render(request, 'estatisticas/editar_penalti.html', {'form': form, 'penalti': penalti, 'jogo': jogo})
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+        
+def apagar_penalti(request, id):
+    try:
+        if request.method == 'POST':
+            penalti = get_object_or_404(P_Penalti, _id=ObjectId(id))
+            penalti.delete()
+            return redirect('listar_estatisticas', id=penalti.jogo.get_id())
+        else:
+            return JsonResponse({'error': 'Método não permitido'}, status=405)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+        
+#Faltas
+def adicionar_falta(request, id):
+    try:
+        jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))  # Converte o id para ObjectId
+
+        if request.method == 'POST':
+            form = P_FaltaForm(request.POST)
+            if form.is_valid():
+                falta = form.save(commit=False)
+                falta.jogo = jogo  # Associa o falta ao jogo
+                falta.save()
+                return redirect('listar_estatisticas', id=str(jogo._id))
+            else:
+                return JsonResponse({'error': form.errors}, status=400)
+
+        form = P_FaltaForm()
+        return render(request, 'estatisticas/adicionar_falta.html', {'form': form, 'jogo': jogo})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+def editar_falta(request, id):
+    try:
+        falta = get_object_or_404(P_Falta, _id=ObjectId(id))
+        jogo = falta.jogo
+
+        if request.method == 'POST':
+            form = P_FaltaForm(request.POST, instance=falta)
+            if form.is_valid():
+                form.save()
+                return redirect('listar_estatisticas', id=str(jogo._id))
+            else:
+                return JsonResponse({'error': form.errors}, status=400)
+
+        form = P_FaltaForm(instance=falta)
+        return render(request, 'estatisticas/editar_falta.html', {'form': form, 'falta': falta, 'jogo': jogo})
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+        
+def apagar_falta(request, id):
+    try:
+        if request.method == 'POST':
+            falta = get_object_or_404(P_Falta, _id=ObjectId(id))
+            falta.delete()
+            return redirect('listar_estatisticas', id=falta.jogo.get_id())
+        else:
+            return JsonResponse({'error': 'Método não permitido'}, status=405)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+        
+#Substituições
+def adicionar_substituicao(request, id):
+    try:
+        jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))  # Converte o id para ObjectId
+
+        if request.method == 'POST':
+            form = P_SubstituicaoForm(request.POST)
+            if form.is_valid():
+                substituicao = form.save(commit=False)
+                substituicao.jogo = jogo  # Associa a substituicao ao jogo
+                substituicao.save()
+                return redirect('listar_estatisticas', id=str(jogo._id))
+            else:
+                return JsonResponse({'error': form.errors}, status=400)
+
+        form = P_SubstituicaoForm()
+        return render(request, 'estatisticas/adicionar_substituicao.html', {'form': form, 'jogo': jogo})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+def editar_substituicao(request, id):
+    try:
+        substituicao = get_object_or_404(P_Golo, _id=ObjectId(id))
+        jogo = substituicao.jogo
+
+        if request.method == 'POST':
+            form = P_SubstituicaoForm(request.POST, instance=substituicao)
+            if form.is_valid():
+                form.save()
+                return redirect('listar_estatisticas', id=str(jogo._id))
+            else:
+                return JsonResponse({'error': form.errors}, status=400)
+
+        form = P_SubstituicaoForm(instance=substituicao)
+        return render(request, 'estatisticas/editar_substituicao.html', {'form': form, 'substituicao': substituicao, 'jogo': jogo})
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+        
+def apagar_substituicao(request, id):
+    try:
+        if request.method == 'POST':
+            substituicao = get_object_or_404(P_Substituicao, _id=ObjectId(id))
+            substituicao.delete()
+            return redirect('listar_estatisticas', id=substituicao.jogo.get_id())
+        else:
+            return JsonResponse({'error': 'Método não permitido'}, status=405)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
     
 # --- Clubes Favoritos ---
 @login_required
@@ -636,3 +808,20 @@ def remover_favorito(request, clube_id):
         favorito.delete()
 
     return redirect('perfil')
+
+
+# --- OUTROS ---
+def get_equipas_por_clube(request, clube_id):
+    try:
+        clube = P_Clube.objects.get(_id=ObjectId(clube_id))
+        # Filtrar apenas equipas ativas do clube
+        equipas = P_Equipa.objects.filter(clube=clube, ativa=True)
+        
+        data = [{
+            'id': str(equipa._id),
+            'nome': equipa.nome
+        } for equipa in equipas]
+        
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)

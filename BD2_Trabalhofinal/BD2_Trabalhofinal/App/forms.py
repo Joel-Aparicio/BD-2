@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from bson import ObjectId  # Adicione esta importação!
 from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao, P_Jogo
-from .models import P_Golo
+from .models import P_Golo, P_Penalti, P_Falta, P_Substituicao
 from .models import Utilizador
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -697,6 +697,274 @@ class P_JogoForm(forms.ModelForm):
 
 # ESTATISTICAS
 class P_GoloForm(forms.ModelForm):
+    clube = forms.ModelChoiceField(
+        queryset=P_Clube.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o clube"
+    )
+    jogador = forms.ModelChoiceField(
+        queryset=P_Jogador.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o jogador"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['minuto'].initial = 0        
+        self.fields['compensacao'].initial = 0        
+        ## IDs
+        self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['jogador'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['jogador'].to_python = self.convert_to_jogador    
+
+    def convert_to_clube(self, value):
+        if not value:
+            return None
+        try:
+            if isinstance(value, str):
+                object_id = ObjectId(value)
+                clube = P_Clube.objects.get(_id=object_id)
+                return clube
+            return value
+        except Exception as e:
+            raise ValidationError('Clube inválido')
+    
+    def convert_to_jogador(self, value):
+        if not value:
+            return None
+        try:
+            if isinstance(value, str):
+                object_id = ObjectId(value)
+                jogador = P_Jogador.objects.get(_id=object_id)
+                return jogador
+            return value
+        except Exception as e:
+            raise ValidationError('Jogador inválido')
+
     class Meta:
         model = P_Golo
-        fields = ['jogador', 'clube', 'penalti', 'minuto', 'compensacao']
+        fields = ['clube', 'jogador', 'penalti', 'minuto', 'compensacao']
+        widgets = {
+            'minuto': forms.NumberInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Duração', 
+                'min': 0,
+                'required': 'required'
+            }),
+            'compensacao': forms.NumberInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Compensação', 
+                'min': 0,
+                'required': 'required'
+            }),
+            'penalti': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        labels = {
+            'minuto': 'Minuto do Golo',
+            'compensacao': 'Compensação (Se existir)',
+            'penalti': 'Penálti?'
+        }
+        
+class P_PenaltiForm(forms.ModelForm):
+    clube = forms.ModelChoiceField(
+        queryset=P_Clube.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o clube"
+    )
+    jogador = forms.ModelChoiceField(
+        queryset=P_Jogador.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o jogador"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)     
+        ## IDs
+        self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['jogador'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['jogador'].to_python = self.convert_to_jogador    
+
+    def convert_to_clube(self, value):
+        if not value:
+            return None
+        try:
+            if isinstance(value, str):
+                object_id = ObjectId(value)
+                clube = P_Clube.objects.get(_id=object_id)
+                return clube
+            return value
+        except Exception as e:
+            raise ValidationError('Clube inválido')
+    
+    def convert_to_jogador(self, value):
+        if not value:
+            return None
+        try:
+            if isinstance(value, str):
+                object_id = ObjectId(value)
+                jogador = P_Jogador.objects.get(_id=object_id)
+                return jogador
+            return value
+        except Exception as e:
+            raise ValidationError('Jogador inválido')
+
+    class Meta:
+        model = P_Penalti
+        fields = ['clube', 'jogador', 'golo']
+        widgets = {
+            'golo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        labels = {
+            'golo': 'Golo?'
+        }
+
+class P_FaltaForm(forms.ModelForm):
+    clube = forms.ModelChoiceField(
+        queryset=P_Clube.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o clube"
+    )
+    jogador = forms.ModelChoiceField(
+        queryset=P_Jogador.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o jogador"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['minuto'].initial = 0        
+        self.fields['compensacao'].initial = 0          
+        ## IDs
+        self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['jogador'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['jogador'].to_python = self.convert_to_jogador   
+
+    def convert_to_clube(self, value):
+        if not value:
+            return None
+        try:
+            if isinstance(value, str):
+                object_id = ObjectId(value)
+                clube = P_Clube.objects.get(_id=object_id)
+                return clube
+            return value
+        except Exception as e:
+            raise ValidationError('Clube inválido')
+    
+    def convert_to_jogador(self, value):
+        if not value:
+            return None
+        try:
+            if isinstance(value, str):
+                object_id = ObjectId(value)
+                jogador = P_Jogador.objects.get(_id=object_id)
+                return jogador
+            return value
+        except Exception as e:
+            raise ValidationError('Jogador inválido')
+
+    class Meta:
+        model = P_Falta
+        fields = ['clube', 'jogador', 'jogador', 'minuto', 'compensacao', 'cartao', 'cartao_cor']
+        widgets = {
+            'minuto': forms.NumberInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Duração', 
+                'min': 0,
+                'required': 'required'
+            }),
+            'compensacao': forms.NumberInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Compensação', 
+                'min': 0,
+                'required': 'required'
+            }),
+            'cartao': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            #'cor_cartao': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cor do Cartão'}),
+            'cartao_cor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cor do Cartão'}),
+        }
+        labels = {
+            'minuto': 'Minuto da Falta',
+            'compensacao': 'Compensação (Se existir)',
+            'cartao': 'Recebeu Cartão?',
+            #'cor_cartao': 'Cor do Cartão'
+            'cartao_cor': 'Cor do Cartão'
+        }
+        
+class P_SubstituicaoForm(forms.ModelForm):
+    clube = forms.ModelChoiceField(
+        queryset=P_Clube.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o clube"
+    )
+    jogador_sai = forms.ModelChoiceField(
+        queryset=P_Jogador.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o jogador que saiu"
+    )
+    jogador_entra = forms.ModelChoiceField(
+        queryset=P_Jogador.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Escolha o jogador que entrou"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['minuto'].initial = 0        
+        self.fields['compensacao'].initial = 0          
+        ## IDs
+        self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['jogador_sai'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['jogador_sai'].to_python = self.convert_to_jogador 
+        self.fields['jogador_entra'].label_from_instance = lambda obj: f"{obj.nome}"
+        self.fields['jogador_entra'].to_python = self.convert_to_jogador    
+
+    def convert_to_clube(self, value):
+        if not value:
+            return None
+        try:
+            if isinstance(value, str):
+                object_id = ObjectId(value)
+                clube = P_Clube.objects.get(_id=object_id)
+                return clube
+            return value
+        except Exception as e:
+            raise ValidationError('Clube inválido')
+    
+    def convert_to_jogador(self, value):
+        if not value:
+            return None
+        try:
+            if isinstance(value, str):
+                object_id = ObjectId(value)
+                jogador = P_Jogador.objects.get(_id=object_id)
+                return jogador
+            return value
+        except Exception as e:
+            raise ValidationError('Jogador inválido')
+
+    class Meta:
+        model = P_Substituicao
+        fields = ['clube', 'jogador_sai', 'jogador_entra', 'minuto', 'compensacao']
+        widgets = {
+            'minuto': forms.NumberInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Duração', 
+                'min': 0,
+                'required': 'required'
+            }),
+            'compensacao': forms.NumberInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Compensação', 
+                'min': 0,
+                'required': 'required'
+            }),
+        }
+        labels = {
+            'minuto': 'Minuto da Substituição',
+            'compensacao': 'Compensação (Se existir)',
+        }
