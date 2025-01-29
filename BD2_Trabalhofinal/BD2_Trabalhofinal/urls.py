@@ -101,7 +101,22 @@ urlpatterns = [
     
     # ESTATISTICAS JOGOS
     path('admin/jogos/estatisticas/<str:id>/', views.listar_estatisticas, name='listar_estatisticas'),
+    ## Golos
     path('admin/jogos/estatisticas/golo/adicionar/<str:id>/', views.adicionar_golo, name='adicionar_golo'),
+    path('admin/jogos/estatisticas/golo/editar/<str:id>/', views.editar_golo, name='editar_golo'),
+    path('admin/jogos/estatisticas/golo/apagar/<str:id>/', views.apagar_golo, name='apagar_golo'),
+    ## Penaltis
+    path('admin/jogos/estatisticas/penalti/adicionar/<str:id>/', views.adicionar_penalti, name='adicionar_penalti'),
+    path('admin/jogos/estatisticas/penalti/editar/<str:id>/', views.editar_penalti, name='editar_penalti'),
+    path('admin/jogos/estatisticas/penalti/apagar/<str:id>/', views.apagar_penalti, name='apagar_penalti'),
+    ## Faltas
+    path('admin/jogos/estatisticas/falta/adicionar/<str:id>/', views.adicionar_falta, name='adicionar_falta'),
+    path('admin/jogos/estatisticas/falta/editar/<str:id>/', views.editar_falta, name='editar_falta'),
+    path('admin/jogos/estatisticas/falta/apagar/<str:id>/', views.apagar_falta, name='apagar_falta'),
+    ## Subsituições
+    path('admin/jogos/estatisticas/substituicao/adicionar/<str:id>/', views.adicionar_substituicao, name='adicionar_substituicao'),
+    path('admin/jogos/estatisticas/substituicao/editar/<str:id>/', views.editar_substituicao, name='editar_substituicao'),
+    path('admin/jogos/estatisticas/substituicao/apagar/<str:id>/', views.apagar_substituicao, name='apagar_substituicao'),
     
     # CLUBES FAVORITOS
     path('favorito_clube/<str:clube_id>/', views.favorito_clube, name='favorito_clube'),
