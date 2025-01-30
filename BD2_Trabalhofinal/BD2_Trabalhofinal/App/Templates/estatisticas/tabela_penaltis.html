@@ -13,7 +13,7 @@
             <tbody>
                 {% for estatistica in lista %}
                     <tr>
-                        <td>{{ forloop.counter }}</td>
+                        <td>{{ estatistica.numero }}</td>
                         <td>{{ estatistica.clube.nome }}</td>
                         <td>{{ estatistica.jogador.nome }}</td>
                         <td>{{ estatistica.golo|yesno:"Sim,Não" }}</td>

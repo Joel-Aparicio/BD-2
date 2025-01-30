@@ -26,16 +26,16 @@
                 <div class="flex-grow-1">
                     <h1 class="mb-1">{{ jogador.num_camisola }}. {{ jogador.nome }}</h1>
                     <p class="mb-0"><b>Nacionalidade: </b> {{ jogador.nacionalidade }}</p>    
-					<p class="mb-0"><b>Clube: </b>
-						{% if jogador.clube %}
-							{{ jogador.clube.nome }}
-						{% else %}
-							Nenhum
-						{% endif %}
-					</p>
-					{% if jogador.valor_de_mercado %}
+                    <p class="mb-0"><b>Clube: </b>
+                        {% if jogador.clube %}
+                            {{ jogador.clube.nome }}
+                        {% else %}
+                            Nenhum
+                        {% endif %}
+                    </p>
+                    {% if jogador.valor_de_mercado %}
                         <p><b>Valor de Mercado:</b> {{ jogador.valor_de_mercado }} M€</p>
-                    {% endif %}	
+                    {% endif %}    
                 </div>
 
                 <!-- Caixa com dados pessoais -->
@@ -59,10 +59,10 @@
                 <p class="card-text">
                     <b>Posição:</b> {{ jogador.posicao }}<br>
                     <b>Número de Camisola:</b> {{ jogador.num_camisola }}<br>
-					<b>Número de Jogos: </b> {{ jogador.num_jogos }} <br>
-					<b>Número de Golos: </b> {{ jogador.num_golos }} <br>
-					<b>Equipa: </b> {{ jogador.equipa.nome }} <br>
-					<b>Situação: </b> {{ jogador.situacao }} <br>
+                    <b>Número de Jogos: </b> {{ num_jogos }} <br>
+                    <b>Número de Golos: </b> {{ num_golos }} <br>
+                    <b>Equipa: </b> {{ jogador.equipa.nome }} <br>
+                    <b>Situação: </b> {{ jogador.situacao }} <br>
                 </p>
             </div>
         </div>
@@ -70,17 +70,51 @@
         <!-- Seção de Jogos -->
         <div class="card mb-4">
             <div class="card-header bg-success text-white">
-                <h3>Jogos</h3>
+                <h3>Jogos Jogados</h3>
             </div>
             <div class="card-body">
-                {% if clubes %}
-                    <ul class="list-group">
+                {% if jogos %}
+                    <div class="list-group">
                         {% for jogo in jogos %}
-                        <li class="list-group-item">
-                            <strong>{{ jogo.nome }}</strong> - {{ jogo.pais }}
-                        </li>
+                        <div class="list-group-item list-group-item-action d-flex align-items-center py-3">
+                            <!-- Imagem do time da casa -->
+                            <div class="d-flex align-items-center me-4">
+                                {% if jogo.clube_casa.imagem %}
+                                    <img src="{{ jogo.clube_casa.imagem }}" alt="{{ jogo.clube_casa.nome }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                {% else %}
+                                    <div class="rounded-circle me-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+                                        ⚽
+                                    </div>
+                                {% endif %}
+                                <h5 class="mb-0">{{ jogo.clube_casa.nome }}</h5>
+                            </div>
+
+                            <!-- Dia, Hora e Botão -->
+                            <div class="flex-grow-1 text-center">
+                                <p class="mb-0 text-muted">
+                                    <i class="bi bi-calendar3"></i> {{ jogo.dia|date:"d/m/Y" }}
+                                </p>
+
+                                <!-- Botão de Ver Detalhes-->
+                                <a href="{% url 'detalhes_jogo' jogo.get_id %}" class="btn btn-primary btn-sm mt-2">
+                                    <i class="bi bi-info-circle"></i> Ver Detalhes
+                                </a>
+                            </div>
+
+                            <!-- Imagem do time fora -->
+                            <div class="d-flex align-items-center ms-4">
+                                <h5 class="mb-0">{{ jogo.clube_fora.nome }}</h5>
+                                {% if jogo.clube_fora.imagem %}
+                                    <img src="{{ jogo.clube_fora.imagem }}" alt="{{ jogo.clube_fora.nome }}" class="rounded-circle ms-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                {% else %}
+                                    <div class="rounded-circle ms-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+                                        ⚽
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
                         {% endfor %}
-                    </ul>
+                    </div>
                 {% else %}
                     <p class="text-center">Nenhum jogo associado.</p>
                 {% endif %}

@@ -5,6 +5,7 @@ from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_J
 from .models import P_Golo, P_Penalti, P_Falta, P_Substituicao
 from .models import Utilizador
 from django.contrib.auth.forms import PasswordChangeForm
+from .form_utils import convert_to_clube, convert_to_equipa, convert_to_posicao, convert_to_jogador, convert_to_associacao, convert_to_formato, convert_to_competicao, convert_to_estadio
 
 # --- Utilizador ---
 class P_PerfilForm(forms.ModelForm):
@@ -163,8 +164,6 @@ class P_JogadorForm(forms.ModelForm):
        self.fields['peso'].initial = 60.0
        self.fields['num_camisola'].initial = 0
        self.fields['valor_de_mercado'].initial = 0.0
-       self.fields['num_jogos'].initial = 0
-       self.fields['num_golos'].initial = 0
        self.fields['situacao'].initial = 'Ativo'
        self.fields['altura'].initial = 0
        self.fields['idade'].initial = 0
@@ -175,9 +174,9 @@ class P_JogadorForm(forms.ModelForm):
        self.fields['posicao'].label_from_instance = lambda obj: f"{obj.nome} ({obj.descricao})" if obj.descricao else f"{obj.nome}"
        
        # Configurar to_python para clube, posição e equipa
-       self.fields['clube'].to_python = self.convert_to_clube
-       self.fields['equipa'].to_python = self.convert_to_equipa
-       self.fields['posicao'].to_python = self.convert_to_posicao
+       self.fields['clube'].to_python = convert_to_clube
+       self.fields['equipa'].to_python = convert_to_equipa
+       self.fields['posicao'].to_python = convert_to_posicao
 
        # Se estiver editando um jogador existente
        if 'instance' in kwargs and kwargs['instance']:
@@ -185,36 +184,6 @@ class P_JogadorForm(forms.ModelForm):
            if jogador.clube:
                # Filtra as equipas do clube selecionado
                self.fields['equipa'].queryset = P_Equipa.objects.filter(clube=jogador.clube)
-
-   def convert_to_clube(self, value):
-       if not value:
-           return None
-       try:
-           if isinstance(value, str):
-               return P_Clube.objects.get(_id=ObjectId(value))
-           return value
-       except Exception as e:
-           raise ValidationError('Clube inválido')
-
-   def convert_to_equipa(self, value):
-       if not value:
-           return None
-       try:
-           if isinstance(value, str):
-               return P_Equipa.objects.get(_id=ObjectId(value))
-           return value
-       except Exception as e:
-           raise ValidationError('Equipa inválida')
-
-   def convert_to_posicao(self, value):
-       if not value:
-           return None
-       try:
-           if isinstance(value, str):
-               return P_Posicao.objects.get(_id=ObjectId(value))
-           return value
-       except Exception as e:
-           raise ValidationError('Posição inválida')
 
    def clean(self):
        cleaned_data = super().clean()
@@ -226,8 +195,7 @@ class P_JogadorForm(forms.ModelForm):
    class Meta:
        model = P_Jogador
        fields = ['nome', 'idade', 'imagem', 'altura', 'peso', 'nacionalidade', 
-                'num_camisola', 'valor_de_mercado', 'num_jogos', 'num_golos', 
-                'situacao', 'posicao', 'clube', 'equipa']
+                'num_camisola', 'valor_de_mercado', 'situacao', 'posicao', 'clube', 'equipa']
        widgets = {
            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escreva o nome do Jogador'}),
            'idade': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Idade', 'min': 0}),
@@ -236,9 +204,7 @@ class P_JogadorForm(forms.ModelForm):
            'peso': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Peso do Jogador', 'min': 0}),
            'nacionalidade': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escreva a nacionalidade'}),
            'num_camisola': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número do Jogador', 'min': 1}),
-           'valor_de_mercado': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Valor de Mercado', 'min': 0}),
-           'num_jogos': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de Jogos', 'min': 0}),    
-           'num_golos': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Número de Golos', 'min': 0}),    
+           'valor_de_mercado': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Valor de Mercado', 'min': 0}), 
            'situacao': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Situação atual'}),
        }
        labels = {
@@ -250,8 +216,6 @@ class P_JogadorForm(forms.ModelForm):
            'nacionalidade': 'Nacionalidade',
            'num_camisola': 'Número Camisola',
            'valor_de_mercado': 'Valor de Mercado (em milhões)',
-           'num_jogos': 'Número de Jogos',
-           'num_golos': 'Número de Golos',
            'situacao': 'Situação',
            'posicao': 'Posição do Jogador',
            'clube': 'Clube (opcional)',
@@ -279,48 +243,12 @@ class P_ClubeForm(forms.ModelForm):
         self.fields['extinto'].initial = False
         self.fields['associacao'].label_from_instance = lambda obj: f"{obj.nome} ({obj.pais})"
         # Adicionar o conversor para a associação e estadio
-        self.fields['associacao'].to_python = self.convert_to_associacao
-        self.fields['estadio'].to_python = self.convert_to_estadio
-
-    def convert_to_associacao(self, value):
-        if not value:
-            return None
-        try:
-            print("=== CONVERT ASSOCIACAO DEBUG ===")
-            print("Received value:", value)
-            print("Type of value:", type(value))
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                print("Created ObjectId:", object_id)
-                associacao = P_Associacao.objects.get(_id=object_id)
-                print("Found associacao:", associacao)
-                return associacao
-            return value
-        except Exception as e:
-            print("Error in convert_to_associacao:", str(e))
-            raise ValidationError('Associação inválida')
-    
-    def convert_to_estadio(self, value):
-        if not value:
-            return None
-        try:
-            print("=== CONVERT ESTADIO DEBUG ===")
-            print("Received value:", value)
-            print("Type of value:", type(value))
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                print("Created ObjectId:", object_id)
-                estadio = P_Estadio.objects.get(_id=object_id)
-                print("Found estadio:", estadio)
-                return estadio
-            return value
-        except Exception as e:
-            print("Error in convert_to_estadio:", str(e))
-            raise ValidationError('estadio inválida')
+        self.fields['associacao'].to_python = convert_to_associacao
+        self.fields['estadio'].to_python = convert_to_estadio
 
     class Meta:
         model = P_Clube
-        fields = ['nome', 'imagem', 'ano_fundacao', 'ano_extinto', 'alcunhas', 'pais', 'cidade', 'extinto', 'associacao', 'estadio']
+        fields = ['nome', 'imagem', 'ano_fundacao', 'extinto', 'ano_extinto', 'alcunhas', 'pais', 'cidade', 'associacao', 'estadio']
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escreva o nome do Clube'}),
             'imagem': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Insira o url da imagem'}),
@@ -335,7 +263,7 @@ class P_ClubeForm(forms.ModelForm):
             'nome': 'Nome do Clube',
             'imagem': 'Imagem do Clube',
             'ano_fundacao': 'Ano Fundado',
-            'ano_extinto': 'Ano Extinto (Caso esteja)',
+            'ano_extinto': 'Ano Extinto',
             'alcunhas': 'Alcunhas',
             'pais': 'País',
             'cidade': 'Cidade',
@@ -361,27 +289,8 @@ class P_EquipaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['clube'].to_python = convert_to_clube
         self.fields['ativa'].initial = True #Coloca a equipa ativa como Default
-        
-
-    def convert_to_clube(self, value):
-        if not value:
-            return None
-        try:
-            print("=== CONVERT DEBUG ===")
-            print("Received value:", value)
-            print("Type of value:", type(value))
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                print("Created ObjectId:", object_id)
-                clube = P_Clube.objects.get(_id=object_id)
-                print("Found clube:", clube)
-                return clube
-            return value
-        except Exception as e:
-            print("Error in convert_to_clube:", str(e))
-            raise ValidationError('Clube inválido')
 
     class Meta:
         model = P_Equipa
@@ -423,33 +332,9 @@ class P_CompeticaoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['formato'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['formato'].to_python = self.convert_to_formato
+        self.fields['formato'].to_python = convert_to_formato
         self.fields['vencedor'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['vencedor'].to_python = self.convert_to_clube
-
-    def convert_to_formato(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                formato = P_FormatoCompeticao.objects.get(_id=object_id)
-                return formato
-            return value
-        except Exception as e:
-            raise ValidationError('Formato inválido')
-
-    def convert_to_clube(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                clube = P_Clube.objects.get(_id=object_id)
-                return clube
-            return value
-        except Exception as e:
-            raise ValidationError('Clube inválido')
+        self.fields['vencedor'].to_python = convert_to_clube
 
     def clean(self):
         cleaned_data = super().clean()
@@ -493,7 +378,7 @@ class P_JogoForm(forms.ModelForm):
     vencedor = forms.ModelChoiceField(
         queryset=P_Clube.objects.none(),
         widget=forms.Select(attrs={'class': 'form-control'}),
-        empty_label="Sem Vencedor",
+        empty_label="Sem Vencedor / Empate",
         required=False
     )
     
@@ -548,6 +433,17 @@ class P_JogoForm(forms.ModelForm):
         label="Hora do Jogo"
     )
     
+    estado = forms.ChoiceField(
+        choices=[
+            ('', 'Selecione o Estado'),
+            ('Em Breve', 'Em Breve'),
+            ('A Decorrer', 'A Decorrer'),
+            ('Terminado', 'Terminado')
+        ],
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        required=True
+    )
+
     
     def clean(self):
         cleaned_data = super().clean()
@@ -592,23 +488,23 @@ class P_JogoForm(forms.ModelForm):
         
         # CASA
         self.fields['clube_casa'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['clube_casa'].to_python = self.convert_to_clube
+        self.fields['clube_casa'].to_python = convert_to_clube
         self.fields['equipa_casa'].label_from_instance = lambda obj: f"{obj.nome} ({obj.clube.nome})"
-        self.fields['equipa_casa'].to_python = self.convert_to_equipa
+        self.fields['equipa_casa'].to_python = convert_to_equipa
         # FORA
         self.fields['clube_fora'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['clube_fora'].to_python = self.convert_to_clube
+        self.fields['clube_fora'].to_python = convert_to_clube
         self.fields['equipa_fora'].label_from_instance = lambda obj: f"{obj.nome} ({obj.clube.nome})"
-        self.fields['equipa_fora'].to_python = self.convert_to_equipa
+        self.fields['equipa_fora'].to_python = convert_to_equipa
         # COMPETICAO
         self.fields['competicao'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['competicao'].to_python = self.convert_to_competicao
+        self.fields['competicao'].to_python = convert_to_competicao
         # ESTADIO
         self.fields['estadio'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['estadio'].to_python = self.convert_to_estadio
+        self.fields['estadio'].to_python = convert_to_estadio
         # VENCEDOR
         self.fields['vencedor'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['vencedor'].to_python = self.convert_to_clube
+        self.fields['vencedor'].to_python = convert_to_clube
         
         # Preencher o campo 'vencedor' apenas com os clubes do jogo (casa e fora)
         if self.instance and self.instance.pk:  # Verifica se é edição
@@ -620,65 +516,11 @@ class P_JogoForm(forms.ModelForm):
                 self.fields['vencedor'].queryset = P_Clube.objects.none()
         else:  # No caso de adição, exibe todos os clubes
             self.fields['vencedor'].queryset = P_Clube.objects.all()
-        
-    # FUNÇÕES
-    def convert_to_clube(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                clube = P_Clube.objects.get(_id=object_id)
-                return clube
-            return value
-        except Exception as e:
-            raise ValidationError('Clube inválido')
-    
-    def convert_to_equipa(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                equipa = P_Equipa.objects.get(_id=object_id)
-                return equipa
-            return value
-        except Exception as e:
-            raise ValidationError('Equipa inválida')
-            
-    def convert_to_competicao(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                competicao = P_Competicao.objects.get(_id=object_id)
-                return competicao
-            return value
-        except Exception as e:
-            raise ValidationError('Competição inválida')
-            
-    def convert_to_estadio(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                estadio = P_Estadio.objects.get(_id=object_id)
-                return estadio
-            return value
-        except Exception as e:
-            raise ValidationError('Estádio inválida')
 
     class Meta:
         model = P_Jogo
         fields = ['dia', 'hora', 'competicao', 'estadio', 'clube_casa', 'equipa_casa', 'clube_fora', 'equipa_fora', 'estado', 'duracao', 'prolongamento', 'penaltis', 'vencedor']
         widgets = {
-            'estado': forms.TextInput(attrs={
-                'class': 'form-control', 
-                'placeholder': 'Estado do Jogo',
-                'required': 'required'
-            }),
             'duracao': forms.NumberInput(attrs={
                 'class': 'form-control', 
                 'placeholder': 'Duração', 
@@ -714,33 +556,9 @@ class P_GoloForm(forms.ModelForm):
         self.fields['compensacao'].initial = 0        
         ## IDs
         self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['clube'].to_python = convert_to_clube
         self.fields['jogador'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['jogador'].to_python = self.convert_to_jogador    
-
-    def convert_to_clube(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                clube = P_Clube.objects.get(_id=object_id)
-                return clube
-            return value
-        except Exception as e:
-            raise ValidationError('Clube inválido')
-    
-    def convert_to_jogador(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                jogador = P_Jogador.objects.get(_id=object_id)
-                return jogador
-            return value
-        except Exception as e:
-            raise ValidationError('Jogador inválido')
+        self.fields['jogador'].to_python = convert_to_jogador
 
     class Meta:
         model = P_Golo
@@ -779,44 +597,28 @@ class P_PenaltiForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)     
+        super().__init__(*args, **kwargs)    
+        self.fields['numero'].initial = 0         
         ## IDs
         self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['clube'].to_python = convert_to_clube
         self.fields['jogador'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['jogador'].to_python = self.convert_to_jogador    
-
-    def convert_to_clube(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                clube = P_Clube.objects.get(_id=object_id)
-                return clube
-            return value
-        except Exception as e:
-            raise ValidationError('Clube inválido')
-    
-    def convert_to_jogador(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                jogador = P_Jogador.objects.get(_id=object_id)
-                return jogador
-            return value
-        except Exception as e:
-            raise ValidationError('Jogador inválido')
+        self.fields['jogador'].to_python = convert_to_jogador    
 
     class Meta:
         model = P_Penalti
-        fields = ['clube', 'jogador', 'golo']
+        fields = ['numero', 'clube', 'jogador', 'golo']
         widgets = {
+            'numero': forms.NumberInput(attrs={
+                    'class': 'form-control', 
+                    'placeholder': 'Duração', 
+                    'min': 1,
+                    'required': 'required'
+                }),
             'golo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
         labels = {
+            'numero': 'Número do Penálti',
             'golo': 'Golo?'
         }
 
@@ -838,33 +640,9 @@ class P_FaltaForm(forms.ModelForm):
         self.fields['compensacao'].initial = 0          
         ## IDs
         self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['clube'].to_python = convert_to_clube
         self.fields['jogador'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['jogador'].to_python = self.convert_to_jogador   
-
-    def convert_to_clube(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                clube = P_Clube.objects.get(_id=object_id)
-                return clube
-            return value
-        except Exception as e:
-            raise ValidationError('Clube inválido')
-    
-    def convert_to_jogador(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                jogador = P_Jogador.objects.get(_id=object_id)
-                return jogador
-            return value
-        except Exception as e:
-            raise ValidationError('Jogador inválido')
+        self.fields['jogador'].to_python = convert_to_jogador   
 
     class Meta:
         model = P_Falta
@@ -917,35 +695,11 @@ class P_SubstituicaoForm(forms.ModelForm):
         self.fields['compensacao'].initial = 0          
         ## IDs
         self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['clube'].to_python = self.convert_to_clube
+        self.fields['clube'].to_python = convert_to_clube
         self.fields['jogador_sai'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['jogador_sai'].to_python = self.convert_to_jogador 
+        self.fields['jogador_sai'].to_python = convert_to_jogador 
         self.fields['jogador_entra'].label_from_instance = lambda obj: f"{obj.nome}"
-        self.fields['jogador_entra'].to_python = self.convert_to_jogador    
-
-    def convert_to_clube(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                clube = P_Clube.objects.get(_id=object_id)
-                return clube
-            return value
-        except Exception as e:
-            raise ValidationError('Clube inválido')
-    
-    def convert_to_jogador(self, value):
-        if not value:
-            return None
-        try:
-            if isinstance(value, str):
-                object_id = ObjectId(value)
-                jogador = P_Jogador.objects.get(_id=object_id)
-                return jogador
-            return value
-        except Exception as e:
-            raise ValidationError('Jogador inválido')
+        self.fields['jogador_entra'].to_python = convert_to_jogador    
 
     class Meta:
         model = P_Substituicao
