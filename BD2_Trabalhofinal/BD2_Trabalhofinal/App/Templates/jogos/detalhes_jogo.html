@@ -24,7 +24,6 @@
 
                 <!-- Resultado do jogo -->
                 <div class="text-center">
-					<!--TALVEZ TIRAR ISTO DO VENCEDOR-->
                     {% if jogo.vencedor %}
                     <!-- Bloco do Vencedor -->
                     <div class="bg-light py-3 px-4 rounded mb-3" style="box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);">
@@ -37,20 +36,11 @@
                         </a>
                     </div>
                     {% endif %}
-					
-					<!--MOSTRAR RESULTADO-->
                     <h2 class="display-4">
-						<span>{{ total_golos_casa }}</span> - 
-						<span>{{ total_golos_fora }}</span>
-					</h2>
-					
-					<!--MOSTRAR RESULTADO PENALTIS -->
-					{% if jogo.penaltis %}
-						<h5 class="display-8">
-							<span>{{ total_penaltis_casa }}</span> - 
-							<span>{{ total_penaltis_fora }}</span>
-						</h5>
-					{% endif %}
+                        <span id="resultado_casa">0</span> - <span id="resultado_fora">0</span>
+                    </h2>
+                    <br>
+                    <p>{{ jogo.estado }}</p>
                 </div>
 
                 <!-- Imagem do Clube Fora -->
@@ -77,202 +67,71 @@
                     <li class="nav-item">
                         <button class="nav-link" id="substituicoes-tab" data-bs-toggle="tab" data-bs-target="#substituicoes" type="button" role="tab" aria-controls="substituicoes" aria-selected="false">Substituições</button>
                     </li>
-					<li class="nav-item">
-                        <button class="nav-link" id="penaltis-tab" data-bs-toggle="tab" data-bs-target="#penaltis" type="button" role="tab" aria-controls="penaltis" aria-selected="false">Penáltis</button>
-                    </li>
                 </ul>
                 <div class="tab-content mt-3">
-					<!-- Golos -->
-					<div class="tab-pane fade show active" id="golos" role="tabpanel" aria-labelledby="golos-tab">
-						<div class="row">
-							<div class="col-md-6">
-								<h5 class="text-center">Clube Casa</h5>
-								<ul class="list-group">
-									{% for golo in golos_casa %}
-										<li class="list-group-item">
-											<b>
-												{{ golo.minuto }}'
-												{% if golo.compensacao %}
-													+ {{ golo.compensacao }}'
-												{% endif %}
-											</b>
-											- {{ golo.jogador.num_camisola }}. {{ golo.jogador.nome }} 
-											{% if golo.penalti %}
-												<b class="float-end">P</b>
-											{% endif %}
-										</li>
-									{% empty %}
-										<li class="list-group-item text-center text-muted">Sem golos</li>
-									{% endfor %}
-								</ul>
-							</div>
-							<div class="col-md-6">
-								<h5 class="text-center">Clube Fora</h5>
-								<ul class="list-group">
-									{% for golo in golos_fora %}
-										<li class="list-group-item">
-											<b>
-												{{ golo.minuto }}'
-												{% if golo.compensacao %}
-													+ {{ golo.compensacao }}'
-												{% endif %}
-											</b>
-											- {{ golo.jogador.num_camisola }}. {{ golo.jogador.nome }} 
-											{% if golo.penalti %}
-												<b class="float-end">P</b>
-											{% endif %}
-										</li>
-									{% empty %}
-										<li class="list-group-item text-center text-muted">Sem golos</li>
-									{% endfor %}
-								</ul>
-							</div>
-						</div>
-					</div>
-
+                    <!-- Golos -->
+                    <div class="tab-pane fade show active" id="golos" role="tabpanel" aria-labelledby="golos-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-center">Equipa Casa</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item">#10 João (15')</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center">Equipa Fora</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item">#9 Pedro (23')</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Faltas -->
                     <div class="tab-pane fade" id="faltas" role="tabpanel" aria-labelledby="faltas-tab">
                         <div class="row">
-							<div class="col-md-6">
-								<h5 class="text-center">Clube Casa</h5>
-								<ul class="list-group">
-									{% for falta in faltas_casa %}
-										<li class="list-group-item">
-											<b>
-												{{ falta.minuto }}'
-												{% if falta.compensacao %}
-													+ {{ falta.compensacao }}'
-												{% endif %}
-											</b>
-											- {{ falta.jogador.num_camisola }}. {{ falta.jogador.nome }} 
-											{% if falta.cartao %}
-												<b class="float-end"> {{falta.cartao_cor}}</b>
-											{% endif %}
-										</li>
-									{% empty %}
-										<li class="list-group-item text-center text-muted">Sem faltas</li>
-									{% endfor %}
-								</ul>
-							</div>
-							<div class="col-md-6">
-								<h5 class="text-center">Clube Fora</h5>
-								<ul class="list-group">
-									{% for falta in faltas_fora %}
-										<li class="list-group-item">
-											<b>
-												{{ falta.minuto }}'
-												{% if falta.compensacao %}
-													+ {{ falta.compensacao }}'
-												{% endif %}
-											</b>
-											- {{ falta.jogador.num_camisola }}. {{ falta.jogador.nome }} 
-											{% if falta.cartao %}
-												<b class="float-end"> {{falta.cartao_cor}}</b>
-											{% endif %}
-										</li>
-									{% empty %}
-										<li class="list-group-item text-center text-muted">Sem faltas</li>
-									{% endfor %}
-								</ul>
-							</div>
-						</div>
+                            <div class="col-md-6">
+                                <h5 class="text-center">Equipa Casa</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>#7 Miguel (30')</span>
+                                        <span><img src="https://via.placeholder.com/20/ffff00" alt="Cartão Amarelo"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center">Equipa Fora</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>#8 Lucas (42')</span>
+                                        <span><img src="https://via.placeholder.com/20/ff0000" alt="Cartão Vermelho"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-					
-					<!-- Substituições -->
-					<div class="tab-pane fade" id="substituicoes" role="tabpanel" aria-labelledby="substituicoes-tab">
-						<div class="row">
-							<div class="col-md-6">
-								<h5 class="text-center">Clube Casa</h5>
-								<ul class="list-group">
-									{% for substituicao in substituicoes_casa %}
-										<li class="list-group-item">
-											<b>{{ substituicao.minuto }}'</b>
-											{% if substituicao.compensacao %}
-												+ {{ substituicao.compensacao }}'
-											{% endif %}
-											- <span>
-												<i class="bi bi-arrow-up-circle text-success"></i>
-												{{ substituicao.jogador_sai.num_camisola }}. {{ substituicao.jogador_sai.nome }}
-											</span>
-											<span class="float-end">
-												<i class="bi bi-arrow-down-circle text-danger"></i>
-												{{ substituicao.jogador_entra.num_camisola }}. {{ substituicao.jogador_entra.nome }}
-											</span>
-										</li>
-									{% empty %}
-										<li class="list-group-item text-center text-muted">Sem substituições</li>
-									{% endfor %}
-								</ul>
-							</div>
-							<div class="col-md-6">
-								<h5 class="text-center">Clube Fora</h5>
-								<ul class="list-group">
-									{% for substituicao in substituicoes_fora %}
-										<li class="list-group-item">
-											<b>{{ substituicao.minuto }}'</b>
-											{% if substituicao.compensacao %}
-												+ {{ substituicao.compensacao }}'
-											{% endif %}
-											- <span>
-												<i class="bi bi-arrow-up-circle text-success"></i>
-												{{ substituicao.jogador_sai.num_camisola }}. {{ substituicao.jogador_sai.nome }}
-											</span>
-											<span class="float-end">
-												<i class="bi bi-arrow-down-circle text-danger"></i>
-												{{ substituicao.jogador_entra.num_camisola }}. {{ substituicao.jogador_entra.nome }}
-											</span>
-										</li>
-									{% empty %}
-										<li class="list-group-item text-center text-muted">Sem substituições</li>
-									{% endfor %}
-								</ul>
-							</div>
-						</div>
-					</div>
-					
-					<!--Penáltis-->
-					<div class="tab-pane fade" id="penaltis" role="tabpanel" aria-labelledby="penaltis-tab">
-						<div class="row">
-							<div class="col-md-6">
-								<h5 class="text-center">Clube Casa</h5>
-								<ul class="list-group">
-									{% for penalti in penaltis_casa %}
-										<li class="list-group-item">
-											<b>{{ penalti.jogador.num_camisola }}.</b> {{ penalti.jogador.nome }}
-											<span class="float-end">
-												{% if penalti.golo %}
-													<i class="bi bi-cookie"></i> Golo
-												{% else %}
-													❌ Falhado
-												{% endif %}
-											</span>
-										</li>
-									{% empty %}
-										<li class="list-group-item text-center text-muted">Sem pênaltis</li>
-									{% endfor %}
-								</ul>
-							</div>
-							<div class="col-md-6">
-								<h5 class="text-center">Clube Fora</h5>
-								<ul class="list-group">
-									{% for penalti in penaltis_fora %}
-										<li class="list-group-item">
-											<b>{{ penalti.jogador.num_camisola }}.</b> {{ penalti.jogador.nome }}
-											<span class="float-end">
-												{% if penalti.golo %}
-													<i class="bi bi-cookie"></i> Golo
-												{% else %}
-													❌ Falhado
-												{% endif %}
-											</span>
-										</li>
-									{% empty %}
-										<li class="list-group-item text-center text-muted">Sem pênaltis</li>
-									{% endfor %}
-								</ul>
-							</div>
-						</div>
-					</div>
+                    <!-- Substituições -->
+                    <div class="tab-pane fade" id="substituicoes" role="tabpanel" aria-labelledby="substituicoes-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-center">Equipa Casa</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>#11 André (60')</span>
+                                        <span><i class="bi bi-arrow-up-circle text-success"></i></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-center">Equipa Fora</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>#14 Felipe (75')</span>
+                                        <span><i class="bi bi-arrow-down-circle text-danger"></i></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

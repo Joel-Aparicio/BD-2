@@ -355,32 +355,7 @@ def todos_jogadores(request):
     
 def detalhes_jogador(request, id):
     jogador = get_object_or_404(P_Jogador, _id=ObjectId(id))
-
-    # Contar o número de gols do jogador
-    num_golos = P_Golo.objects.filter(jogador=jogador).count()
-
-    # Contar o número de jogos do jogador (verifica se a equipa do jogador é equipa_casa ou equipa_fora)
-    num_jogos = P_Jogo.objects.filter(
-        equipa_casa=jogador.equipa
-    ).count() + P_Jogo.objects.filter(
-        equipa_fora=jogador.equipa
-    ).count()
-
-    # Buscar todos os jogos onde o jogador participou
-    jogos = P_Jogo.objects.filter(
-        equipa_casa=jogador.equipa
-    ) | P_Jogo.objects.filter(
-        equipa_fora=jogador.equipa
-    )
-
-    context = {
-        'jogador': jogador,
-        'num_golos': num_golos,
-        'num_jogos': num_jogos,
-        'jogos': jogos.filter(estado="Terminado") #Só mostra os jogos terminados
-    }
-
-    return render(request, 'jogadores/detalhes_jogador.html', context)
+    return render(request, 'jogadores/detalhes_jogador.html', {'jogador': jogador})
 
 ## --- Clubes ---
 def listar_clubes(request):
@@ -579,52 +554,9 @@ def todos_jogos(request):
     jogos = P_Jogo.objects.all().order_by('dia')  # Ordenar por Dia para melhor organização
     return render(request, 'jogos/todos_jogos.html', {'jogos': jogos})
     
-
 def detalhes_jogo(request, id):
-    try:
-        jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))
-        # Buscar todas as ações do jogo
-        golos = P_Golo.objects.filter(jogo=jogo).order_by('minuto', 'compensacao')
-        faltas = P_Falta.objects.filter(jogo=jogo).order_by('minuto', 'compensacao')
-        substituicoes = P_Substituicao.objects.filter(jogo=jogo).order_by('minuto', 'compensacao')
-        penaltis = P_Penalti.objects.filter(jogo=jogo).order_by('numero')
-        
-        # Filtrar os dados por clube
-        golos_casa = golos.filter(clube=jogo.clube_casa)
-        golos_fora = golos.filter(clube=jogo.clube_fora)
-        faltas_casa = faltas.filter(clube=jogo.clube_casa)
-        faltas_fora = faltas.filter(clube=jogo.clube_fora)
-        substituicoes_casa = substituicoes.filter(clube=jogo.clube_casa)
-        substituicoes_fora = substituicoes.filter(clube=jogo.clube_fora)
-        penaltis_casa = penaltis.filter(clube=jogo.clube_casa)
-        penaltis_fora = penaltis.filter(clube=jogo.clube_fora)
-        
-        # Count successful penalties
-        total_penaltis_casa = sum(1 for p in penaltis_casa if p.golo)
-        total_penaltis_fora = sum(1 for p in penaltis_fora if p.golo)
-        
-        return render(request, 'jogos/detalhes_jogo.html', {
-            'jogo': jogo,
-            'golos_casa': golos_casa,
-            'golos_fora': golos_fora,
-            'total_golos_casa': len(golos_casa),
-            'total_golos_fora': len(golos_fora),
-            'faltas_casa': faltas_casa,
-            'faltas_fora': faltas_fora,
-            'substituicoes_casa': substituicoes_casa,
-            'substituicoes_fora': substituicoes_fora,
-            'penaltis_casa': penaltis_casa,
-            'penaltis_fora': penaltis_fora,
-            'total_penaltis_casa': total_penaltis_casa,
-            'total_penaltis_fora': total_penaltis_fora,
-        })
-    except Exception as e:
-        print(f"Error: {str(e)}")
-        raise
-
-
-
-
+    jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))
+    return render(request, 'jogos/detalhes_jogo.html', {'jogo': jogo})
         
 # --- ESTATISTICAS ---
 def listar_estatisticas(request, id):
@@ -633,9 +565,9 @@ def listar_estatisticas(request, id):
 
         estatisticas = {
             'golos': P_Golo.objects.filter(jogo=jogo).order_by('minuto', 'compensacao' ), # Ordenar pelo minuto e compensacao
-            'penaltis': P_Penalti.objects.filter(jogo=jogo).order_by('numero'), # Ordenar pelo numero do penálti
-            'faltas': P_Falta.objects.filter(jogo=jogo).order_by('minuto', 'compensacao' ), # Ordenar pelo minuto e compensacao
-            'substituicoes': P_Substituicao.objects.filter(jogo=jogo).order_by('minuto', 'compensacao' ), # Ordenar pelo minuto e compensacao
+            'penaltis': P_Penalti.objects.filter(jogo=jogo),
+            'faltas': P_Falta.objects.filter(jogo=jogo),
+            'substituicoes': P_Substituicao.objects.filter(jogo=jogo).order_by('minuto', 'compensacao' ), # Ordenar pelo minuto e compensacao,
         }
 
         return render(request, 'estatisticas/listar_estatisticas.html', {'jogo': jogo, 'estatisticas': estatisticas})

@@ -196,7 +196,7 @@ class P_Jogo(models.Model):
     def get_id(self):
         return str(self._id)
 
-class P_Jogador(models.Model): #FEITO +- => Falta Num Golos e Jogos
+class P_Jogador(models.Model): #FEITO +- => Falta Historico 
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     clube = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, null=True, related_name="jogadores")
     posicao = models.ForeignKey(P_Posicao, on_delete=models.SET_NULL, null=True, related_name="jogadores")
@@ -209,7 +209,13 @@ class P_Jogador(models.Model): #FEITO +- => Falta Num Golos e Jogos
     nacionalidade = models.CharField(max_length=100, blank=True)
     num_camisola = models.IntegerField()
     valor_de_mercado = models.FloatField(blank=True)
+    num_jogos = models.IntegerField(blank=True, null=True)
+    num_golos = models.IntegerField(blank=True, null=True)
     situacao = models.CharField(max_length=50)
+    #historico = models.ArrayField(
+     #   model_container=models.JSONField(),
+      #  blank=True, null=True
+    #)
 
     class Meta:
         db_table = "p_jogadores"
@@ -264,7 +270,6 @@ class P_Penalti(models.Model):
     jogo = models.ForeignKey(P_Jogo, on_delete=models.CASCADE, related_name="golos")
     jogador = models.ForeignKey(P_Jogador, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
     clube = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
-    numero = models.IntegerField(blank=False)
     golo = models.BooleanField(default=False)
 
     class Meta:
