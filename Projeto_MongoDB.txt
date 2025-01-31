@@ -20,14 +20,14 @@ db.createCollection("p_associacoes", {
 db.createCollection("p_estadios", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "pais", "cidade", "inauguracao", "ativo"],
+         required: ["nome", "pais", "cidade", "inauguracao", "estado"],
          properties: {
             nome: { type: "string" },
 	    imagem: { type: "string" },
 	    pais: { type: "string" },
             cidade: { type: "string" },
 	    inauguracao: { type: "number" },
-	    ativo: { type: "boolean" },
+	    estado: { type: "string" },
 	    lotacao: { type: "number" }
          }
       }
@@ -82,12 +82,6 @@ db.createCollection("p_jogadores", {
             valor_de_mercado: {
                bsonType: "number"
             },
-            num_jogos: {
-               bsonType: "number"
-            },
-            num_golos: {
-               bsonType: "number"
-            },
             situacao: {
                bsonType: "string"
             },
@@ -102,37 +96,6 @@ db.createCollection("p_jogadores", {
         	bsonType: "objectId",
         	description: "ID do clube associado ao jogador. Necessário se 'equipa' estiver definido."
       	    },
-            historico: {
-               bsonType: "array",
-               items: {
-                  bsonType: "object",
-                  properties: {
-                     data_inicio: {
-                        bsonType: "date"
-                     },
-                     data_fim: {
-                        bsonType: "date"
-                     },
-                     situacao: {
-                        bsonType: "string"
-                     },
-                     valor_contrato: {
-                        bsonType: "number"
-                     },
-                     clube: {
-                        bsonType: "object",
-                        properties: {
-                           clube_id: {
-                              bsonType: "objectId"
-                           },
-                           nome: {
-                              bsonType: "string"
-                           }
-                        }
-                     }
-                  }
-               }
-            }
          }
       }
    }
@@ -142,7 +105,7 @@ db.createCollection("p_jogadores", {
 db.createCollection("p_clubes", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "pais", "extinto"],
+         required: ["nome", "pais", "estado"],
          properties: {
             nome: { type: "string" },
 	    imagem: { type: "string" },
@@ -151,7 +114,7 @@ db.createCollection("p_clubes", {
             alcunhas: { type: "string" },
             pais: { type: "string" },
             cidade: { type: "string" },
-            extinto: { type: "boolean" },
+            estado: { type: "string" },
 	    associacao: {
                bsonType: "objectId",
                description: "ID da Associação associado ao clube"
@@ -170,7 +133,7 @@ db.createCollection("p_equipas", {
    validator: {
       $jsonSchema: {
          bsonType: "object",
-         required: ["clube_id", "nome", "ativa"],
+         required: ["clube_id", "nome", "estado"],
          properties: {
             clube_id: {
                bsonType: "objectId"
@@ -178,8 +141,8 @@ db.createCollection("p_equipas", {
             nome: {
                bsonType: "string"
             },
-            ativa: {
-               bsonType: "bool"
+            estado: {
+               bsonType: "string"
             }
          }
       }
@@ -322,7 +285,7 @@ db.createCollection("p_faltas", {
         cartao: {
           type: "boolean"
         },
-        cor_cartao: {
+        cartao_cor: {
           type: "string"
         },
         minuto: {
@@ -369,7 +332,7 @@ db.createCollection("p_penaltis", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["jogo", "jogador", "clube", "golo"],
+      required: ["golo", "numero"],
       properties: {
         jogo: {
           bsonType: "objectId"
@@ -380,6 +343,9 @@ db.createCollection("p_penaltis", {
         clube: {
           bsonType: "objectId"
         },
+	numero: {
+	  type: "number"
+	},
         golo: {
           type: "boolean"
         }
@@ -388,32 +354,6 @@ db.createCollection("p_penaltis", {
   }
 });
 
-
-db.createCollection("p_historico_clubeEquipa", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["clube", "jogador", "data_inicio", "situacao", "valor_contrato"],
-      properties: {
-        clube: {
-          bsonType: "objectId",
-          description: "ID do clube ao qual o jogador pertenceu"
-        },
-        jogador: {
-          bsonType: "objectId",
-          description: "ID do jogador relacionado"
-        },
-        data_inicio: { bsonType: "date" },
-        data_fim: { bsonType: "date" },
-        situacao: { 
-	  type: "string",
-          description: "Situação atual do vínculo (e.g., ativo, encerrado)"
-        },
-        valor_contrato: { type: "number" }
-      }
-    }
-  }
-});
 
 
 //Clubes Favoritos Schema
