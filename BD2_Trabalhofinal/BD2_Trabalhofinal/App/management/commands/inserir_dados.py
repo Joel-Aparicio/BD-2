@@ -1103,6 +1103,7 @@ class Command(BaseCommand):
                     {
                         'utilizador_id': utilizadores[1], # Utilizador Francisca
                         'clube': clubes[3], # Clube Sporting
+                        'clube': clubes[0],
                     },
                 ]
                     
