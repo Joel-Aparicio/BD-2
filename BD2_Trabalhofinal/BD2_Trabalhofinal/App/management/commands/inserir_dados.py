@@ -953,7 +953,7 @@ class Command(BaseCommand):
                 ## O Vencedor, se não houver, coloca-se None
                 jogos_data = [
                     {
-                        'dia': datetime(2025, 1, 30).date(),
+                        'dia': datetime(2024, 8, 29).date(),
                         'hora': "14:00",
                         'estado': "Terminado" ,
                         'duracao': 90,
