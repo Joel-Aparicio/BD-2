@@ -874,6 +874,7 @@ class Command(BaseCommand):
                 competicoes_data = [
                     {
                         'nome': "Liga Portuguesa 2024-2025",
+                        'imagem': "https://upload.wikimedia.org/wikipedia/commons/5/5a/S%C3%ADmbolo_da_Liga_Portuguesa_de_Futebol_Profissional.png",
                         'data_inicio': datetime(2024, 8, 17).date(),
                         'data_fim': datetime(2025, 6, 29).date(),
                         'finalizado': False,
@@ -882,6 +883,7 @@ class Command(BaseCommand):
                     {
                         'nome': "Taça da Liga 2024",
                         'data_inicio': datetime(2024, 8, 17).date(),
+                         'imagem': "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/S%C3%ADmbolo_da_Allianz_Cup.png/800px-S%C3%ADmbolo_da_Allianz_Cup.png",                      
                         'data_fim': datetime(2024, 12, 29).date(),
                         'finalizado': True,
                         'formato': formatosComp[2],  # Formato Liga Portuguesa
@@ -957,12 +959,12 @@ class Command(BaseCommand):
                         'duracao': 90,
                         'prolongamento': True,
                         'penaltis': True,
-                        'competicao': competicoes[0], # Competição Liga Portuguesa
-                        'estadio': estadios[1], # Estádio do Sport Lisboa e Benfica
+                        'competicao': competicoes[1], # Competição Liga Portuguesa
+                        'estadio': estadios[24], # Estádio  leiria
                         'clube_casa': clubes[4], # Clube Benfica
                         'clube_fora': clubes[3], # Clube Sporting
-                        'equipa_casa': equipas[0], # Equipa Principal Benfica
-                        'equipa_fora': equipas[2], # Equipa Principal Sporting
+                        'equipa_casa': equipas[3], # Equipa Principal Benfica
+                        'equipa_fora': equipas[5], # Equipa Principal Sporting
                         'vencedor': clubes[2], # Benfica
                     },
                 ]
