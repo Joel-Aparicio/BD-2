@@ -875,22 +875,24 @@ class Command(BaseCommand):
                     {
                         'nome': "Liga Portuguesa 2024-2025",
                         'data_inicio': datetime(2024, 8, 17).date(),
-                        'data_fim': datetime(2025, 6, 31).date(),
+                        'data_fim': datetime(2025, 6, 29).date(),
                         'finalizado': False,
-                        'formato': formatosComp[0], # Formato Liga Portuguesa
+                        'formato': formatosComp[0],  # Formato Liga Portuguesa
                     },
                     {
                         'nome': "Taça da Liga 2024",
                         'data_inicio': datetime(2024, 8, 17).date(),
-                        'data_fim': datetime(2024, 6, 31).date(),
+                        'data_fim': datetime(2024, 12, 29).date(),
                         'finalizado': True,
-                        'formato': formatosComp[3], # Formato Liga Portuguesa
-                        'vencedor': clubes[4], # Clube Naval 1893
+                        'formato': formatosComp[2],  # Formato Liga Portuguesa
+                        'vencedor': clubes[4],  # Clube Naval 1893
                     },
                 ]
-                
+
+                # Criar as competições
                 competicoes = [P_Competicao.objects.create(**data) for data in competicoes_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(competicoes)} Competições created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(competicoes)} Competições criadas'))
+                                
                 
                 # Inserir Jogador
                 ## Situação: Ativo / Aleijado / Expulso / Sem Clube / Reformado
