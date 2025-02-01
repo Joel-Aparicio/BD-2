@@ -82,8 +82,9 @@ class P_Estadio(models.Model): #FEITO
 
 class P_Posicao(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
-    nome = models.CharField(max_length=50)
-    descricao = models.TextField(blank=True, null=True, default='') #Opcional
+    nome = models.CharField(max_length=30)
+    descricao = models.TextField(blank=False)
+    desig = models.CharField(max_length=4)
     
     class Meta:
         db_table = "p_posicoes"

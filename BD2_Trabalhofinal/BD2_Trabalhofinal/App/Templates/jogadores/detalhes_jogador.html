@@ -57,7 +57,11 @@
             <div class="card-body">
                 <h5 class="card-title">Informações Adicionais</h5>
                 <p class="card-text">
-                    <b>Posição:</b> {{ jogador.posicao }}<br>
+                    <b>Posição:</b> {{ jogador.posicao.nome }}
+						{% if jogador.posicao.desig %}
+							({{ jogador.posicao.desig }})
+						{% endif %}
+						<br>
                     <b>Número de Camisola:</b> {{ jogador.num_camisola }}<br>
                     <b>Número de Jogos: </b> {{ num_jogos }} <br>
                     <b>Número de Golos: </b> {{ num_golos }} <br>

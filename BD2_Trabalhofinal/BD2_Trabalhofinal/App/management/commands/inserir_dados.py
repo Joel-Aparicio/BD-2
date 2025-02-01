@@ -18,14 +18,13 @@ class Command(BaseCommand):
             with transaction.atomic():
                 
                 # Inserir Associações
-                # Inserir Associações
                 associacoes_data = [
                     {
                         'nome': "Associação de Futebol de Viseu",
                         'url': "https://afviseu.fpf.pt/",
                         'pais': "Portugal",
                         'imagem': "https://www.zerozero.pt/img/logos/associacoes/17_af_viseu_imgbank.png"
-                    }
+                    },
                     {
                         'nome': "Associação de Futebol de Aveiro",
                         'url': "http://afaveiro.pt",
@@ -151,7 +150,7 @@ class Command(BaseCommand):
                         'url': "http://afvreal.com",
                         'pais': "Portugal",
                         'imagem': "https://apaf.controlink.pt/images/associacoes/AF%20Vila%20Real.png"
-                    },
+                    }
                 ]
 
                 
@@ -231,20 +230,60 @@ class Command(BaseCommand):
 
                 # Inserir Posições
                 posicoes_data = [
-                    {'nome': "Defesa", 'descricao': "Defesa Direito"},
-                    {'nome': "Defesa", 'descricao': "Defesa Central"},
-                    {'nome': "Defesa", 'descricao': "Defesa Esquerdo"},
-                    {'nome': "Médio", 'descricao': "Médio Defensivo"},
-                    {'nome': "Médio", 'descricao': "Médio Ofensivo"},
-                    {'nome': "Médio", 'descricao': "Médio Centro"},
-                    {'nome': "Avançado", 'descricao': "Extremo Direito"},
-                    {'nome': "Avançado", 'descricao': "Ponta de Lança"},
-                    {'nome': "Avançado", 'descricao': "Extremo Esquerdo"},
-                    {'nome': "Guarda Redes", 'descricao': ""}
+                    # Guarda-Redes
+                    {'nome': 'Guarda-Redes', 'descricao': 'Guarda-Redes', 'desig': 'GR'},
+                    {'nome': 'Guarda-Redes', 'descricao': 'Guarda-Redes Líbero', 'desig': 'GRL'},
+                    
+                    # Defesa
+                    {'nome': 'Defesa', 'descricao': 'Defesa Central', 'desig': 'DC'},
+                    {'nome': 'Defesa', 'descricao': 'Defesa Com Bola', 'desig': 'DCP'},
+                    {'nome': 'Defesa', 'descricao': 'Defesa Central Eficiente', 'desig': 'DCE'},
+                    {'nome': 'Defesa', 'descricao': 'Central Descaído', 'desig': 'DCL'},
+                    {'nome': 'Defesa', 'descricao': 'Líbero Avançado', 'desig': 'L'},
+                    {'nome': 'Defesa', 'descricao': 'Defesa Lateral', 'desig': 'DL'},
+                    {'nome': 'Defesa', 'descricao': 'Ala', 'desig': 'AL'},
+                    {'nome': 'Defesa', 'descricao': 'Defesa Lateral Descomplicado', 'desig': 'DLD'},
+                    {'nome': 'Defesa', 'descricao': 'Ala Completo', 'desig': 'DLA'},
+                    {'nome': 'Defesa', 'descricao': 'Defesa Ala Invertido', 'desig': 'DLI'},
+                    
+                    # Médio
+                    {'nome': 'Médio', 'descricao': 'Médio Defensivo', 'desig': 'MD'},
+                    {'nome': 'Médio', 'descricao': 'Construtor de Jogo Recuado', 'desig': 'MDR'},
+                    {'nome': 'Médio', 'descricao': 'Médio Recuperador de Bolas', 'desig': 'MRB'},
+                    {'nome': 'Médio', 'descricao': 'Trinco', 'desig': 'TR'},
+                    {'nome': 'Médio', 'descricao': 'Pivô Defensivo', 'desig': 'PV'},
+                    {'nome': 'Médio', 'descricao': 'Médio Criativo', 'desig': 'MC'},
+                    {'nome': 'Médio', 'descricao': 'Organizador Móvel', 'desig': 'MCM'},
+                    {'nome': 'Médio', 'descricao': 'Segundo Volante', 'desig': 'SV'},
+                    {'nome': 'Médio', 'descricao': 'Médio Centro', 'desig': 'MC'},
+                    {'nome': 'Médio', 'descricao': 'Médio Área-a-Área', 'desig': 'AA'},
+                    {'nome': 'Médio', 'descricao': 'Construtor de Jogo Avançado', 'desig': 'CJA'},
+                    {'nome': 'Médio', 'descricao': 'Mezzala', 'desig': 'MS'},
+                    {'nome': 'Médio', 'descricao': 'Carrilero', 'desig': 'CR'},
+                    {'nome': 'Médio', 'descricao': 'Médio Ofensivo', 'desig': 'MO'},
+                    {'nome': 'Médio', 'descricao': 'Número 10', 'desig': 'N10'},
+                    {'nome': 'Médio', 'descricao': 'Pivô Ofensivo', 'desig': 'PO'},
+                    {'nome': 'Médio', 'descricao': 'Avançado Sombra', 'desig': 'AVS'},
+                    {'nome': 'Médio', 'descricao': 'Médio Ala', 'desig': 'MA'},
+                    
+                    # Avançado
+                    {'nome': 'Avançado', 'descricao': 'Extremo Direito', 'desig': 'ED'},
+                    {'nome': 'Avançado', 'descricao': 'Extremo Esquerdo', 'desig': 'EE'},
+                    {'nome': 'Avançado', 'descricao': 'Organizador Aberto', 'desig': 'OA'},
+                    {'nome': 'Avançado', 'descricao': 'Extremo Invertido', 'desig': 'EI'},
+                    {'nome': 'Avançado', 'descricao': 'Avançado Interior', 'desig': 'AI'},
+                    {'nome': 'Avançado', 'descricao': 'Avançado de Referência', 'desig': 'ALR'},
+                    {'nome': 'Avançado', 'descricao': 'Ponta de Lança Aberto', 'desig': 'PLA'},
+                    {'nome': 'Avançado', 'descricao': 'Avançado Recuado', 'desig': 'AR'},
+                    {'nome': 'Avançado', 'descricao': 'Falso Nove', 'desig': 'FN'},
+                    {'nome': 'Avançado', 'descricao': 'Ponta-de-Lança', 'desig': 'PL'},
+                    {'nome': 'Avançado', 'descricao': 'Ponta-de-Lança Fixo', 'desig': 'PLF'},
+                    {'nome': 'Avançado', 'descricao': 'Avançado Completo', 'desig': 'AF'}
                 ]
                 
                 posicoes = [P_Posicao.objects.create(**data) for data in posicoes_data]
                 self.stdout.write(self.style.SUCCESS(f'{len(posicoes)} Posições created'))
+                    
                 
                  # Inserir Clubes
                  ## ano_extinto não pode ser null senão dá erro

@@ -43,18 +43,23 @@ class P_SenhaForm(PasswordChangeForm):
 
 
 # --- Website ---
+
 class P_PosicaoForm(forms.ModelForm):
     class Meta:
         model = P_Posicao
-        fields = ['nome', 'descricao']
+        fields = ['nome', 'descricao', 'desig']  # Incluído 'desig' no formulário
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o nome da posição'}),
             'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Digite a descrição'}),
+            'desig': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o designador da posição'})  # Adicionado para 'desig'
         }
         labels = {
             'nome': 'Nome da Posição',
             'descricao': 'Descrição',
+            'desig': 'Designador',  # Adicionado rótulo para o campo 'desig'
         }
+        
+
         
 class P_AssociacaoForm(forms.ModelForm):
     class Meta:
