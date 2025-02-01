@@ -376,11 +376,7 @@ class Command(BaseCommand):
                         "estado": "Ativo",
                         "lotacao": 37593
                     },
-                    
-                    
-                    
-                    
-                    
+                         
                     
                  
                     {
@@ -396,14 +392,13 @@ class Command(BaseCommand):
                     
                        {
                         "nome": "Campo de jogos Almeida Sobrinho",
-                        "imagem": "https://www.regiaodeleiria.pt/wp-content/uploads/2021/07/uniao_leiria_futebol_estadio_Fotos-Joaquim-DamasoDSCF7833_.jpg",
+                        "imagem": "https://www.zerozero.pt/img/estadios/602/660602_ori__20200308174404_campo_almeida_sobrinho.jpg",
                         "pais": "Portugal",
                         "cidade": "S. Cruz da Trapa",
                         "estado": "Em Obras",
                         "lotacao": 600
                     },
-                    
-
+                   
                 ]
                 
                 estadios = [P_Estadio.objects.create(**data) for data in estadios_data]
@@ -475,11 +470,12 @@ class Command(BaseCommand):
                         'imagem': "https://www.zerozero.pt/img/logos/equipas/15069_imgbank_1734620394.png",
                         'ano_fundacao': 1931,
                         'ano_extinto': 0,
+                        'alcunhas': "Santa",
                         'pais': "Portugal",
                         'cidade': "Santa Cruz da Trapa - São Pedro do Sul",
                         'estado': "Ativo",
                         'associacao': associacoes[0],  # Associação de Futebol de Viseu
-                        'estadio': None
+                        'estadio': estadios[24]
                     },
                     {
                         'nome': "Naval",
@@ -514,7 +510,7 @@ class Command(BaseCommand):
                         'pais': "Portugal",
                         'cidade': "Lisboa",
                         'estado': "Ativo",
-                        'associacao': associacoes[1],  # Associação de Futebol de Lisboa
+                        'associacao': associacoes[13],  # Associação de Futebol de Lisboa
                         'estadio': estadios[2]  # Estádio José Alvalade
                     },
                     {
@@ -526,9 +522,201 @@ class Command(BaseCommand):
                         'pais': "Portugal",
                         'cidade': "Lisboa",
                         'estado': "Ativo",
-                        'associacao': associacoes[1],  # Associação de Futebol de Lisboa
+                        'associacao': associacoes[13],  # Associação de Futebol de Lisboa
                         'estadio': estadios[1]  # Estádio do Sport Lisboa e Benfica
-                    }
+                    },
+                    {
+                        'nome': "Porto",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/9_imgbank_1728921003.png",
+                        'ano_fundacao': 1893,
+                        'ano_extinto': 0,
+                        'alcunhas': "Dragões, Azuis e Brancos, Portistas",
+                        'pais': "Portugal",
+                        'cidade': "Porto",
+                        'estado': "Ativo",
+                        'associacao': associacoes[17],  
+                        'estadio': estadios[6]  
+                    },
+                    {
+                        'nome': "SC Braga",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/15_imgbank_1682583585.png",
+                        'ano_fundacao': 1921,
+                        'ano_extinto': 0,
+                        'alcunhas': "Arsenalistas, Guerreiros do Minho",
+                        'pais': "Portugal",
+                        'cidade': "Braga",
+                        'estado': "Ativo",
+                        'associacao': associacoes[6],  
+                        'estadio': estadios[7]  
+                    },
+                    {
+                        'nome': "Santa Clara",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas_a_data/4199_logo__20240712101624.png",
+                        'ano_fundacao': 1921,
+                        'ano_extinto': 0,
+                        'alcunhas': "Bravos Açorianos",
+                        'pais': "Portugal",
+                        'cidade': "Ponta Delgada",
+                        'estado': "Ativo",
+                        'associacao': associacoes[15],  
+                        'estadio': estadios[8]  
+                    },
+                    {
+                        'nome': "Casa Pia",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/2412_imgbank_1695724045.png",
+                        'ano_fundacao': 1920,
+                        'ano_extinto': 0,
+                        'alcunhas': "Gansos , Casapianos",
+                        'pais': "Portugal",
+                        'cidade': "Lisboa",
+                        'estado': "Ativo",
+                        'associacao': associacoes[13],  
+                        'estadio': estadios[9]  
+                    },
+                    {
+                        'nome': "Estoril Praia",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/1734_imgbank_1682584220.png",
+                        'ano_fundacao': 1939,
+                        'ano_extinto': 0,
+                        'alcunhas': "Mágico, Estorilistas, Canarinhos, Equipa da Linha ",
+                        'pais': "Portugal",
+                        'cidade': "Estoril",
+                        'estado': "Ativo",
+                        'associacao': associacoes[13],  
+                        'estadio': estadios[11]  
+                    },
+                    {
+                        'nome': "Vitoria SC",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/18_imgbank_1691672368.png",
+                        'ano_fundacao': 1922,
+                        'ano_extinto': 0,
+                        'alcunhas': "Vitorianos, Os Conquistadores",
+                        'pais': "Portugal",
+                        'cidade': "Guimarães",
+                        'estado': "Ativo",
+                        'associacao': associacoes[6],  
+                        'estadio': estadios[10]  
+                    },
+                    {
+                        'nome': "Famalicão",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/2175_imgbank_1682583693.png",
+                        'ano_fundacao': 1931,
+                        'ano_extinto': 0,
+                        'alcunhas': "Famalicenses",
+                        'pais': "Portugal",
+                        'cidade': "Vila Nova de Famalicão",
+                        'estado': "Ativo",
+                        'associacao': associacoes[6],  
+                        'estadio': estadios[12]  
+                    },
+                    {
+                        'nome': "Rio Ave",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/31_imgbank_1682584600.png",
+                        'ano_fundacao': 1939,
+                        'ano_extinto': 0,
+                        'alcunhas': "Vilacondenses; Rioavistas",
+                        'pais': "Portugal",
+                        'cidade': "Vila do Conde",
+                        'estado': "Ativo",
+                        'associacao': associacoes[17],  
+                        'estadio': estadios[13]  
+                    },
+                     {
+                        'nome': "Moreirense",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/6_imgbank_1682585615.png",
+                        'ano_fundacao': 1938,
+                        'ano_extinto': 0,
+                        'alcunhas': "Cónegos, Moreira",
+                        'pais': "Portugal",
+                        'cidade': "Guimarães",
+                        'estado': "Ativo",
+                        'associacao': associacoes[6],  
+                        'estadio': estadios[14]  
+                    },
+                    {
+                        'nome': "Gil Vicente",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/11_imgbank_1682582593.png",
+                        'ano_fundacao': 1924,
+                        'ano_extinto': 0,
+                        'alcunhas': "Gilistas, Galos de Barcelos",
+                        'pais': "Portugal",
+                        'cidade': "Barcelos",
+                        'estado': "Ativo",
+                        'associacao': associacoes[6],  
+                        'estadio': estadios[15]  
+                    },
+                    {
+                        'nome': "Arouca",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/3555_imgbank_1682582864.png",
+                        'ano_fundacao': 1952,
+                        'ano_extinto': 0,
+                        'alcunhas': "Lobos de Arouca, Arouquenses",
+                        'pais': "Portugal",
+                        'cidade': "Arouca",
+                        'estado': "Ativo",
+                        'associacao': associacoes[1],  
+                        'estadio': estadios[16]  
+                    },
+                    {
+                        'nome': "Nacional",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/27_imgbank_1682588574.png",
+                        'ano_fundacao': 1910,
+                        'ano_extinto': 0,
+                        'alcunhas': "Alvinegros, Insulares",
+                        'pais': "Portugal",
+                        'cidade': "Funchal ",
+                        'estado': "Ativo",
+                        'associacao': associacoes[14],  
+                        'estadio': estadios[17]  
+                    },
+                    {
+                        'nome': "AFS",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/296012_imgbank_1730118268.png",
+                        'ano_fundacao': 2023,
+                        'ano_extinto': 0,
+                        'alcunhas': "Aves",
+                        'pais': "Portugal",
+                        'cidade': "Vila das Aves ",
+                        'estado': "Ativo",
+                        'associacao': associacoes[17],  
+                        'estadio': estadios[18]  
+                    },
+                    {
+                        'nome': "Est. Amadora",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/253884_imgbank_1691766850.png",
+                        'ano_fundacao': 1932,
+                        'ano_extinto': 0,
+                        'alcunhas': "Tricolores, Estrelistas",
+                        'pais': "Portugal",
+                        'cidade': "Amadora",
+                        'estado': "Ativo",
+                        'associacao': associacoes[13],  
+                        'estadio': estadios[19]  
+                    },
+                    {
+                        'nome': "Farense",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/10_imgbank_1682585361.png",
+                        'ano_fundacao': 1910,
+                        'ano_extinto': 0,
+                        'alcunhas': "Leões de Faro",
+                        'pais': "Portugal",
+                        'cidade': "Faro",
+                        'estado': "Ativo",
+                        'associacao': associacoes[3],  
+                        'estadio': estadios[20]  
+                    },
+                    {
+                        'nome': "Boavista",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/5_imgbank_1683106885.png",
+                        'ano_fundacao': 1903,
+                        'ano_extinto': 0,
+                        'alcunhas': "Axadrezados, Panteras Negras",
+                        'pais': "Portugal",
+                        'cidade': "Porto",
+                        'estado': "Ativo",
+                        'associacao': associacoes[17],  
+                        'estadio': estadios[21]  
+                    },
                 ]
                 
                 clubes = [P_Clube.objects.create(**data) for data in clubes_data]
