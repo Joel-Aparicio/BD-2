@@ -18,38 +18,142 @@ class Command(BaseCommand):
             with transaction.atomic():
                 
                 # Inserir Associações
+                # Inserir Associações
                 associacoes_data = [
                     {
                         'nome': "Associação de Futebol de Viseu",
                         'url': "https://afviseu.fpf.pt/",
                         'pais': "Portugal",
                         'imagem': "https://www.zerozero.pt/img/logos/associacoes/17_af_viseu_imgbank.png"
-                    },
+                    }
                     {
-                        'nome': "Associação de Futebol de Lisboa",
-                        'url': "http://www.afl.pt",
+                        'nome': "Associação de Futebol de Aveiro",
+                        'url': "http://afaveiro.pt",
                         'pais': "Portugal",
-                        'imagem': "https://www.zerozero.pt/img/logos/associacoes/2_af_lisboa_imgbank.png"
+                        'imagem': "https://afaveiro.fpf.pt/Portals/19/Logo_AFA3.gif?ver=2019-01-24-120420-670"
                     },
                     {
                         'nome': "Associação de Futebol de Coimbra",
                         'url': "https://afcoimbra.fpf.pt/",
                         'pais': "Portugal",
-                        'imagem': "https://www.zerozero.pt/img/logos/associacoes/11_af_coimbra_imgbank.png"
+                        'imagem': "https://afcoimbra.fpf.pt/Portals/5/Logo_Coimbra.png?ver=2015-10-28-094333-600"
                     },
                     {
-                        'nome': "Federación de Fútbol de Madrid (FFM)",
-                        'url': '',
-                        'pais': "Espanha",
-                        'imagem': "https://www.zerozero.pt/img/logos/federacoes/12_esp_imgbank.png"
+                        'nome': "Associação de Futebol do Algarve",
+                        'url': "http://afalgarve.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://upload.wikimedia.org/wikipedia/pt/a/a4/AF_Algarve.png"
                     },
                     {
-                        'nome': "Ligue de Paris Ile-de-France de Football",
-                        'url': "https://paris-idf.fff.fr/cgi-bin/general/accueil.pl",
-                        'pais': "França",
-                        'imagem': "https://www.zerozero.pt/img/logos/federacoes/14_fra_imgbank.png"
-                    }
+                        'nome': "Associação de Futebol de Angra do Heroísmo",
+                        'url': "http://afah.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://afah.fpf.pt/Portals/18/AF_Angra_Heroismo.png?ver=2016-08-24-100523-877"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Beja",
+                        'url': "http://afbeja.com",
+                        'pais': "Portugal",
+                        'imagem': "https://afbeja.fpf.pt/Portals/12/logo%20afbeja%20novo.jpg?ver=2020-09-04-115900-780"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Braga",
+                        'url': "http://afbraga.com",
+                        'pais': "Portugal",
+                        'imagem': "https://afbraga.fpf.pt/Portals/4/AF_Braga.png?ver=2016-04-26-142900-000"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Bragança",
+                        'url': "http://afbraganca.com",
+                        'pais': "Portugal",
+                        'imagem': "https://afbraganca.fpf.pt/Portals/17/af_-bragan%C3%A7a_150x150.png?ver=2017-01-13-094230-000"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Castelo Branco",
+                        'url': "http://afcastelobranco.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://afcastelobranco.fpf.pt/Portals/6/Logo_Castelo_Branco.png?ver=2016-04-26-142745-913"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Évora",
+                        'url': "http://afevora.com",
+                        'pais': "Portugal",
+                        'imagem': "https://afevora.fpf.pt/Portals/11/Logo_Evora.png?ver=2016-05-06-102004-000"
+                    },
+                    {
+                        'nome': "Associação de Futebol da Guarda",
+                        'url': "http://afguarda.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://afguarda.fpf.pt/Portals/20/LOGO_AFGuarda.png?ver=2018-11-05-143924-137"
+                    },
+                    {
+                        'nome': "Associação de Futebol da Horta",
+                        'url': "http://afhorta.com",
+                        'pais': "Portugal",
+                        'imagem': "https://afhorta.fpf.pt/Portals/13/Logo%20AFH%202022.png?ver=2023-06-30-150218-540"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Leiria",
+                        'url': "http://afleiria.com",
+                        'pais': "Portugal",
+                        'imagem': "https://afleiria.fpf.pt/SimpleImageHandler.ashx?id=99613"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Lisboa",
+                        'url': "http://www.afl.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://afl.pt/wp-content/uploads/2023/12/cropped-Sem-Fundo.png"
+                    },
+                    {
+                        'nome': "Associação de Futebol da Madeira",
+                        'url': "http://afmadeira.com",
+                        'pais': "Portugal",
+                        'imagem': "https://fpfimagehandler.fpf.pt/ScoreImageHandler.ashx?type=Organization&id=878"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Ponta Delgada",
+                        'url': "http://afpd.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://afpd.fpf.pt/Portals/14/Logo_Ponta_Delgada.png?ver=2015-10-15-143459-960"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Portalegre",
+                        'url': "http://afportalegre.com",
+                        'pais': "Portugal",
+                        'imagem': "https://afportalegre.fpf.pt/Portals/10/Logo_Portalegre.png?ver=2015-10-15-141740-000"
+                    },
+                    {
+                        'nome': "Associação de Futebol do Porto",
+                        'url': "http://afporto.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://upload.wikimedia.org/wikipedia/commons/a/a2/Af_porto.png"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Santarém",
+                        'url': "http://afsantarem.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://afsantarem.fpf.pt/Portals/3/AF_Santarem.png?ver=2015-07-21-194208-000"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Setúbal",
+                        'url': "http://afsetubal.pt",
+                        'pais': "Portugal",
+                        'imagem': "https://afsetubal.fpf.pt/Portals/16/logo_afs_brasao%20novo.png?ver=2022-12-13-173718-513"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Viana do Castelo",
+                        'url': "http://afvianacastelo.com",
+                        'pais': "Portugal",
+                        'imagem': "https://afvianacastelo.fpf.pt/Portals/7/AFVC-Logo.png?ver=2016-05-09-164122-000"
+                    },
+                    {
+                        'nome': "Associação de Futebol de Vila Real",
+                        'url': "http://afvreal.com",
+                        'pais': "Portugal",
+                        'imagem': "https://apaf.controlink.pt/images/associacoes/AF%20Vila%20Real.png"
+                    },
                 ]
+
                 
                 associacoes = [P_Associacao.objects.create(**data) for data in associacoes_data]
                 self.stdout.write(self.style.SUCCESS(f'{len(associacoes)} Associações created'))
