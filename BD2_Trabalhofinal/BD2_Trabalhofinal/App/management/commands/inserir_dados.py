@@ -850,8 +850,18 @@ class Command(BaseCommand):
                 ## Valor de Mercado: se não houver, metes zero (para garantir que não dá erro) e é em milhões
                 formatosComp_data = [
                     {
-                        'nome': "Liga Portuguesa",
+                        'nome': "Liga ",
                         'descricao': "Liga Portuguesa",
+                        'valor_de_mercado': 1980,
+                    },
+                    {
+                        'nome': "Taça",
+                        'descricao': "Taça de Portugual",
+                        'valor_de_mercado': 1980,
+                    },
+                    {
+                        'nome': "Taça da Liga",
+                        'descricao': "Taça da Liga",
                         'valor_de_mercado': 1980,
                     },
                 ]
@@ -863,12 +873,19 @@ class Command(BaseCommand):
                 ## Vencedor: coloca-se None se não houver
                 competicoes_data = [
                     {
-                        'nome': "Liga Portuguesa",
-                        'data_inicio': datetime(2025, 1, 17).date(),
-                        'data_fim': datetime(2025, 5, 31).date(),
-                        'finalizado': True,
+                        'nome': "Liga Portuguesa 2024-2025",
+                        'data_inicio': datetime(2024, 8, 17).date(),
+                        'data_fim': datetime(2025, 6, 31).date(),
+                        'finalizado': False,
                         'formato': formatosComp[0], # Formato Liga Portuguesa
-                        'vencedor': clubes[2], # Clube Naval 1893
+                    },
+                    {
+                        'nome': "Taça da Liga 2024",
+                        'data_inicio': datetime(2024, 8, 17).date(),
+                        'data_fim': datetime(2024, 6, 31).date(),
+                        'finalizado': True,
+                        'formato': formatosComp[3], # Formato Liga Portuguesa
+                        'vencedor': clubes[4], # Clube Naval 1893
                     },
                 ]
                 
