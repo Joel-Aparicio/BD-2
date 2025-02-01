@@ -475,7 +475,7 @@ class Command(BaseCommand):
                         'cidade': "Santa Cruz da Trapa - São Pedro do Sul",
                         'estado': "Ativo",
                         'associacao': associacoes[0],  # Associação de Futebol de Viseu
-                        'estadio': estadios[24]
+                        'estadio': estadios[25]
                     },
                     {
                         'nome': "Naval",
