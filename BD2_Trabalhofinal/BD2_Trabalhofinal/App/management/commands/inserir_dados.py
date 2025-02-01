@@ -161,16 +161,16 @@ class Command(BaseCommand):
                 ## Estados: Ativo / Em Obras / Demolido
                 estadios_data = [
                     {
-                        'nome': "Estádio da Luz",
-                        'imagem': "https://www.zerozero.pt/img/estadios/328/214328_estadio_da_luz.jpg.jpg",
+                        'nome': "Estádio das Antas",
+                        'imagem': "https://img.iol.pt/image/id/56db8e790cf25dc1853beb23/",
                         'pais': "Portugal",
-                        'cidade': "São Domingos de Benfica - Lisboa",
-                        'inauguracao': 1954,
+                        'cidade': "Porto",
+                        'inauguracao': 1924,
                         'estado': 'Demolido',
-                        'lotacao': 120000
+                        'lotacao': 75000
                     },
                     {
-                        'nome': "Estádio do Sport Lisboa e Benfica",
+                        'nome': "Estádio da Luz",
                         'imagem': "https://cdn-imgix.headout.com/media/images/e5aa08b27d25e7d82bcbc3aa9517228a-Benfica%20Stadium%20%26%20Museum%201.jpg",
                         'pais': "Portugal",
                         'cidade': "Lisboa",
@@ -222,7 +222,188 @@ class Command(BaseCommand):
                         'inauguracao': 2003,
                         'estado': 'Ativo',
                         'lotacao': 50033
-                    }
+                    },
+                    {
+                        "nome": "Estádio Municipal de Braga",
+                        "imagem": "https://scbraga.pt/wp-content/uploads/2019/07/est%C3%A1diooo.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Braga",
+                        "inauguracao": 2003,
+                        "estado": "Ativo",
+                        "lotacao": 30286
+                    },
+                    {
+                        "nome": "Estádio de Sáo Miguel",
+                        "imagem": "https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NzVlF4WOSDr6hpXe3Y+yz6YMVAdPveGm4sNW9+y5/7H/LeZgM6bQrC9pDHWqH12v44Oxk6HMa+a4e+2VaiEONPeKdAWdYQNCd6O1TlLVFgAihP4=",
+                        "pais": "Portugal",
+                        "cidade": "Ponta Delgada",
+                        "inauguracao": 1976,
+                        "estado": "Ativo",
+                        "lotacao": 12500
+                    },
+                      {
+                        "nome": "Estádio Municipal de Rio Maior",
+                        "imagem": "https://desmor.pt/image.php?image=estadio-municipal-de-rio-maior-rio-maior-football-stadium--31440206.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Rio Maior",
+                        "inauguracao": 2003,
+                        "estado": "Ativo",
+                        "lotacao": 6925
+                    },
+                    {
+                        "nome": "Estádio D. Afonso Henriques",
+                        "imagem": "https://vitoriasc.pt/wp-content/uploads/2022/01/Esta%CC%81dio-D.-Afonso-Henriques.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Guimarães",
+                        "inauguracao": 1965,
+                        "estado": "Ativo",
+                        "lotacao": 30000
+                    },
+                    {
+                        "nome": "Estádio António Coimbra da Mota",
+                        "imagem": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/31/0b/e2/estadio-antonio-coimbra.jpg?w=1200&h=-1&s=1",
+                        "pais": "Portugal",
+                        "cidade": "Estoril",
+                        "inauguracao": 1939,
+                        "estado": "Ativo",
+                        "lotacao": 8000
+                    },
+                    {
+                        "nome": "Estádio Municipal de Famalicão",
+                        "imagem": "https://www.noticiasdefamalicao.pt/wp-content/uploads/2023/06/Estadio-MUnicipal-_-campo-de-treinos.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Vila Nova de Famalicão",
+                        "inauguracao": 1952,
+                        "estado": "Ativo",
+                        "lotacao": 5186
+                    },
+                    {
+                        "nome": "Estádio do Rio Ave FC",
+                        "imagem": "https://cdn-images.rtp.pt/icm/noticias/images/76/76d8f3a64323a773de803f21c58da2e7?w=860&q=90&rect=195,0,810,444",
+                        "pais": "Portugal",
+                        "cidade": "Vila do Conde",
+                        "inauguracao": 1984,
+                        "estado": "Ativo",
+                        "lotacao": 5300
+                    },
+                    {
+                        "nome": "Estádio Comendador Joaquim de Almeida Freitas",
+                        "imagem": "https://www.zerozero.pt/img/estadios/826/1130826_ori_estadio_comendador_joaquim_de_almeida_freitas.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Moreira de Cónegos - Guimarães",
+                        "inauguracao":2002,
+                        "estado": "Ativo",
+                        "lotacao": 6150
+                    },
+                    {
+                        "nome": "Estádio Cidade de Barcelos",
+                        "imagem": "https://www.zerozero.pt/img/estadios/627/1018627_ori_estadio_cidade_de_barcelos.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Barcelos",
+                        "inauguracao":2004,
+                        "estado": "Ativo",
+                        "lotacao": 12046
+                    },
+                    {
+                        "nome": "Estádio Municipal de Arouca",
+                        "imagem": "https://www.zerozero.pt/img/estadios/762/857762_ori_estadio_municipal_de_arouca.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Arouca",
+                        "inauguracao":2006,
+                        "estado": "Ativo",
+                        "lotacao": 5600
+                    },
+                    {
+                        "nome": "Estádio da Madeira",
+                        "imagem": "https://www.zerozero.pt/img/estadios/265/1223265_ori_estadio_da_madeira.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Funchal",
+                        "inauguracao":1998,
+                        "estado": "Ativo",
+                        "lotacao": 5200
+                    },
+                    {
+                        "nome": "Estádio do Clube Desportivo das Aves",
+                        "imagem": "https://www.zerozero.pt/img/estadios/921/573921_ori_estadio_do_clube_desportivo_das_aves.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Vila das Aves",
+                        "inauguracao":1981,
+                        "estado": "Ativo",
+                        "lotacao": 6230
+                    },
+                    {
+                        "nome": "Estádio José Gomes",
+                        "imagem": "https://www.zerozero.pt/img/estadios/607/687607_ori_estadio_jose_gomes.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Amadora",
+                        "inauguracao":157,
+                        "estado": "Ativo",
+                        "lotacao": 9288
+                    },
+                    {
+                        "nome": "Estádio de São Luís",
+                        "imagem": "https://www.zerozero.pt/img/estadios/393/735393_ori__20201223182044_estadio_de_sao_luis.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Faro",
+                        "inauguracao":1922,
+                        "estado": "Ativo",
+                        "lotacao": 7000
+                    },
+                    {
+                        "nome": "Estádio do Bessa Séc. XXI",
+                        "imagem": "https://www.zerozero.pt/img/estadios/388/690388_ori_estadio_do_bessa_sec_xxi.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Faro",
+                        "inauguracao":1922,
+                        "estado": "Ativo",
+                        "lotacao": 7000
+                    },
+                    {
+                        "nome": "Estádio do Bessa Séc. XXI",
+                        "imagem": "https://www.zerozero.pt/img/estadios/388/690388_ori_estadio_do_bessa_sec_xxi.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Porto",
+                        "inauguracao":1910,
+                        "estado": "Ativo",
+                        "lotacao": 28263
+                    },
+                    {
+                        "nome": "Estádio Nacional do Jamor",
+                        "imagem": "https://jamor.ipdj.pt/cacheimage/dXBsb2FkL2ltZ19nYWxlcmlhLzEtZXN0YWRpb2hvbnJhL2VzdGFkaW9ob25yYV81NC5qcGdfNjIwXzM1MF8wXzBfMzc0ODg1.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Oeiras",
+                        "inauguracao":1944,
+                        "estado": "Ativo",
+                        "lotacao": 37593
+                    },
+                    
+                    
+                    
+                    
+                    
+                    
+                 
+                    {
+                        "nome": "Estádio Municipal de Leiria",
+                        "imagem": "https://www.regiaodeleiria.pt/wp-content/uploads/2021/07/uniao_leiria_futebol_estadio_Fotos-Joaquim-DamasoDSCF7833_.jpg",
+                        "pais": "Portugal",
+                        "cidade": "Leiria",
+                        "inauguracao": 1985,
+                        "estado": "Ativo",
+                        "lotacao": 27200
+                    },
+                    
+                    
+                       {
+                        "nome": "Campo de jogos Almeida Sobrinho",
+                        "imagem": "https://www.regiaodeleiria.pt/wp-content/uploads/2021/07/uniao_leiria_futebol_estadio_Fotos-Joaquim-DamasoDSCF7833_.jpg",
+                        "pais": "Portugal",
+                        "cidade": "S. Cruz da Trapa",
+                        "estado": "Em Obras",
+                        "lotacao": 600
+                    },
+                    
+
                 ]
                 
                 estadios = [P_Estadio.objects.create(**data) for data in estadios_data]
