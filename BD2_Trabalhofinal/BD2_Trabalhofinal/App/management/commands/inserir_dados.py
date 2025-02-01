@@ -722,9 +722,24 @@ class Command(BaseCommand):
                 clubes = [P_Clube.objects.create(**data) for data in clubes_data]
                 self.stdout.write(self.style.SUCCESS(f'{len(clubes)} Clubes created'))
                 
+
                 # Inserir Equipas
-                ## Estado: Ativa / Suspensa / Extinta
                 equipas_data = [
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[0],  # CD Santacruzense
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Extinto",
+                        'clube': clubes[1],  # Naval
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[2],  # Naval 1893
+                    },
                     {
                         'nome': "Equipa Principal",
                         'estado': "Ativo",
@@ -738,17 +753,98 @@ class Command(BaseCommand):
                     {
                         'nome': "Equipa Principal",
                         'estado': "Ativo",
-                        'clube': clubes[3],  # Clube Sporting
+                        'clube': clubes[3],  # Sporting
+                    },
+                    {
+                        'nome': "Jun.A S19",
+                        'estado': "Ativo",
+                        'clube': clubes[3],  
                     },
                     {
                         'nome': "Equipa Principal",
                         'estado': "Ativo",
-                        'clube': clubes[2],  # Clube Naval 1893
+                        'clube': clubes[5],  # Porto
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[6],  # SC Braga
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[7],  # Santa Clara
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[8],  # Casa Pia
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[9],  # Estoril Praia
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[10], # Vitória SC
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[11], # Famalicão
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[12], # Rio Ave
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[13], # Moreirense
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[14], # Gil Vicente
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[15], # Arouca
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[16], # Nacional
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[17], # AFS
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[18], # Est. Amadora
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[19], # Farense
+                    },
+                    {
+                        'nome': "Equipa Principal",
+                        'estado': "Ativo",
+                        'clube': clubes[20], # Boavista
                     },
                 ]
-                
+
                 equipas = [P_Equipa.objects.create(**data) for data in equipas_data]
                 self.stdout.write(self.style.SUCCESS(f'{len(equipas)} Equipas created'))
+
                 
                 # Inserir Formato Competição
                 ## Valor de Mercado: se não houver, metes zero (para garantir que não dá erro) e é em milhões
