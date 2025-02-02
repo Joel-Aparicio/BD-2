@@ -730,7 +730,7 @@ class Command(BaseCommand):
                         'cidade': "Sao Pedro do Sul",
                         'estado': "Extinto",
                         'associacao': associacoes[0],  
-                        'estadio': estadios[21]  
+                        'estadio': estadios[26]  
                     },
                 ]
                 
@@ -961,7 +961,7 @@ class Command(BaseCommand):
                     {
                         'nome': "Marco Vicente Rodrigues",
                         'idade': 20,
-                        'imagem': "Thttps://i.guim.co.uk/img/media/949db9aed8c784769dd16baf88ba4a6e16da2e4d/233_511_3026_1815/master/3026.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=83d72cdfe662a162e809d77ca049ff6f" ,
+                        'imagem': "https://lh3.googleusercontent.com/pw/AP1GczOhRWLfVhuSlZeqBsd7Y0CYoJV7ub68l8zg4EOAmRL1NiY_b-tkSw4Cszs5W2NdZ-6nBwXZvHCC0NKysMewwj2LRSYudkvakCCo5yoeGwYJZC-viSeGK8TRI-55sq7ffk81uKj7ha-z0ZKl8JMQNAQKCg=w604-h841-s-no?authuser=0" ,
                         'altura': 177,
                         'peso': 70.5,
                         'nacionalidade': "Portugal",
@@ -975,7 +975,7 @@ class Command(BaseCommand):
                     {
                         'nome': "MiguelDa Silba",
                         'idade': 20,
-                        'imagem': "https://instagram.fopo4-1.fna.fbcdn.net/v/t51.2885-19/472306972_1677750903095283_1084486030806483066_n.jpg?_nc_ht=instagram.fopo4-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2AFdjkzo0BmDPhDTxarZcGeTxTpWR9b1u1cItyBHex6NhMrBMq1kq1OyBvsoxD7yYV0vXV7BQlOGy6ypLJ3xtItO&_nc_ohc=tQDz59ze0UYQ7kNvgE-Gn4T&_nc_gid=d2efd71917464344b7c9489be0846290&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AYD9t7lEIT-HGB8vBjrQ6ZueSf1nPop5EypW1fkW_hjkYg&oe=67A52078&_nc_sid=7a9f4b" ,
+                        'imagem': "https://scontent.fopo4-2.fna.fbcdn.net/v/t39.30808-6/344746020_1637346010072123_4867410465697714811_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=DVsrwPhk258Q7kNvgH3o7Bg&_nc_oc=Adihf5FAwrkOPul27fiIIZ5sWl9QgqpaOhxTXkRHLpkMm6aDOU_hsZFgwH4esDOPLHC2kYAqUqUjwAwca2WuLhGI&_nc_zt=23&_nc_ht=scontent.fopo4-2.fna&_nc_gid=AcL1MlkOSsXsoLQ1CezQnDJ&oh=00_AYBTtVNGx6hIiHfSX0UwGS0Z43p6p4_sZMXhN85KWURkMg&oe=67A55A14" ,
                         'altura': 157,
                         'peso': 63.5,
                         'nacionalidade': "Portugal",
