@@ -375,10 +375,7 @@ class Command(BaseCommand):
                         "inauguracao":1944,
                         "estado": "Ativo",
                         "lotacao": 37593
-                    },
-                         
-                    
-                 
+                    },       
                     {
                         "nome": "Estádio Municipal de Leiria",
                         "imagem": "https://www.regiaodeleiria.pt/wp-content/uploads/2021/07/uniao_leiria_futebol_estadio_Fotos-Joaquim-DamasoDSCF7833_.jpg",
@@ -388,9 +385,7 @@ class Command(BaseCommand):
                         "estado": "Ativo",
                         "lotacao": 27200
                     },
-                    
-                    
-                       {
+                    {
                         "nome": "Campo de jogos Almeida Sobrinho",
                         "imagem": "https://www.zerozero.pt/img/estadios/602/660602_ori__20200308174404_campo_almeida_sobrinho.jpg",
                         "pais": "Portugal",
@@ -1061,7 +1056,7 @@ class Command(BaseCommand):
                     {
                         'nome': "Miguel Silva",
                         'email': "miguel@email.com",
-                        'palavra_passe': "123",
+                        'password': "123",
                         'is_active': True,
                         'is_staff': True,
                         'is_superuser': True 
@@ -1069,7 +1064,7 @@ class Command(BaseCommand):
                     {
                         'nome': "Francisca Palma",
                         'email': "kika@email.com",
-                        'palavra_passe': "123",
+                        'password': "123",
                         'is_active': True,
                         'is_staff': False,
                         'is_superuser': False
@@ -1077,7 +1072,7 @@ class Command(BaseCommand):
                     {
                         'nome': "Marco Vicente",
                         'email': "vicente@email.com",
-                        'palavra_passe': "123",
+                        'password': "123",
                         'is_active': True,
                         'is_staff': True,
                         'is_superuser': True
@@ -1087,11 +1082,11 @@ class Command(BaseCommand):
                 # Criar Utilizadores utilizando o manager para a criptografia (hashing) da palavra-passe
                 utilizadores = []
                 for data in utilizadores_data:
-                    palavra_passe = data.pop('palavra_passe')  # Remove password from data dict
+                    password = data.pop('password')  # Remove password from data dict
                     utilizador = Utilizador.objects.create_user(
                         email=data.pop('email'),
                         nome=data.pop('nome'),
-                        palavra_passe=palavra_passe,
+                        password=password,
                         **data
                     )
                     utilizadores.append(utilizador)
@@ -1101,7 +1096,7 @@ class Command(BaseCommand):
                 # Inserir Clube Favorito
                 clubesFav_data = [
                     {
-                        'utilizador_id': utilizadores[1], # Utilizador Francisca
+                        'utilizador_id': utilizadores[1].utilizador_id, # Utilizador Francisca
                         'clube': clubes[3], # Clube Sporting
                         'clube': clubes[0],
                     },
