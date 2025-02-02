@@ -359,13 +359,13 @@ class Command(BaseCommand):
                         "lotacao": 7000
                     },
                     {
-                        "nome": "Estádio do Bessa Séc. XXI",
-                        "imagem": "https://www.zerozero.pt/img/estadios/388/690388_ori_estadio_do_bessa_sec_xxi.jpg",
+                        "nome": "Estádio Municipal de Aveiro",
+                        "imagem": "https://www.zerozero.pt/wimg/p807242g/-.jpg",
                         "pais": "Portugal",
-                        "cidade": "Porto",
-                        "inauguracao":1910,
+                        "cidade": "Aveiro",
+                        "inauguracao":2003,
                         "estado": "Ativo",
-                        "lotacao": 28263
+                        "lotacao": 30127
                     },
                     {
                         "nome": "Estádio Nacional do Jamor",
@@ -1290,8 +1290,11 @@ class Command(BaseCommand):
                         'clube': clubes[0],
                         'posicao': posicoes[41],  # Avançado Completo (AF)
                         'equipa': equipas[0],
-                    }
-
+                    },
+                    
+                    
+                    
+                    
                     {
                         'nome': "Viktor Gyökeres",
                         'idade': 26,
@@ -1304,8 +1307,244 @@ class Command(BaseCommand):
                         'situacao': "Ativo",
                         'clube': clubes[3], # Clube Sporting
                         'posicao': posicoes[39], # Posição Avançado (Ponta de Lança)
-                        'equipa': equipas[2], # Equipa Principal Sporting
+                        'equipa': equipas[5], # Equipa Principal Sporting
                     },
+                    
+                    {
+
+                        'nome': "António Adán",
+                        'idade': 36,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/83/33/38333_antonio_adan_20241029170259.jpg",
+                        'altura': 188,
+                        'peso': 85.0,
+                        'nacionalidade': "Espanha",
+                        'num_camisola': 1,
+                        'valor_de_mercado': 2.5,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],  # Sporting
+                        'posicao': posicoes[0],  # Guarda-Redes (GR)
+                        'equipa': equipas[5],  # Equipa 5
+
+                    },
+
+                    {
+
+                        'nome': "Gonçalo Inácio",
+                        'idade': 22,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/41/59/384159_goncalo_inacio_20241027010748.png",
+                        'altura': 185,
+                        'peso': 78.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 15,
+                        'valor_de_mercado': 20.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[2],  # Defesa Central (DC)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+                        'nome': "Matheus Reis",
+                        'idade': 28,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/57/02/395702_matheus_reis_20240812161006.jpg",
+                        'altura': 180,
+                        'peso': 75.0,
+                        'nacionalidade': "Brasil",
+                        'num_camisola': 3,
+                        'valor_de_mercado': 10.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[7],  # Defesa Lateral (DL)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+
+                        'nome': "Pedro Gonçalves",
+                        'idade': 25,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/83/88/338388_pedro_goncalves_20240812160800.jpg",
+                        'altura': 180,
+                        'peso': 77.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 28,
+                        'valor_de_mercado': 30.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[17],  # Médio Criativo (MC)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+
+                        'nome': "João Palhinha",
+                        'idade': 28,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/11/16/211116_joao_palhinha_20241031110257.png",
+                        'altura': 185,
+                        'peso': 80.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 6,
+                        'valor_de_mercado': 25.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[12],  # Médio Defensivo (MD)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+
+                        'nome': "Nuno Santos",
+                        'idade': 27,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/08/73/160873_nuno_santos_20240729155308.jpg",
+                        'altura': 178,
+                        'peso': 74.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 19,
+                        'valor_de_mercado': 18.0,
+                        'situacao': "Lesionado",
+                        'clube': clubes[3],
+                        'posicao': posicoes[30],  # Extremo Direito (ED)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+
+                        'nome': "Paulinho",
+                        'idade': 29,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/90/04/189004_paulinho_20241024123451.png",
+                        'altura': 182,
+                        'peso': 85.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 21,
+                        'valor_de_mercado': 20.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[39],  # Ponta-de-Lança (PL)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+                        'nome': "Tiago Tomás",
+                        'idade': 21,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/81/416481_20230929134124_tiago_tomas.png",
+                        'altura': 180,
+                        'peso': 72.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 17,
+                        'valor_de_mercado': 15.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[28],  # Avançado Sombra (AVS)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+
+                        'nome': "Matheus Nunes",
+                        'idade': 24,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/41/99/564199_matheus_nunes_20240816210213.png",
+                        'altura': 182,
+                        'peso': 80.0,
+                        'nacionalidade': "Brasil",
+                        'num_camisola': 8,
+                        'valor_de_mercado': 30.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[20],  # Médio Centro (MC)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+
+                        'nome': "Daniel Bragança",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/48/50/84850_daniel_braganca_20240812161107.jpg",
+                        'altura': 180,
+                        'peso': 75.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 10,
+                        'valor_de_mercado': 12.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[18],  # Organizador Móvel (MCM)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+                        'nome': "Jovane Cabral",
+                        'idade': 25,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/13/96/461396_jovane_cabral_20250120231132.png",
+                        'altura': 175,
+                        'peso': 70.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 77,
+                        'valor_de_mercado': 15.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[31],  # Extremo Esquerdo (EE)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+                        'nome': "Nuno Mendes",
+                        'idade': 21,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/41/64/384164_nuno_mendes_20241012232838.png",
+                        'altura': 178,
+                        'peso': 70.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 29,
+                        'valor_de_mercado': 25.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[9],  # Defesa Lateral Descomplicado (DLD)
+                        'equipa': equipas[5],
+
+                    },
+
+                    {
+                        'nome': "Eduardo Quaresma",
+                        'idade': 21,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/05/17/160517_eduardo_quaresma_20240812161817.jpg",
+                        'altura': 185,
+                        'peso': 80.0,
+                        'n acionalidade': "Portugal",
+                        'num_camisola': 4,
+                        'valor_de_mercado': 18.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[2],  # Defesa Central (DC)
+                        'equipa': equipas[5],
+
+                    },
+
+
+                    {
+
+                        'nome': "Francisco Trincão",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/02/56/500256_francisco_trincao_20240812160208.jpg",
+                        'altura': 180,
+                        'peso': 72.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 7,
+                        'valor_de_mercado': 20.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[3],
+                        'posicao': posicoes[30],  # Extremo Direito (ED)
+                        'equipa': equipas[5],
+
+                    },
+                    
+                    
                     {
                         'nome': "Ángel Di María",
                         'idade': 36,
