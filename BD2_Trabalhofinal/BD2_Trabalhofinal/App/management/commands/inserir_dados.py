@@ -1735,6 +1735,133 @@ class Command(BaseCommand):
                     },
                     
                     
+                                        
+                    {
+                        'nome': "Diogo Costa",
+                        'idade': 25,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/44/06/284406_diogo_costa_20240731174246.png" ,
+                        'altura': 186,
+                        'peso': 82.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':99, 
+                        'valor_de_mercado': 41.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[5], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[7],
+                    },
+                    
+                    
+                    {
+                        'nome': "João Mário",
+                        'idade': 25,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/12/83/421283_joao_mario_20240731174919.png" ,
+                        'altura': 178,
+                        'peso': 66.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':23, 
+                        'valor_de_mercado': 14.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[5], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[7],
+                    },
+                    
+                    
+                    {
+                        'nome': "Iván Marcano",
+                        'idade': 37,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/67/73/36773_ivan_marcano_20240731175356.png" ,
+                        'altura': 189,
+                        'peso': 92.0,
+                        'nacionalidade': "Espanha",
+                        'num_camisola':5, 
+                        'valor_de_mercado': 1.0,
+                        'situacao': "Lesionado",
+                        'clube': clubes[5], 
+                        'posicao': posicoes[2],
+                        'equipa': equipas[7],
+                    },
+                    
+                    
+                    {
+                        'nome': "Zé Pedro",
+                        'idade': 27,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/68/87/226887_ze_pedro_20240731175509.png" ,
+                        'altura': 187,
+                        'peso': 84.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':97, 
+                        'valor_de_mercado': 3.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[5], 
+                        'posicao': posicoes[2],
+                        'equipa': equipas[7],
+                    },
+                    
+                    
+                    {
+                        'nome': "Zé Pedro",
+                        'idade': 27,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/68/87/226887_ze_pedro_20240731175509.png" ,
+                        'altura': 187,
+                        'peso': 84.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':97, 
+                        'valor_de_mercado': 3.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[5], 
+                        'posicao': posicoes[2],
+                        'equipa': equipas[7],
+                    },
+                    
+                    
+                    {
+                        'nome': "Vasco Sousa",
+                        'idade': 21,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/94/45/529445_vasco_sousa_20240731175251.png" ,
+                        'altura': 169,
+                        'peso': 64.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':15, 
+                        'valor_de_mercado': 5.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[5], 
+                        'posicao': posicoes[20],
+                        'equipa': equipas[7],
+                    },
+             
+             
+                                 
+                    {
+                        'nome': "Gonçalo Borges",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/83/78/428378_goncalo_borges_20240731174604.png" ,
+                        'altura': 184,
+                        'peso': 69.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':70, 
+                        'valor_de_mercado': 4.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[5], 
+                        'posicao': posicoes[30],
+                        'equipa': equipas[7],
+                    },
+                    
+                    {
+                        'nome': "Samu Aghehowa",
+                        'idade': 20,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/22/94/1182294_samu_omorodion_20240828172835.png" ,
+                        'altura': 193,
+                        'peso': 90.0,
+                        'nacionalidade': "Espanha",
+                        'num_camisola':14, 
+                        'valor_de_mercado': 50.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[5], 
+                        'posicao': posicoes[39],
+                        'equipa': equipas[7],
+                    },
                     
                     
                     {
