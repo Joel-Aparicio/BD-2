@@ -2499,11 +2499,481 @@ class Command(BaseCommand):
                     
                     
                     
+                    {
+                        'nome': "João Valido",
+                        'idade': 24,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/01/71/520171_joao_valido_20240807144211.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 1, 
+                        'situacao': "Ativo",
+                        'clube': clubes[15], 
+                        'posicao': posicoes[1],
+                        'equipa': equipas[17],
+                    },
+                    
+                    
+                    {
+                        'nome': "Tiago Esgaio",
+                        'idade': 29,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/21/97/282197_tiago_esgaio_20250118231600.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 1, 
+                        'situacao': "Ativo",
+                        'clube': clubes[15], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[17],
+                    },
+                    
+                    
+                    {
+                        'nome': "Pedro Santos",
+                        'idade': 24,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/59/09/545909_pedro_santos_20240807144800.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 89, 
+                        'situacao': "Ativo",
+                        'clube': clubes[15], 
+                        'posicao': posicoes[28],
+                        'equipa': equipas[17],
+                    },
+                    
+                    
+                    {
+                        'nome': "Henrique Araújo",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/80/31/238031_henrique_araujo_20250201205757.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 39, 
+                        'situacao': "Ativo",
+                        'clube': clubes[15], 
+                        'posicao': posicoes[39],
+                        'equipa': equipas[17],
+                    },
+                    
+                    
+                    {
+                        'nome': "Rui Encarnação",
+                        'idade': 26,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/19/92/471992_rui_encarnacao_20250120092416.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 1, 
+                        'situacao': "Ativo",
+                        'clube': clubes[16], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[18],
+                    },
+                    
+                    
+                    {
+                        'nome': "João Aurélio",
+                        'idade': 36,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/55/60/5560_joao_aurelio_20250120092642.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 2, 
+                        'situacao': "Ativo",
+                        'clube': clubes[16], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[18],
+                    },
+                    
+                    
+                    {
+                        'nome': "Jota Garcês",
+                        'idade': 31,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/08/66/170866_jota_garces_20250120093142.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 31, 
+                        'situacao': "Ativo",
+                        'clube': clubes[16], 
+                        'posicao': posicoes[20],
+                        'equipa': equipas[18],
+                    },
+                    
+                                        
+                    {
+                        'nome': "Rúben Macedo",
+                        'idade': 28,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/08/99/160899_ruben_macedo_20250120093403.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 31, 
+                        'situacao': "Ativo",
+                        'clube': clubes[16], 
+                        'posicao': posicoes[30],
+                        'equipa': equipas[18],
+                    },
+                    
+                    
+                    {
+                        'nome': "Guillermo Ochoa",
+                        'idade': 39,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/69/11/26911_guillermo_ochoa_20250120000501.png" ,
+                        'nacionalidade': "México",
+                        'num_camisola': 1, 
+                        'situacao': "Ativo",
+                        'clube': clubes[17], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[19],
+                    },
+                    
+                    
+                    {
+                        'nome': "Rafael Rodrigues",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/03/52/520352_rafael_rodrigues_20250120095441.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 3, 
+                        'situacao': "Ativo",
+                        'clube': clubes[17], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[19],
+                    },
+
+
+                    {
+                        'nome': "Gustavo Mendonça",
+                        'idade': 21,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/58/97/385897_gustavo_mendonca_20250120095915.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 23, 
+                        'situacao': "Ativo",
+                        'clube': clubes[17], 
+                        'posicao': posicoes[15],
+                        'equipa': equipas[19],
+                    },
+                    
+                    {
+                        'nome': "Rodrigo Ribeiro",
+                        'idade': 19,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/46/09/664609_rodrigo_ribeiro_20250120000331.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 20, 
+                        'situacao': "Ativo",
+                        'clube': clubes[17], 
+                        'posicao': posicoes[39],
+                        'equipa': equipas[19],
+                    },
+                    
+                    
+                    
+                    {
+                        'nome': "Francisco Meixedo",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/57/40/505740_francisco_meixedo_20250120225953.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 1, 
+                        'situacao': "Ativo",
+                        'clube': clubes[18], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[20],
+                    },
+                    
+                    
+                    {
+                        'nome': "Fábio Ronaldo",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/26/60/512660_fabio_ronaldo_20240809155531.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 7, 
+                        'situacao': "Ativo",
+                        'clube': clubes[18], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[20],
+                    },
+                    
+                    
+                    {
+                        'nome': "Ferro",
+                        'idade': 27,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/43/68/214368_ferro_20250120230056.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 4, 
+                        'situacao': "Ativo",
+                        'clube': clubes[18], 
+                        'posicao': posicoes[2],
+                        'equipa': equipas[20],
+                    },
+                    
+                    {
+                        'nome': "Diogo Travassos",
+                        'idade': 20,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/23/51/182351_diogo_travassos_20250120230043.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 2, 
+                        'situacao': "Ativo",
+                        'clube': clubes[18], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[20],
+                    },
+                    
+                    
+                    {
+                        'nome': "Rúben Lima",
+                        'idade': 35,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/27/66/52766_ruben_lima_20250120230401.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 28, 
+                        'situacao': "Ativo",
+                        'clube': clubes[18], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[20],
+                    },
+                   
+                   
+                    {
+                        'nome': "Paulo Moreira",
+                        'idade': 35,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/12/94/421294_paulo_moreira_20250120230824.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 19, 
+                        'situacao': "Ativo",
+                        'clube': clubes[18], 
+                        'posicao': posicoes[21],
+                        'equipa': equipas[20],
+                    },
+                    
+                    
+                    {
+                        'nome': "Kikas",
+                        'idade': 26,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/59/55/385955_kikas_20250120231156.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 98, 
+                        'situacao': "Ativo",
+                        'clube': clubes[18], 
+                        'posicao': posicoes[39],
+                        'equipa': equipas[20],
+                    },
+                    
+                    
+                    {
+                        'nome': "Ricado Velho",
+                        'idade': 26,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/74/13/227413_ricardo_velho_20240729164546.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 33, 
+                        'situacao': "Ativo",
+                        'clube': clubes[19], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[21],
+                    },
+                    
+                    {
+                        'nome': "Artur Jorge",
+                        'idade': 30,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/70/99/167099_artur_jorge_20240729165916.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 4, 
+                        'situacao': "Ativo",
+                        'clube': clubes[19], 
+                        'posicao': posicoes[2],
+                        'equipa': equipas[21],
+                    },
+                    
+                    
+                    {
+                        'nome': "Zé Carlos",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/01/74/450174_ze_carlos_20250202231222.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 8, 
+                        'situacao': "Ativo",
+                        'clube': clubes[19], 
+                        'posicao': posicoes[20],
+                        'equipa': equipas[21],
+                    },
+                    
+                    
+                    {
+                        'nome': "André Seruca",
+                        'idade': 24,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/04/28/160428_andre_seruca_20240729165253.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 50, 
+                        'situacao': "Ativo",
+                        'clube': clubes[19], 
+                        'posicao': posicoes[23],
+                        'equipa': equipas[21],
+                    },
+                    
+                    
+                    
+                    {
+                        'nome': "Miguel Menino",
+                        'idade': 22,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/52/36/155236_miguel_menino_20241221195917.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 93, 
+                        'situacao': "Ativo",
+                        'clube': clubes[19], 
+                        'posicao': posicoes[24],
+                        'equipa': equipas[21],
+                    },
                     
                     
                     
                     
+                    {
+                        'nome': "Tiago Madeira",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/34/48/553448_tiago_madeira_20240729170140.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 20, 
+                        'situacao': "Ativo",
+                        'clube': clubes[19], 
+                        'posicao': posicoes[37],
+                        'equipa': equipas[21],
+                    },
                     
+                    
+                   {
+                        'nome': "Tomané",
+                        'idade': 32,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/30/37/133037_tomane_20240729165759.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 9, 
+                        'situacao': "Ativo",
+                        'clube': clubes[19], 
+                        'posicao': posicoes[39],
+                        'equipa': equipas[21],
+                    },
+                    
+                    {
+                        'nome': "Tomané",
+                        'idade': 32,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/30/37/133037_tomane_20240729165759.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 9, 
+                        'situacao': "Ativo",
+                        'clube': clubes[19], 
+                        'posicao': posicoes[39],
+                        'equipa': equipas[21],
+                    },
+                    
+                    {
+                        'nome': "Tomé Sousa",
+                        'idade': 18,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/65/25/746525_tome_sousa_20250120143532.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 76, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[22],
+                    },
+                    
+                    
+                    {
+                        'nome': "Augusto Dabó",
+                        'idade': 20,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/09/15/870915_augusto_dabo_20250120143721.png" ,
+                        'nacionalidade': "Guiné-Bissau",
+                        'num_camisola': 25, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[22],
+                    },
+                    
+                    
+                    {
+                        'nome': "Gonçalo Almeida",
+                        'idade': 21,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/33/31/693331_goncalo_almeida_20250120143816.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 35, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[22],
+                    },
+                    
+                    
+                    
+                    {
+                        'nome': "Tomás Silva",
+                        'idade': 18,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/94/04/669404_tomas_silva_20250120143900.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 75, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[7],
+                        'equipa': equipas[22],
+                    },
+                    
+                    {
+                        'nome': "Leonardo Ferreira",
+                        'idade': 17,
+                        'imagem': "https://www.zerozero.pt/jogador/leonardo-ferreira/877441" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 85, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[2],
+                        'equipa': equipas[22],
+                    },
+                    
+                    
+                    {
+                        'nome': "Miguel Reisinho",
+                        'idade': 25,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/58/00/415800_miguel_reisinho_20250120144052.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 10, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[26],
+                        'equipa': equipas[22],
+                    },
+                    
+                    
+                    {
+                        'nome': "Manuel Namora",
+                        'idade': 26,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/72/68/417268_manuel_namora_20250120144326.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 17, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[39],
+                        'equipa': equipas[22],
+                    },
+                    
+                    {
+                        'nome': "Tiago Machado",
+                        'idade': 20,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/84/78/468478_tiago_machado_20250120144837.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 26, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[39],
+                        'equipa': equipas[22],
+                    },
+                    
+                    {
+                        'nome': "João Barros",
+                        'idade': 19,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/78/11/877811_joao_barros_20250120144948.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 71, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[31],
+                        'equipa': equipas[22],
+                    },
+                    
+                    {
+                        'nome': "Salvador Agra",
+                        'idade': 33,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/38/40/123840_salvador_agra_20250120144314.png" ,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 7, 
+                        'situacao': "Ativo",
+                        'clube': clubes[20], 
+                        'posicao': posicoes[30],
+                        'equipa': equipas[22],
+                    },
                     
                     
                     
