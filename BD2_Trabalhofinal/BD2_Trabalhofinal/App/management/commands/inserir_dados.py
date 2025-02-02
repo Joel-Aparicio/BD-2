@@ -1852,6 +1852,72 @@ class Command(BaseCommand):
                     
                     
                     {
+                        'nome': "Matheus Magalhães",
+                        'idade': 32,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/70/75/147075_matheus_magalhaes_20240816114204.png" ,
+                        'altura': 190,
+                        'peso': 86.0,
+                        'nacionalidade': "Brasil",
+                        'num_camisola': 1, 
+                        'valor_de_mercado': 5.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[6], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[8],
+                    },
+                    
+                    {
+                        'nome': "João Moutinho",
+                        'idade': 38,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/76/08/7608_joao_moutinho_20241019235352.png" ,
+                        'altura': 170,
+                        'peso': 63.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 8, 
+                        'valor_de_mercado': 0.6,
+                        'situacao': "Ativo",
+                        'clube': clubes[6], 
+                        'posicao': posicoes[20],
+                        'equipa': equipas[8],
+                    },
+                    
+                    
+                    {
+                        'nome': "Ricardo Horta",
+                        'idade': 21,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/49/52/74952_ricardo_horta_20240722153939.jpg" ,
+                        'altura': 173,
+                        'peso': 58.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':21, 
+                        'valor_de_mercado': 12.6,
+                        'situacao': "Ativo",
+                        'clube': clubes[6], 
+                        'posicao': posicoes[30],
+                        'equipa': equipas[8],
+                    },
+                    
+                    
+                    {
+                        'nome': "Bruma",
+                        'idade': 30,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/43/12/74312_bruma_20240722153821.jpg" ,
+                        'altura': 173,
+                        'peso': 58.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':7, 
+                        'valor_de_mercado': 10.6,
+                        'situacao': "Ativo",
+                        'clube': clubes[6], 
+                        'posicao': posicoes[31],
+                        'equipa': equipas[8],
+                    },
+                    
+                    
+                    
+                    
+                    
+                    {
                         'nome': "Miguel DaSilba",
                         'idade': 20,
                         'imagem': "https://scontent.fopo4-2.fna.fbcdn.net/v/t39.30808-6/344746020_1637346010072123_4867410465697714811_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=DVsrwPhk258Q7kNvgH3o7Bg&_nc_oc=Adihf5FAwrkOPul27fiIIZ5sWl9QgqpaOhxTXkRHLpkMm6aDOU_hsZFgwH4esDOPLHC2kYAqUqUjwAwca2WuLhGI&_nc_zt=23&_nc_ht=scontent.fopo4-2.fna&_nc_gid=AcL1MlkOSsXsoLQ1CezQnDJ&oh=00_AYBTtVNGx6hIiHfSX0UwGS0Z43p6p4_sZMXhN85KWURkMg&oe=67A55A14" ,
