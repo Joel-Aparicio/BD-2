@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'BD2_Trabalhofinal.App',  # Certifique-se de que este é o caminho correto
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'BD2_Trabalhofinal.App',  # Certifique-se de que este é o caminho correto
     
 ]
 
