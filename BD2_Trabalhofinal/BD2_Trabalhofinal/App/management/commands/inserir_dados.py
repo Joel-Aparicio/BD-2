@@ -972,6 +972,23 @@ class Command(BaseCommand):
                         'posicao': posicoes[26], 
                         'equipa': equipas[0], 
                     },
+                    {
+                        'nome': "MiguelDa Silba",
+                        'idade': 20,
+                        'imagem': "https://instagram.fopo4-1.fna.fbcdn.net/v/t51.2885-19/472306972_1677750903095283_1084486030806483066_n.jpg?_nc_ht=instagram.fopo4-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2AFdjkzo0BmDPhDTxarZcGeTxTpWR9b1u1cItyBHex6NhMrBMq1kq1OyBvsoxD7yYV0vXV7BQlOGy6ypLJ3xtItO&_nc_ohc=tQDz59ze0UYQ7kNvgE-Gn4T&_nc_gid=d2efd71917464344b7c9489be0846290&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AYD9t7lEIT-HGB8vBjrQ6ZueSf1nPop5EypW1fkW_hjkYg&oe=67A52078&_nc_sid=7a9f4b" ,
+                        'altura': 157,
+                        'peso': 63.5,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 21, 
+                        'valor_de_mercado': 99.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[2], 
+                        'posicao': posicoes[12], 
+                        'equipa': equipas[2], 
+                    },
+                    
+                    
+                    
                 ]
                 
                 jogadores = [P_Jogador.objects.create(**data) for data in jogadores_data]
