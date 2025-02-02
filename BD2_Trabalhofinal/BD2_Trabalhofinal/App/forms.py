@@ -176,10 +176,11 @@ class P_JogadorForm(forms.ModelForm):
         choices=[
             ('', 'Selecione a Situação'),
             ('Ativo', 'Ativo'),
-            ('Aleijado', 'Aleijado'),
+            ('Lesionado', 'Lesionado'),
             ('Expulso', 'Expulso'),
             ('Sem Clube', 'Sem Clube'),
-            ('Reformado', 'Reformado'),
+            ('Retirado', 'Retirado'),
+            ('Falecido', 'Falecido'),
         ],
         widget=forms.Select(attrs={'class': 'form-control'}),
         required=True
