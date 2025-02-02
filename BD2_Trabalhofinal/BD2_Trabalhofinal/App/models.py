@@ -21,6 +21,8 @@ class UtilizadorManager(BaseUserManager):
 
         return self.create_user(email, nome, palavra_passe, **extra_fields)
 
+
+
 class Utilizador(AbstractBaseUser, PermissionsMixin):
     utilizador_id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=50)
@@ -40,6 +42,8 @@ class Utilizador(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.nome
 
+
+
 # MONGODB 
 class P_Associacao(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
@@ -58,6 +62,9 @@ class P_Associacao(models.Model): #FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
+
+
+
 
 class P_Estadio(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
@@ -80,6 +87,9 @@ class P_Estadio(models.Model): #FEITO
     def get_id(self):
         return str(self._id)
 
+
+
+
 class P_Posicao(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     nome = models.CharField(max_length=30)
@@ -96,6 +106,9 @@ class P_Posicao(models.Model): #FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
+
+
+
 
 class P_Clube(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
@@ -119,7 +132,11 @@ class P_Clube(models.Model): #FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-        
+     
+
+
+
+     
 class P_Equipa(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     clube = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="equipas")
@@ -136,6 +153,9 @@ class P_Equipa(models.Model): #FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
+    
+    
+    
     
 class P_FormatoCompeticao(models.Model): # FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
@@ -154,6 +174,9 @@ class P_FormatoCompeticao(models.Model): # FEITO
     def get_id(self):
         return str(self._id)
 
+
+
+
 class P_Competicao(models.Model): # FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     nome = models.CharField(max_length=255)
@@ -170,6 +193,8 @@ class P_Competicao(models.Model): # FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
+
+
 
 
 class P_Jogo(models.Model):
@@ -197,6 +222,11 @@ class P_Jogo(models.Model):
     def get_id(self):
         return str(self._id)
 
+
+
+
+
+
 class P_Jogador(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     clube = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, null=True, related_name="jogadores")
@@ -222,7 +252,10 @@ class P_Jogador(models.Model): #FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-        
+    
+
+
+    
 class P_ClubeFavorito(models.Model):
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB => Só para o caso de ser preciso
     utilizador_id = models.IntegerField()
@@ -238,7 +271,10 @@ class P_ClubeFavorito(models.Model):
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-        
+     
+
+
+     
 # --- ESTATÍSTICAS JOGOS
 class P_Golo(models.Model):
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
@@ -260,6 +296,10 @@ class P_Golo(models.Model):
     def get_id(self):
         return str(self._id)
         
+        
+        
+        
+        
 class P_Penalti(models.Model):
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     jogo = models.ForeignKey(P_Jogo, on_delete=models.CASCADE, related_name="golos")
@@ -278,7 +318,10 @@ class P_Penalti(models.Model):
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-        
+   
+
+
+   
 class P_Falta(models.Model):
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     jogo = models.ForeignKey(P_Jogo, on_delete=models.CASCADE, related_name="golos")
@@ -299,7 +342,13 @@ class P_Falta(models.Model):
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-        
+     
+
+
+
+
+
+     
 class P_Substituicao(models.Model):
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     jogo = models.ForeignKey(P_Jogo, on_delete=models.CASCADE, related_name="golos")

@@ -14,9 +14,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+
+
+
+
 from django.contrib import admin
 from django.urls import path
 from .App import views
+
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -25,16 +32,20 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),
     
+    
     # PERFIL
     path('perfil/', views.ver_perfil, name='perfil'),
     path('perfil/editar/dados', views.editar_perfil, name='editar_perfil'),
     path("perfil/editar/senha/", views.editar_senha, name="editar_senha"),
+    
     
     # POSIÇÕES DE CAMPO DOS JOGADORES
     path('admin/posicoes/', views.listar_posicoes, name='listar_posicoes'),
     path('admin/posicoes/adicionar/', views.adicionar_posicao, name='adicionar_posicao'),
     path('admin/posicoes/editar/<str:id>/', views.editar_posicao, name='editar_posicao'),
     path('admin/posicoes/apagar/<str:id>/', views.apagar_posicao, name='apagar_posicao'),
+    
+    
     
     # ASSOCIAÇÕES DE FUTEBOL
     path('admin/associacoes/', views.listar_associacoes, name='listar_associacoes'),
@@ -44,11 +55,16 @@ urlpatterns = [
     path('associacoes/', views.todas_associacoes, name='todas_associacoes'),
     path('associacoes/<str:id>/', views.detalhes_associacao, name='detalhes_associacao'),
     
+    
+    
     # FORMATOS DE COMPETIÇÃO
     path('admin/formatos/', views.listar_formatos, name='listar_formatos'),
     path('admin/formatos/adicionar/', views.adicionar_formato, name='adicionar_formato'),
     path('admin/formatos/editar/<str:id>/', views.editar_formato, name='editar_formato'),
     path('admin/formatos/apagar/<str:id>/', views.apagar_formato, name='apagar_formato'),
+    
+    
+    
     
     # ESTÁDIOS
     path('admin/estadios/', views.listar_estadios, name='listar_estadios'),
@@ -58,6 +74,9 @@ urlpatterns = [
     path('estadios/', views.todos_estadios, name='todos_estadios'),
     path('estadios/<str:id>/', views.detalhes_estadio, name='detalhes_estadio'),
     
+    
+    
+    
     # JOGADORES
     path('admin/jogadores/', views.listar_jogadores, name='listar_jogadores'),
     path('admin/jogadores/adicionar/', views.adicionar_jogador, name='adicionar_jogador'),
@@ -65,6 +84,10 @@ urlpatterns = [
     path('admin/jogadores/apagar/<str:id>/', views.apagar_jogador, name='apagar_jogador'),
     path('jogadores/', views.todos_jogadores, name='todos_jogadores'),
     path('jogadores/<str:id>/', views.detalhes_jogador, name='detalhes_jogador'),
+
+
+
+
 
     # CLUBES  
     path('admin/clubes/', views.listar_clubes, name='listar_clubes'),
@@ -74,15 +97,25 @@ urlpatterns = [
     path('clubes/', views.todos_clubes, name='todos_clubes'),
     path('clubes/<str:id>/', views.detalhes_clube, name='detalhes_clube'),
     
+    
+    
+    
+    
     # EQUIPAS
     path('admin/equipas/', views.listar_equipas, name='listar_equipas'),
     path('admin/equipas/adicionar/', views.adicionar_equipa, name='adicionar_equipa'),
     path('admin/equipas/editar/<str:id>/', views.editar_equipa, name='editar_equipa'),
     path('admin/equipas/apagar/<str:id>/', views.apagar_equipa, name='apagar_equipa'),
     
+    
+    
+    
     # EQUIPAS - CLUBES - JOGADORES
     path('api/equipas-por-clube/<str:clube_id>/', views.get_equipas_por_clube, name='equipas_por_clube'),
     path('api/jogadores-por-clube/', views.get_jogadores_por_clube, name='get_jogadores_por_clube'),
+    
+    
+    
     
     # COMPETIÇÕES
     path('admin/competicoes/', views.listar_competicoes, name='listar_competicoes'),
@@ -92,6 +125,8 @@ urlpatterns = [
     path('competicoes/<str:id>/', views.detalhes_competicao, name='detalhes_competicao'),
     path('competicoes/', views.todas_competicoes, name='todas_competicoes'),
     
+    
+    
     # JOGOS
     path('admin/jogos/', views.listar_jogos, name='listar_jogos'),
     path('admin/jogos/adicionar/', views.adicionar_jogo, name='adicionar_jogo'),    
@@ -100,28 +135,67 @@ urlpatterns = [
     path('jogos/<str:id>/', views.detalhes_jogo, name='detalhes_jogo'),
     path('jogos/', views.todos_jogos, name='todos_jogos'),
     
+    
+    
     # ESTATISTICAS JOGOS
+    
     path('admin/jogos/estatisticas/<str:id>/', views.listar_estatisticas, name='listar_estatisticas'),
+    
     ## Golos
     path('admin/jogos/estatisticas/golo/adicionar/<str:id>/', views.adicionar_golo, name='adicionar_golo'),
     path('admin/jogos/estatisticas/golo/editar/<str:id>/', views.editar_golo, name='editar_golo'),
     path('admin/jogos/estatisticas/golo/apagar/<str:id>/', views.apagar_golo, name='apagar_golo'),
-    ## Penaltis
+    
+    
+    ## Penaltis  
     path('admin/jogos/estatisticas/penalti/adicionar/<str:id>/', views.adicionar_penalti, name='adicionar_penalti'),
     path('admin/jogos/estatisticas/penalti/editar/<str:id>/', views.editar_penalti, name='editar_penalti'),
     path('admin/jogos/estatisticas/penalti/apagar/<str:id>/', views.apagar_penalti, name='apagar_penalti'),
-    ## Faltas
+    
+    
+    ## Faltas  
     path('admin/jogos/estatisticas/falta/adicionar/<str:id>/', views.adicionar_falta, name='adicionar_falta'),
     path('admin/jogos/estatisticas/falta/editar/<str:id>/', views.editar_falta, name='editar_falta'),
     path('admin/jogos/estatisticas/falta/apagar/<str:id>/', views.apagar_falta, name='apagar_falta'),
+    
+    
+    
     ## Subsituições
     path('admin/jogos/estatisticas/substituicao/adicionar/<str:id>/', views.adicionar_substituicao, name='adicionar_substituicao'),
     path('admin/jogos/estatisticas/substituicao/editar/<str:id>/', views.editar_substituicao, name='editar_substituicao'),
     path('admin/jogos/estatisticas/substituicao/apagar/<str:id>/', views.apagar_substituicao, name='apagar_substituicao'),
     
+    
     # CLUBES FAVORITOS
+    
+    
     path('favorito_clube/<str:clube_id>/', views.favorito_clube, name='favorito_clube'),
     path('remover_favorito/<str:clube_id>/', views.remover_favorito, name='remover_favorito'),
 
+
+
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

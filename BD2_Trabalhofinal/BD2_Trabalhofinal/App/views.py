@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 
+
+
 from django.contrib.auth import login, authenticate , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -11,10 +13,14 @@ from django.contrib.auth import update_session_auth_hash
 #from .models import Utilizador  # Certifique-se de importar o seu modelo
 from django.contrib.auth import get_user_model
 
+
+
 #from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 #from django.contrib.auth import logout
 #from django.shortcuts import redirect
+
+
 
 from .models import Utilizador
 from .models import P_Posicao, P_Associacao, P_FormatoCompeticao, P_Estadio, P_Jogador, P_Clube, P_Equipa, P_Competicao, P_Jogo, P_Golo, P_Falta, P_Penalti, P_Substituicao, P_ClubeFavorito
@@ -23,28 +29,42 @@ from .forms import P_PerfilForm, P_SenhaForm
 from .forms import P_GoloForm, P_PenaltiForm, P_SubstituicaoForm, P_FaltaForm
 from bson import ObjectId
 
+
 from django.db.models import Q
 from itertools import groupby
 from operator import attrgetter
 
+
 import logging
 
+
 logger = logging.getLogger(__name__)
+
+
 
 # Dashboard com proteção de login
 @login_required
 def dashboard(request):
     return render(request, 'dashboard.html', {'user': request.user})
 
+
+
 # Página inicial
 def home(request):
     return render(request, 'home.html')
+
+
+
 
 # Lista de utilizadores
 @login_required
 def lista_utilizadores(request):
     utilizadores = Utilizador.objects.all()
     return render(request, 'teste_conetividade.html', {'utilizadores': utilizadores})
+
+
+
+
 
 # View de login
 def login_view(request):
@@ -65,11 +85,17 @@ def login_view(request):
 
     return render(request, 'login.html')
 
+
+
+
 # View de logout
 def logout_view(request):
     logout(request)
     messages.success(request, 'Sessão encerrada com sucesso.')
     return redirect('home')
+
+
+
 
 # Registo de utilizadores
 def register(request):
@@ -105,6 +131,8 @@ def register(request):
 
 
 
+
+
 # --- PERFIL ---
 def ver_perfil(request):
     if request.user.is_authenticated:
@@ -122,6 +150,11 @@ def ver_perfil(request):
     else:
         # Redirecionar para login caso não esteja autenticado
         return redirect('login')
+        
+        
+        
+        
+        
         
 def editar_perfil(request):
     if not request.user.is_authenticated:
@@ -141,6 +174,10 @@ def editar_perfil(request):
 
     return render(request, 'perfil/editar_perfil.html', {'form': form})
 
+
+
+
+
 @login_required
 def editar_senha(request):
     if request.method == "POST":
@@ -158,11 +195,21 @@ def editar_senha(request):
     
     return render(request, "perfil/editar_senha.html", {"form": form})
         
+        
+        
+        
+        
+        
+        
 # --- MONGO DB ---
 ## --- Posições de Campo ---
+
+
 def listar_posicoes(request):
     posicoes = P_Posicao.objects.all()        
     return render(request, 'posicoes/listar_posicoes.html', {'posicoes': posicoes})
+
+
 
 def adicionar_posicao(request):
     if request.method == 'POST':
@@ -173,6 +220,8 @@ def adicionar_posicao(request):
     else:
         form = P_PosicaoForm()
     return render(request, 'posicoes/adicionar_posicao.html', {'form': form})
+
+
 
 def editar_posicao(request, id):
     posicao = get_object_or_404(P_Posicao, _id=ObjectId(id))  # Note the ObjectId conversion
@@ -185,16 +234,22 @@ def editar_posicao(request, id):
         form = P_PosicaoForm(instance=posicao)
     return render(request, 'posicoes/editar_posicao.html', {'form': form}) 
 
+
+
 def apagar_posicao(request, id):
     posicao = get_object_or_404(P_Posicao, _id=ObjectId(id))
     if request.method == 'POST':
         posicao.delete()
         return redirect('listar_posicoes')
     
+    
+    
 ## --- Associações de Futebol ---
 def listar_associacoes(request):
     associacoes = P_Associacao.objects.all()        
     return render(request, 'associacoes/listar_associacoes.html', {'associacoes': associacoes})
+
+
 
 def adicionar_associacao(request):
     if request.method == 'POST':
@@ -212,6 +267,8 @@ def adicionar_associacao(request):
         form = P_AssociacaoForm()
     return render(request, 'associacoes/adicionar_associacao.html', {'form': form})
 
+
+
 def editar_associacao(request, id):
     associacao = get_object_or_404(P_Associacao, _id=ObjectId(id))  # Note the ObjectId conversion
     if request.method == 'POST':
@@ -223,24 +280,34 @@ def editar_associacao(request, id):
         form = P_AssociacaoForm(instance=associacao)
     return render(request, 'associacoes/editar_associacao.html', {'form': form}) 
     
+    
+    
 def apagar_associacao(request, id):
     associacao = get_object_or_404(P_Associacao, _id=ObjectId(id))
     if request.method == 'POST':
         associacao.delete()
         return redirect('listar_associacoes')
-        
+     
+
+     
 def todas_associacoes(request):
     associacao = P_Associacao.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
     return render(request, 'associacoes/todas_associacoes.html', {'associacao': associacao})
+
+
 
 def detalhes_associacao(request, id):
     associacao = get_object_or_404(P_Associacao, _id=ObjectId(id))
     return render(request, 'associacoes/detalhes_associacao.html', {'associacao': associacao})
     
+    
+    
 ## --- Formatos de Competições ---
 def listar_formatos(request):
     formatos = P_FormatoCompeticao.objects.all()
     return render(request, 'formatos/listar_formatos.html', {'formatos': formatos})
+
+
 
 def adicionar_formato(request):
     if request.method == 'POST':
@@ -251,6 +318,8 @@ def adicionar_formato(request):
     else:
         form = P_FormatoCompeticaoForm()
     return render(request, 'formatos/adicionar_formato.html', {'form': form})
+
+
 
 def editar_formato(request, id):
     formato = get_object_or_404(P_FormatoCompeticao, _id=ObjectId(id))
@@ -263,16 +332,22 @@ def editar_formato(request, id):
         form = P_FormatoCompeticaoForm(instance=formato)
     return render(request, 'formatos/editar_formato.html', {'form': form})
 
+
+
 def apagar_formato(request, id):
     formato = get_object_or_404(P_FormatoCompeticao, _id=ObjectId(id))
     if request.method == 'POST':
         formato.delete()
         return redirect('listar_formatos')
 
+
+
 ## --- Estádios ---
 def listar_estadios(request):
     estadios = P_Estadio.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
     return render(request, 'estadios/listar_estadios.html', {'estadios': estadios})
+
+
 
 def adicionar_estadio(request):
     if request.method == 'POST':
@@ -288,6 +363,8 @@ def adicionar_estadio(request):
         form = P_EstadioForm()
     return render(request, 'estadios/adicionar_estadio.html', {'form': form})
 
+
+
 def editar_estadio(request, id):
     estadio = get_object_or_404(P_Estadio, _id=ObjectId(id))
     if request.method == 'POST':
@@ -299,24 +376,34 @@ def editar_estadio(request, id):
         form = P_EstadioForm(instance=estadio)
     return render(request, 'estadios/editar_estadio.html', {'form': form})
 
+
+
 def apagar_estadio(request, id):
     estadio = get_object_or_404(P_Estadio, _id=ObjectId(id))
     if request.method == 'POST':
         estadio.delete()
         return redirect('listar_estadios')
 
+
+
 def todos_estadios(request):
     estadio = P_Estadio.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
     return render(request, 'estadios/todos_estadios.html', {'estadio': estadio})
+    
+    
     
 def detalhes_estadio(request, id):
     estadio = get_object_or_404(P_Estadio, _id=ObjectId(id))
     return render(request, 'estadios/detalhes_estadio.html', {'estadio': estadio})
     
+    
+    
 ## --- Jogadores ---
 def listar_jogadores(request):
     jogadores = P_Jogador.objects.all().order_by('nome', 'num_camisola')  # Ordenar por Nome e Número de Camisola para melhor organização
     return render(request, 'jogadores/listar_jogadores.html', {'jogadores': jogadores})
+
+
 
 def adicionar_jogador(request):
     if request.method == 'POST':
@@ -332,6 +419,8 @@ def adicionar_jogador(request):
         form = P_JogadorForm()
     return render(request, 'jogadores/adicionar_jogador.html', {'form': form})
     
+    
+    
 def editar_jogador(request, id):
     jogador = get_object_or_404(P_Jogador, _id=ObjectId(id))
     if request.method == 'POST':
@@ -343,15 +432,21 @@ def editar_jogador(request, id):
         form = P_JogadorForm(instance=jogador)
     return render(request, 'jogadores/editar_jogador.html', {'form': form})
     
+    
+    
 def apagar_jogador(request, id):
     jogador = get_object_or_404(P_Jogador, _id=ObjectId(id))
     if request.method == 'POST':
         jogador.delete()
         return redirect('listar_jogadores')
-        
+       
+
+       
 def todos_jogadores(request):
     jogador = P_Jogador.objects.all().order_by('nome', 'num_camisola')  # Ordenar por Nome e Número de Camisola para melhor organização
     return render(request, 'jogadores/todos_jogadores.html', {'jogador': jogador})
+    
+    
     
 def detalhes_jogador(request, id):
     jogador = get_object_or_404(P_Jogador, _id=ObjectId(id))
@@ -382,10 +477,14 @@ def detalhes_jogador(request, id):
 
     return render(request, 'jogadores/detalhes_jogador.html', context)
 
+
+
 ## --- Clubes ---
 def listar_clubes(request):
     clubes = P_Clube.objects.all().order_by('nome') # Ordenar por Nome
     return render(request, 'clubes/listar_clubes.html', {'clubes': clubes})
+    
+    
     
 def adicionar_clube(request):
     if request.method == 'POST':
@@ -407,6 +506,9 @@ def adicionar_clube(request):
         form = P_ClubeForm()
     return render(request, 'clubes/adicionar_clube.html', {'form': form})
     
+    
+    
+    
 def editar_clube(request, id):
     clube = get_object_or_404(P_Clube, _id=ObjectId(id))
     if request.method == 'POST':
@@ -418,15 +520,25 @@ def editar_clube(request, id):
         form = P_ClubeForm(instance=clube)
     return render(request, 'clubes/editar_clube.html', {'form': form})
     
+    
+    
 def apagar_clube(request, id):
     clube = get_object_or_404(P_Clube, _id=ObjectId(id))
     if request.method == 'POST':
         clube.delete()
         return redirect('listar_clubes')
         
+        
+        
+        
+        
 def todos_clubes(request):
     clube = P_Clube.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
     return render(request, 'clubes/todos_clubes.html', {'clube': clube})
+    
+    
+    
+    
     
 def detalhes_clube(request, id):
     clube = get_object_or_404(P_Clube, _id=ObjectId(id))
@@ -453,14 +565,24 @@ def detalhes_clube(request, id):
         'is_favorito': is_favorito
     })
 
+
+
+
+
 def todos_clubes(request):
     clubes = P_Clube.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
     return render(request, 'clubes/todos_clubes.html', {'clubes': clubes})
+    
+    
+    
     
 ## --- Equipas ---
 def listar_equipas(request):
     equipas = P_Equipa.objects.all()
     return render(request, 'equipas/listar_equipas.html', {'equipas': equipas})
+
+
+
 
 def adicionar_equipa(request):
     if request.method == 'POST':
@@ -478,6 +600,10 @@ def adicionar_equipa(request):
         form = P_EquipaForm()
     return render(request, 'equipas/adicionar_equipa.html', {'form': form})
 
+
+
+
+
 def editar_equipa(request, id):
     equipa = get_object_or_404(P_Equipa, _id=ObjectId(id))
     if request.method == 'POST':
@@ -489,6 +615,10 @@ def editar_equipa(request, id):
         form = P_EquipaForm(instance=equipa)
     return render(request, 'equipas/editar_equipa.html', {'form': form})
     
+    
+    
+    
+    
 def apagar_equipa(request, id):
     equipa = get_object_or_404(P_Equipa, _id=ObjectId(id))
     if request.method == 'POST':
@@ -497,10 +627,16 @@ def apagar_equipa(request, id):
         
 
 
+
+
+
+
 ## --- Competições ---
 def listar_competicoes(request):
     competicoes = P_Competicao.objects.all()
     return render(request, 'competicoes/listar_competicoes.html', {'competicoes': competicoes})
+
+
 
 def adicionar_competicao(request):
     if request.method == 'POST':
@@ -516,6 +652,8 @@ def adicionar_competicao(request):
         form = P_CompeticaoForm()
     return render(request, 'competicoes/adicionar_competicao.html', {'form': form})
 
+
+
 def editar_competicao(request, id):
     competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
     if request.method == 'POST':
@@ -527,15 +665,21 @@ def editar_competicao(request, id):
         form = P_CompeticaoForm(instance=competicao)
     return render(request, 'competicoes/editar_competicao.html', {'form': form})
 
+
+
 def apagar_competicao(request, id):
     competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
     if request.method == 'POST':
         competicao.delete()
         return redirect('listar_competicoes')
         
+        
+        
 def todas_competicoes(request):
     competicoes = P_Competicao.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
     return render(request, 'competicoes/todas_competicoes.html', {'competicoes': competicoes})
+    
+    
     
 def detalhes_competicao(request, id):
     competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
@@ -547,10 +691,19 @@ def detalhes_competicao(request, id):
     })
     
     
+    
+    
+    
+    
+    
+    
+    
  # --- JOGOS ---
 def listar_jogos(request):
     jogos = P_Jogo.objects.all()
     return render(request, 'jogos/listar_jogos.html', {'jogos': jogos})
+
+
 
 def adicionar_jogo(request):
     if request.method == 'POST':
@@ -561,6 +714,8 @@ def adicionar_jogo(request):
     else:
         form = P_JogoForm()
     return render(request, 'jogos/adicionar_jogo.html', {'form': form})
+
+
 
 
 def editar_jogo(request, id):
@@ -574,16 +729,23 @@ def editar_jogo(request, id):
         form = P_JogoForm(instance=jogo)
     return render(request, 'jogos/editar_jogo.html', {'form': form})
 
+
+
 def apagar_jogo(request, id):
     jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))
     if request.method == 'POST':
         jogo.delete()
         return redirect('listar_jogos')
-        
+       
+
+       
 def todos_jogos(request):
     jogos = P_Jogo.objects.all().order_by('dia')  # Ordenar por Dia para melhor organização
     return render(request, 'jogos/todos_jogos.html', {'jogos': jogos})
     
+
+
+
 
 def detalhes_jogo(request, id):
     try:
@@ -630,6 +792,8 @@ def detalhes_jogo(request, id):
 
 
 
+
+
         
 # --- ESTATISTICAS ---
 def listar_estatisticas(request, id):
@@ -646,6 +810,12 @@ def listar_estatisticas(request, id):
         return render(request, 'estatisticas/listar_estatisticas.html', {'jogo': jogo, 'estatisticas': estatisticas})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+
+
+
+
+
+
 
 #Golos
 def adicionar_golo(request, id):
@@ -665,6 +835,8 @@ def adicionar_golo(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
+
+
 def editar_golo(request, id):
     try:
         golo = get_object_or_404(P_Golo, _id=ObjectId(id))
@@ -681,6 +853,9 @@ def editar_golo(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
+
+
+
 def apagar_golo(request, id):
     try:
         # Verificar se o método é POST
@@ -695,8 +870,12 @@ def apagar_golo(request, id):
             return JsonResponse({'error': 'Método não permitido'}, status=405)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
-        
+     
+
+
+     
 #Penáltis
+
 def adicionar_penalti(request, id):
     try:
         jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))  # Converte o id para ObjectId
@@ -714,6 +893,9 @@ def adicionar_penalti(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
+
+
+
 def editar_penalti(request, id):
     try:
         penalti = get_object_or_404(P_Penalti, _id=ObjectId(id))
@@ -729,7 +911,9 @@ def editar_penalti(request, id):
         return render(request, 'estatisticas/editar_penalti.html', {'form': form, 'penalti': penalti, 'jogo': jogo})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
-        
+   
+
+   
 def apagar_penalti(request, id):
     try:
         if request.method == 'POST':
@@ -740,6 +924,11 @@ def apagar_penalti(request, id):
             return JsonResponse({'error': 'Método não permitido'}, status=405)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+        
+        
+        
+        
+        
         
 #Faltas
 def adicionar_falta(request, id):
@@ -759,6 +948,9 @@ def adicionar_falta(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
+
+
+
 def editar_falta(request, id):
     try:
         falta = get_object_or_404(P_Falta, _id=ObjectId(id))
@@ -775,6 +967,9 @@ def editar_falta(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
         
+        
+        
+        
 def apagar_falta(request, id):
     try:
         if request.method == 'POST':
@@ -785,6 +980,10 @@ def apagar_falta(request, id):
             return JsonResponse({'error': 'Método não permitido'}, status=405)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+        
+        
+        
+        
         
 #Substituições
 def adicionar_substituicao(request, id):
@@ -803,6 +1002,10 @@ def adicionar_substituicao(request, id):
         return render(request, 'estatisticas/adicionar_substituicao.html', {'form': form, 'jogo': jogo})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+
+
+
+
 
 def editar_substituicao(request, id):
     try:
@@ -824,6 +1027,10 @@ def editar_substituicao(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
         
+        
+        
+        
+        
 def apagar_substituicao(request, id):
     try:
         if request.method == 'POST':
@@ -835,6 +1042,9 @@ def apagar_substituicao(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
+    
+    
+    
     
 # --- Clubes Favoritos ---
 @login_required
@@ -853,6 +1063,9 @@ def favorito_clube(request, clube_id):
     
     return redirect('detalhes_clube', id=clube.get_id())
     
+    
+    
+    
 def remover_favorito(request, clube_id):
     clube = get_object_or_404(P_Clube, _id=ObjectId(clube_id))
     utilizador = request.user  # O utilizador logado
@@ -864,6 +1077,8 @@ def remover_favorito(request, clube_id):
         favorito.delete()
 
     return redirect('perfil')
+
+
 
 
 # --- OUTROS ---
@@ -887,7 +1102,10 @@ def get_equipas_por_clube(request, clube_id):
     except Exception as e:
         print(f"Erro: {str(e)}")  # Debug
         return JsonResponse({'error': str(e)}, status=400)
-        
+      
+
+
+      
 def get_jogadores_por_clube(request):
     clube_id = request.GET.get('clube_id')
     jogo_id = request.GET.get('jogo_id')
@@ -934,3 +1152,23 @@ def get_jogadores_por_clube(request):
             return JsonResponse({'error': f'Erro inesperado: {str(e)}'}, status=400)
             
     return JsonResponse({'error': 'Parâmetros obrigatórios faltando'}, status=400)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

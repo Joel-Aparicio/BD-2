@@ -1,16 +1,19 @@
 1. Arquitetura Geral
 Este projeto pode ser dividido em três camadas principais:
 
+
 Camada de Apresentação (Front-end): Interface do usuário para interagir com a aplicação.
 Camada de Aplicação (Back-end): Lógica de negócios, regras, e processamento.
 Camada de Dados (Banco de Dados): Armazenamento e gestão de dados.
 Tecnologias sugeridas:
+
 
 Front-end: html css 
 Back-end:Python com Django/Flask.
 Banco de Dados: PostgreSQL, MongoDB.
 2. Modelagem de Dados (Diagrama de Entidades e Relacionamentos)
 Ficheiro : Conceptual Data_2.cdm
+
 
 3. Funcionalidades e Regras de Negócio
 Administração: O administrador pode gerenciar competições e clubes.
@@ -21,12 +24,14 @@ Jogos e Competições: Registro de dados completos de cada partida e seu víncul
 Histórico de Competições: Exibição de campeões anteriores e detalhes completos das edições passadas.
 Favoritos do Utilizador: O utilizador pode marcar várias equipes como favoritas para fácil acesso.
 
+
 4. Fluxo de Dados
 Administrador cria e gerencia competições e clubes.
 Usuários visualizam informações detalhadas sobre clubes, jogadores, e competições.
 Dados de jogos são atualizados e registrados após as partidas.
 Consultas para ver campeões anteriores e estatísticas detalhadas de competições.
 Favoritos permite que os usuários acompanhem clubes de preferência.
+
 
 5. Requisitos de Segurança e Autenticação
 Implementar autenticação segura para administradores e utilizadores.

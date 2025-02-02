@@ -26,7 +26,9 @@ class P_PerfilForm(forms.ModelForm):
         if Utilizador.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
             raise forms.ValidationError("Este email já está em uso por outro utilizador.")
         return email
-               
+             
+
+             
 class P_SenhaForm(PasswordChangeForm):
     old_password = forms.CharField(
         label="Senha Atual",
@@ -40,6 +42,8 @@ class P_SenhaForm(PasswordChangeForm):
         label="Confirme a Nova Senha",
         widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Confirme sua nova senha"}),
     )
+
+
 
 
 # --- Website ---
@@ -60,6 +64,9 @@ class P_PosicaoForm(forms.ModelForm):
         }
         
 
+        
+        
+        
         
 class P_AssociacaoForm(forms.ModelForm):
     class Meta:
@@ -86,7 +93,10 @@ class P_AssociacaoForm(forms.ModelForm):
         if 'imagem' in cleaned_data and cleaned_data['imagem'] == '':
             cleaned_data['imagem'] = None
         return cleaned_data
-        
+    
+
+
+    
 class P_FormatoCompeticaoForm(forms.ModelForm):
     class Meta:
         model = P_FormatoCompeticao
@@ -105,6 +115,10 @@ class P_FormatoCompeticaoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['valor_de_mercado'].initial = 0.0
+
+
+
+
 
 class P_EstadioForm(forms.ModelForm):
     estado = forms.ChoiceField(
@@ -151,6 +165,9 @@ class P_EstadioForm(forms.ModelForm):
         return cleaned_data
         
 
+
+
+
 class P_JogadorForm(forms.ModelForm):
    clube = forms.ModelChoiceField(
        queryset=P_Clube.objects.all(),
@@ -185,6 +202,7 @@ class P_JogadorForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'}),
         required=True
     )
+    
     
    def __init__(self, *args, **kwargs):
        super().__init__(*args, **kwargs)       
@@ -248,6 +266,10 @@ class P_JogadorForm(forms.ModelForm):
            'clube': 'Clube (opcional)',
            'equipa': 'Equipa (opcional)'
        }
+
+
+
+
 
 class P_ClubeForm(forms.ModelForm):
     associacao = forms.ModelChoiceField(
@@ -325,6 +347,10 @@ class P_ClubeForm(forms.ModelForm):
         return cleaned_data
         
         
+        
+        
+        
+        
 class P_EquipaForm(forms.ModelForm):
     clube = forms.ModelChoiceField(
         queryset=P_Clube.objects.filter(estado="Ativo"),
@@ -358,6 +384,11 @@ class P_EquipaForm(forms.ModelForm):
             'nome': 'Nome da Equipa',
             'estado': 'Estado da Equipa',
         }
+        
+        
+        
+        
+        
         
 
 class P_CompeticaoForm(forms.ModelForm):
@@ -426,7 +457,11 @@ class P_CompeticaoForm(forms.ModelForm):
         }
         
         
-        
+       
+
+
+
+       
         
 class P_JogoForm(forms.ModelForm):
 
@@ -502,6 +537,8 @@ class P_JogoForm(forms.ModelForm):
     )
 
     
+    
+    
     def clean(self):
         cleaned_data = super().clean()
         
@@ -522,15 +559,20 @@ class P_JogoForm(forms.ModelForm):
         if duracao and duracao < 90:
             self.add_error('duracao', 'A duração mínima deve ser 90 minutos')
         
+        
         # Validar estado
         estado = cleaned_data.get('estado')
         if not estado:
             self.add_error('estado', 'Estado é obrigatório')
             
         # Validar dia
+        
+        
         dia = cleaned_data.get('dia')
         if not dia:
             self.add_error('dia', 'Dia é obrigatório')
+        
+        
         
         # Validar se o estádio está disponível naquele dia
         estadio = cleaned_data.get('estadio')
@@ -541,13 +583,16 @@ class P_JogoForm(forms.ModelForm):
                 estadio=estadio
             )
             
+            
             # Se estiver editando, excluir o jogo atual da verificação
             if self.instance and self.instance.pk:
                 jogos_mesmo_dia = jogos_mesmo_dia.exclude(pk=self.instance.pk)
             
+            
             if jogos_mesmo_dia.exists():
                 raise ValidationError('Os clubes não podem ser iguais')
                 self.add_error('estadio', 'Este estádio já tem um jogo marcado para este dia!')
+            
             
         # Converter hora para string no formato HH:mm
         hora = cleaned_data.get('hora')
@@ -555,6 +600,7 @@ class P_JogoForm(forms.ModelForm):
             cleaned_data['hora'] = hora.strftime('%H:%M')
         
         return cleaned_data
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -565,31 +611,43 @@ class P_JogoForm(forms.ModelForm):
         self.fields['equipa_casa'].label_from_instance = lambda obj: f"{obj.nome} ({obj.clube.nome})"
         self.fields['equipa_casa'].to_python = convert_to_equipa
     
+    
         # Inicialmente, não mostrar nenhuma equipa
         self.fields['equipa_fora'].queryset = P_Equipa.objects.none()
         self.fields['equipa_fora'].label_from_instance = lambda obj: f"{obj.nome} ({obj.clube.nome})"
         self.fields['equipa_fora'].to_python = convert_to_equipa
+        
         
         # CASA
         self.fields['clube_casa'].label_from_instance = lambda obj: f"{obj.nome}"
         self.fields['clube_casa'].to_python = convert_to_clube
         self.fields['equipa_casa'].label_from_instance = lambda obj: f"{obj.nome} ({obj.clube.nome})"
         self.fields['equipa_casa'].to_python = convert_to_equipa
-        # FORA
+       
+
+       # FORA
         self.fields['clube_fora'].label_from_instance = lambda obj: f"{obj.nome}"
         self.fields['clube_fora'].to_python = convert_to_clube
         self.fields['equipa_fora'].label_from_instance = lambda obj: f"{obj.nome} ({obj.clube.nome})"
         self.fields['equipa_fora'].to_python = convert_to_equipa
         
+        
         # COMPETICAO
         self.fields['competicao'].label_from_instance = lambda obj: f"{obj.nome}"
         self.fields['competicao'].to_python = convert_to_competicao
-        # ESTADIO
+       
+
+       # ESTADIO
         self.fields['estadio'].label_from_instance = lambda obj: f"{obj.nome}"
         self.fields['estadio'].to_python = convert_to_estadio
+        
+        
         # VENCEDOR
         self.fields['vencedor'].label_from_instance = lambda obj: f"{obj.nome}"
         self.fields['vencedor'].to_python = convert_to_clube
+        
+        
+        
         
         
         # Se estivermos "EDITAR" um jogo
@@ -606,7 +664,10 @@ class P_JogoForm(forms.ModelForm):
                 # Se houver algum erro, mantenha os querysets vazios
                 self.fields['equipa_casa'].queryset = P_Equipa.objects.none()
                 self.fields['equipa_fora'].queryset = P_Equipa.objects.none()
-                
+          
+
+
+          
         # Preencher o campo 'vencedor' apenas com os clubes do jogo (casa e fora)
         if self.instance and self.instance.pk:  # Verifica se é "EDITAR"
             clube_casa = getattr(self.instance, 'clube_casa', None)
@@ -618,6 +679,11 @@ class P_JogoForm(forms.ModelForm):
                 self.fields['vencedor'].queryset = P_Clube.objects.none()
         else:  # No caso de "ADICIONAR", exibe todos os clubes
             self.fields['vencedor'].queryset = P_Clube.objects.all()
+            
+            
+            
+            
+            
 
     class Meta:
         model = P_Jogo
@@ -639,6 +705,12 @@ class P_JogoForm(forms.ModelForm):
             'penaltis': 'Houve Penáltis?'
         }
 
+
+
+
+
+
+
 # ESTATISTICAS
 class P_GoloForm(forms.ModelForm):
     clube = forms.ModelChoiceField(
@@ -658,6 +730,8 @@ class P_GoloForm(forms.ModelForm):
         empty_label="Escolha o jogador"
     )
 
+
+
     def __init__(self, *args, jogo=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['minuto'].initial = 0        
@@ -669,6 +743,7 @@ class P_GoloForm(forms.ModelForm):
                 self.fields['clube'].queryset = P_Clube.objects.filter(
                     _id__in=[jogo.clube_casa._id, jogo.clube_fora._id]
                 )
+            
             
             # Se estivermos editando um golo existente
             if self.instance and self.instance.pk and self.instance.clube:
@@ -684,6 +759,7 @@ class P_GoloForm(forms.ModelForm):
                         equipa=equipa
                     )
         
+        
         self.fields['clube'].label_from_instance = lambda obj: f"{obj.nome}"
         self.fields['clube'].to_python = convert_to_clube
         self.fields['jogador'].label_from_instance = lambda obj: f"{obj.nome}"
@@ -691,7 +767,9 @@ class P_GoloForm(forms.ModelForm):
         
         self.jogo = jogo
         
+        
     class Meta:
+       
         model = P_Golo
         fields = ['clube', 'jogador', 'penalti', 'minuto', 'compensacao']
         widgets = {
@@ -714,6 +792,11 @@ class P_GoloForm(forms.ModelForm):
             'compensacao': 'Compensação (Se existir)',
             'penalti': 'Penálti?'
         }
+        
+        
+        
+        
+        
         
 class P_PenaltiForm(forms.ModelForm):
     clube = forms.ModelChoiceField(
@@ -766,6 +849,8 @@ class P_PenaltiForm(forms.ModelForm):
         
         self.jogo = jogo
         
+        
+        
     class Meta:
         model = P_Penalti
         fields = ['numero', 'clube', 'jogador', 'golo']
@@ -782,6 +867,12 @@ class P_PenaltiForm(forms.ModelForm):
             'numero': 'Número do Penálti',
             'golo': 'Golo?'
         }
+
+
+
+
+
+
 
 class P_FaltaForm(forms.ModelForm):
     clube = forms.ModelChoiceField(
@@ -800,6 +891,9 @@ class P_FaltaForm(forms.ModelForm):
         }),
         empty_label="Escolha o jogador"
     )
+    
+    
+    
     
     def __init__(self, *args, jogo=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -835,6 +929,9 @@ class P_FaltaForm(forms.ModelForm):
         
         self.jogo = jogo
         
+        
+        
+        
     class Meta:
         model = P_Falta
         fields = ['clube', 'jogador', 'minuto', 'compensacao', 'cartao', 'cartao_cor']
@@ -860,7 +957,11 @@ class P_FaltaForm(forms.ModelForm):
             'cartao': 'Recebeu Cartão?',
             'cartao_cor': 'Cor do Cartão'
         }
-        
+       
+
+
+
+       
 class P_SubstituicaoForm(forms.ModelForm):
     clube = forms.ModelChoiceField(
         queryset=P_Clube.objects.none(),
@@ -886,6 +987,7 @@ class P_SubstituicaoForm(forms.ModelForm):
         }),
         empty_label="Escolha o jogador que entrou"
     )
+    
     
     def __init__(self, *args, jogo=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -935,6 +1037,9 @@ class P_SubstituicaoForm(forms.ModelForm):
             
         return cleaned_data
         
+        
+        
+        
     class Meta:
         model = P_Substituicao
         fields = ['clube', 'jogador_sai', 'jogador_entra', 'minuto', 'compensacao']
@@ -956,3 +1061,38 @@ class P_SubstituicaoForm(forms.ModelForm):
             'minuto': 'Minuto da Substituição',
             'compensacao': 'Compensação (Se existir)',
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

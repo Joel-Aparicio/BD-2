@@ -2226,13 +2226,31 @@ class Command(BaseCommand):
                         'nome': "Ivan Zlobin",
                         'idade': 27,
                         'imagem': "https://www.zerozero.pt/img/jogadores/new/68/11/376811_ivan_zlobin_20250201005601.png" ,
-                        'nacionalidade': "Portugal",
-                        'num_camisola':19, 
+                        'nacionalidade': "Russia",
+                        'num_camisola':1, 
                         'situacao': "Ativo",
-                        'clube': clubes[9], 
-                        'posicao': posicoes[30],
-                        'equipa': equipas[41],
+                        'clube': clubes[11], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[13],
                     },
+                    
+                    
+                    
+                    
+                    
+                    
+                   {
+                        'nome': "Hugo Cunha",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/63/45/426345_hugo_cunha_20250201005526.png" ,
+                        'nacionalidade': "Russia",
+                        'num_camisola':1, 
+                        'situacao': "Ativo",
+                        'clube': clubes[11], 
+                        'posicao': posicoes[0],
+                        'equipa': equipas[13],
+                    },
+                    
                     
                     
                     {

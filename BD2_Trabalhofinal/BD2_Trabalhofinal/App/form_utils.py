@@ -5,6 +5,7 @@ from .models import P_Clube, P_Jogador, P_Posicao, P_Associacao, P_Estadio, P_Eq
 # Estas funções servem para o forms.py
 # Têm o objetivo de converter as chaves estrangeiras num ObjectId
 
+
 def convert_to_clube(value):
     if not value:
         return None
@@ -14,6 +15,8 @@ def convert_to_clube(value):
         return value
     except Exception as e:
         raise ValidationError('Clube inválido')
+
+
 
 def convert_to_jogador(value):
     if not value:
@@ -25,6 +28,8 @@ def convert_to_jogador(value):
     except Exception as e:
         raise ValidationError('Jogador inválido')
 
+
+
 def convert_to_posicao(value):
     if not value:
         return None
@@ -34,6 +39,8 @@ def convert_to_posicao(value):
         return value
     except Exception as e:
         raise ValidationError('Posição inválida')
+
+
 
 def convert_to_associacao(value):
     if not value:
@@ -45,6 +52,8 @@ def convert_to_associacao(value):
     except Exception as e:
         raise ValidationError('Associação inválida')
 
+
+
 def convert_to_estadio(value):
     if not value:
         return None
@@ -54,6 +63,8 @@ def convert_to_estadio(value):
         return value
     except Exception as e:
         raise ValidationError('Estádio inválido')
+
+
 
 def convert_to_equipa(value):
     if not value:
@@ -65,6 +76,8 @@ def convert_to_equipa(value):
     except Exception as e:
         raise ValidationError('Equipa inválida')
 
+
+
 def convert_to_formato(value):
     if not value:
         return None
@@ -75,6 +88,8 @@ def convert_to_formato(value):
     except Exception as e:
         raise ValidationError('Formato inválido')
 
+
+
 def convert_to_competicao(value):
     if not value:
         return None
@@ -84,3 +99,7 @@ def convert_to_competicao(value):
         return value
     except Exception as e:
         raise ValidationError('Competição inválida')
+        
+        
+        
+        
