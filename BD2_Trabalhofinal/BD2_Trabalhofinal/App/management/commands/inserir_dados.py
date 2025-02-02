@@ -2216,8 +2216,8 @@ class Command(BaseCommand):
                         'num_camisola':19, 
                         'situacao': "Ativo",
                         'clube': clubes[9], 
-                        'posicao': posicoes[30],
-                        'equipa': equipas[41],
+                        'posicao': posicoes[41],
+                        'equipa': equipas[11],
                     },
                     
                     
