@@ -394,6 +394,14 @@ class Command(BaseCommand):
                         "lotacao": 600
                     },
                    
+                    {
+                        "nome": "Estádio Municipal da Pedreira",
+                        "imagem": "https://www.zerozero.pt/img/estadios/155/182155_ori_municipal_da_pedreira.jpg",
+                        "pais": "Portugal",
+                        "cidade": "São Pedro do Sul",
+                        "estado": "Ativo",
+                        "lotacao": 2000
+                    },                   
                 ]
                 
                 estadios = [P_Estadio.objects.create(**data) for data in estadios_data]
@@ -712,6 +720,18 @@ class Command(BaseCommand):
                         'associacao': associacoes[17],  
                         'estadio': estadios[21]  
                     },
+                    
+                    {
+                        'nome': "CDDrizes",
+                        'imagem': "https://www.zerozero.pt/img/logos/equipas/68/15068_logo_drizes.gif",
+                        'ano_fundacao': 1962,
+                        'ano_extinto': 2015,
+                        'pais': "Portugal",
+                        'cidade': "Sao Pedro do Sul",
+                        'estado': "Extinto",
+                        'associacao': associacoes[0],  
+                        'estadio': estadios[21]  
+                    },
                 ]
                 
                 clubes = [P_Clube.objects.create(**data) for data in clubes_data]
@@ -899,7 +919,7 @@ class Command(BaseCommand):
                     {
                         'nome': "Viktor Gyökeres",
                         'idade': 26,
-                        'imagem': "Thttps://i.guim.co.uk/img/media/949db9aed8c784769dd16baf88ba4a6e16da2e4d/233_511_3026_1815/master/3026.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=83d72cdfe662a162e809d77ca049ff6f" ,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/39/56/473956_viktor_gyokeres_20250118232350.png" ,
                         'altura': 189,
                         'peso': 90.0,
                         'nacionalidade': "Suécia",
@@ -907,7 +927,7 @@ class Command(BaseCommand):
                         'valor_de_mercado': 77.0,
                         'situacao': "Ativo",
                         'clube': clubes[3], # Clube Sporting
-                        'posicao': posicoes[7], # Posição Avançado (Ponta de Lança)
+                        'posicao': posicoes[39], # Posição Avançado (Ponta de Lança)
                         'equipa': equipas[2], # Equipa Principal Sporting
                     },
                     {
@@ -921,7 +941,7 @@ class Command(BaseCommand):
                         'valor_de_mercado': 3.0,
                         'situacao': "Ativo",
                         'clube': clubes[4], # Clube Benfica
-                        'posicao': posicoes[6], # Posição Avançado (Extrema Direita)
+                        'posicao': posicoes[30], # Posição Avançado (Extrema Direita)
                         'equipa': equipas[0], # Equipa Principal Sporting
                     },
                     {
@@ -935,8 +955,22 @@ class Command(BaseCommand):
                         'valor_de_mercado': 1.0,
                         'situacao': "Ativo",
                         'clube': clubes[4], # Clube Benfica
-                        'posicao': posicoes[3], # Posição Médio (Médio Defensivo)
+                        'posicao': posicoes[12], # Posição Médio (Médio Defensivo)
                         'equipa': equipas[0], # Equipa Principal Sporting
+                    },
+                    {
+                        'nome': "Marco Vicente Rodrigues",
+                        'idade': 20,
+                        'imagem': "Thttps://i.guim.co.uk/img/media/949db9aed8c784769dd16baf88ba4a6e16da2e4d/233_511_3026_1815/master/3026.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=83d72cdfe662a162e809d77ca049ff6f" ,
+                        'altura': 177,
+                        'peso': 70.5,
+                        'nacionalidade': "Portugal",
+                        'num_camisola': 10, 
+                        'valor_de_mercado': 99999.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[0], 
+                        'posicao': posicoes[26], 
+                        'equipa': equipas[0], 
                     },
                 ]
                 
