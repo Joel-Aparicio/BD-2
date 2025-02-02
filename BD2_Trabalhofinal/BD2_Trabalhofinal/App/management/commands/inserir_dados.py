@@ -206,13 +206,13 @@ class Command(BaseCommand):
                         'lotacao': 6912
                     },
                     {
-                        'nome': "Estádio Municipal de Aveiro",
-                        'imagem': "https://upload.wikimedia.org/wikipedia/commons/e/ef/Nt-Aveiro-Estadio_Beira-Mar.jpg",
+                        'nome': "Estádio Algarve",
+                        'imagem': "https://www.zerozero.pt/img/estadios/048/1155048_ori_estadio_do_algarve.jpg",
                         'pais': "Portugal",
-                        'cidade': "Aveiro",
+                        'cidade': "Algarve",
                         'inauguracao': 2003,
                         'estado': 'Ativo',
-                        'lotacao': 30127
+                        'lotacao': 30305
                     },
                     {
                         'nome': "Estádio do Dragão",
@@ -1557,7 +1557,7 @@ class Command(BaseCommand):
                         'situacao': "Ativo",
                         'clube': clubes[4], # Clube Benfica
                         'posicao': posicoes[30], # Posição Avançado (Extrema Direita)
-                        'equipa': equipas[0], # Equipa Principal Sporting
+                        'equipa': equipas[3], # Equipa Principal Sporting
                     },
                     {
                         'nome': "Nuno Félix",
@@ -1571,8 +1571,172 @@ class Command(BaseCommand):
                         'situacao': "Ativo",
                         'clube': clubes[4], # Clube Benfica
                         'posicao': posicoes[12], # Posição Médio (Médio Defensivo)
-                        'equipa': equipas[0], # Equipa Principal Sporting
+                        'equipa': equipas[3], # Equipa Principal Sporting
                     },
+                    
+                    {
+                        'nome': "Anatoliy Trubin",
+                        'idade': 23,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/40/58/594058_anatoliy_trubin_20250103092031.png" ,
+                        'altura': 199,
+                        'peso': 86.0,
+                        'nacionalidade': "Ucrânia",
+                        'num_camisola': 1, 
+                        'valor_de_mercado': 24.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[0], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    {
+                        'nome': "Alexander Bah",
+                        'idade': 27,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/30/06/523006_alexander_bah_20240807131232.jpg" ,
+                        'altura': 183,
+                        'peso': 77.0,
+                        'nacionalidade': "Dinamarca",
+                        'num_camisola': 6, 
+                        'valor_de_mercado': 14.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[7], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    {
+                        'nome': "Nicolás Otamendi",
+                        'idade': 36,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/75/88/67588_nicolas_otamendi_20250103092114.png" ,
+                        'altura': 183,
+                        'peso': 80.0,
+                        'nacionalidade': "Argentina",
+                        'num_camisola':30, 
+                        'valor_de_mercado': 1.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[2], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    {
+                        'nome': "Tomás Araújo",
+                        'idade': 22,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/03/53/520353_tomas_araujo_20240807131554.jpg" ,
+                        'altura': 187,
+                        'peso': 81.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':44, 
+                        'valor_de_mercado': 29.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[2], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    {
+                        'nome': "Álvaro Carreras",
+                        'idade': 21,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/53/05/825305_alvaro_carreras_20240807130155.jpg" ,
+                        'altura': 186,
+                        'peso': 78.0,
+                        'nacionalidade': "Espanha",
+                        'num_camisola':3, 
+                        'valor_de_mercado': 19.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[7], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    {
+                        'nome': "Florentino Luís",
+                        'idade': 25,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/62/29/166229_florentino_luis_20240807130919.jpg" ,
+                        'altura': 184,
+                        'peso': 76.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':61, 
+                        'valor_de_mercado': 19.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[12], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    {
+                        'nome': "Andreas Schjelderup",
+                        'idade': 20,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/18/85/741885_andreas_schjelderup_20250111235523.png" ,
+                        'altura': 176,
+                        'peso': 69.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':21, 
+                        'valor_de_mercado': 10.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[30], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    {
+                        'nome': "Zeki Amdouni",
+                        'idade': 24,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/46/54/724654_zeki_amdouni__20240930104822.jpg" ,
+                        'altura': 186,
+                        'peso': 79.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':7, 
+                        'valor_de_mercado': 16.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[37], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                                        
+                    {
+                        'nome': "Renato Sanches",
+                        'idade': 27,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/52/84/155284_renato_sanches_20240813093549.jpg" ,
+                        'altura': 176,
+                        'peso': 73.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':85, 
+                        'valor_de_mercado': 5.0,
+                        'situacao': "Lesionado",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[20], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    {
+                        'nome': "Leandro Barreiro",
+                        'idade': 25,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/12/76/591276_leandro_barreiro_20240807130229.jpg" ,
+                        'altura': 174,
+                        'peso': 67.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':18, 
+                        'valor_de_mercado': 14.0,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[20], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[3], # Equipa Principal Sporting
+                    },
+                    
+                    
+                    
+                    
                     {
                         'nome': "Miguel DaSilba",
                         'idade': 20,
@@ -1596,15 +1760,7 @@ class Command(BaseCommand):
                         'clube': clubes[22], 
                         'posicao': posicoes[12], 
                     },
-                    {
-                        'nome': "Roberto Macedo",
-                        'imagem': "https://www.zerozero.pt/img/jogadores/27/1048227_roberto_macedo.jpg" ,
-                        'nacionalidade': "Portugal",
-                        'num_camisola': 15, 
-                        'situacao': "Ativo",
-                        'clube': clubes[22], 
-                        'posicao': posicoes[12], 
-                    },
+
                     
                     
                 ]
