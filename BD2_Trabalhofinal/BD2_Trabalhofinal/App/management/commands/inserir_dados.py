@@ -1086,7 +1086,7 @@ class Command(BaseCommand):
                     utilizador = Utilizador.objects.create_user(
                         email=data.pop('email'),
                         nome=data.pop('nome'),
-                        password=password,
+                        palavra_passe=password,
                         **data
                     )
                     utilizadores.append(utilizador)
