@@ -1,0 +1,104 @@
+{% block golos_table %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Clube</th>
+                    <th>Jogador</th>
+                    <th>Minuto</th>
+                    <th>Pênalti</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estatistica in lista %}
+                    <tr>
+                        <td>{{ estatistica.clube.nome }}</td>
+                        <td>{{ estatistica.jogador.nome }}</td>
+                        <td>
+                            {{ estatistica.minuto }}
+                            {% if estatistica.compensacao %}
+                                + {{ estatistica.compensacao }}
+                            {% endif %}
+                        </td>
+                        <td>{{ estatistica.penalti|yesno:"Sim,Não" }}</td>
+                        <td>
+							<!--EDITAR--->
+							<a href="{% url 'editar_golo' estatistica.get_id %}" class="btn btn-warning btn-sm me-2">
+								<i class="bi bi-pencil-square"></i>
+								Editar
+							</a>
+							<!--APAGAR-->
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ estatistica.get_id }}">
+								<i class="bi bi-trash"></i> <!-- Ícone de lixo -->
+                                Apagar
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteModal{{ estatistica.get_id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ estatistica.get_id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title" id="deleteModalLabel{{ estatistica.get_id }}">Confirmar Exclusão</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Tem certeza de que deseja apagar o golo marcado pelo <b>{{estatistica.jogador.nome}}</b> aos <b>{{ estatistica.minuto}}
+                                            {% if estatistica.compensacao %}
+                                                (+{{ estatistica.compensacao }})
+                                            {% endif %}
+                                            </b> minutos?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form method="post" action="{% url 'apagar_golo' estatistica.get_id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger">
+													<i class="bi bi-trash"></i> <!-- Ícone de lixo -->
+													<!--Apagar-->
+												</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

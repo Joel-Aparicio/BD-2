@@ -1,0 +1,345 @@
+{% extends 'header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Jogo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Cabeçalho do Jogo -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>Detalhes do Jogo</h3>
+            </div>
+            <div class="card-body d-flex align-items-center justify-content-around">
+                <!-- Imagem do Clube Casa -->
+                <div class="text-center">
+                    <img src="{{ jogo.clube_casa.imagem }}" alt="Logo do {{ jogo.clube_casa.nome }}" class="img-fluid mb-2" style="width: 150px; height: 150px;">
+                    <h4>{{ jogo.clube_casa.nome }}</h4>
+                </div>
+
+                <!-- Resultado do jogo -->
+                <div class="text-center">					
+					<!--MOSTRAR RESULTADO-->
+                    <h2 class="display-4">
+						<span>{{ total_golos_casa }}</span> - 
+						<span>{{ total_golos_fora }}</span>
+					</h2>
+					
+					<!--MOSTRAR RESULTADO PENALTIS -->
+					{% if jogo.penaltis %}
+						<h5 class="display-8">
+							<span>{{ total_penaltis_casa }}</span> - 
+							<span>{{ total_penaltis_fora }}</span>
+						</h5>
+					{% endif %}
+                </div>
+
+                <!-- Imagem do Clube Fora -->
+                <div class="text-center">
+                    <img src="{{ jogo.clube_fora.imagem }}" alt="Logo do {{ jogo.clube_fora.nome }}" class="img-fluid mb-2" style="width: 150px; height: 150px;">
+                    <h4>{{ jogo.clube_fora.nome }}</h4>
+                </div>
+            </div>
+        </div>
+		
+		<!-- Caixa com informações adicionais -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Ficha do Jogo</h5>
+            </div>
+            <div class="card-body">
+				<p><b>Competição:</b>
+					<a href="{% url 'detalhes_competicao' jogo.competicao.get_id %}"> {{ jogo.competicao.nome }} </a>
+				</p>
+                <p><b>Data:</b> {{ jogo.dia }}, {{ jogo.hora }}</p>
+                <p><b>Local:</b> {{ jogo.estadio.pais }}, {{ jogo.estadio.cidade }}</p>
+				<p><b>Estádio:</b> 
+					<a href="{% url 'detalhes_estadio' jogo.estadio.get_id %}"> {{ jogo.estadio.nome }} </a>
+				</p>
+                <p><b>Estado:</b> {{ jogo.estado }}</p>
+				{% if jogo.estado == "Terminado" %}
+					<p>
+						<b>Vencedor: </b>
+						{% if jogo.vencedor %}
+							{{ jogo.vencedor.nome }}
+						{% else %}
+							Sem Vencedor / Empate
+						{% endif %}
+					</p>
+				{% endif %}
+            </div>
+        </div>
+		
+        <!-- Separadores -->
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Estatísticas do Jogo</h4>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="jogoTabs" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="golos-tab" data-bs-toggle="tab" data-bs-target="#golos" type="button" role="tab" aria-controls="golos" aria-selected="true">Golos</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="faltas-tab" data-bs-toggle="tab" data-bs-target="#faltas" type="button" role="tab" aria-controls="faltas" aria-selected="false">Faltas</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="substituicoes-tab" data-bs-toggle="tab" data-bs-target="#substituicoes" type="button" role="tab" aria-controls="substituicoes" aria-selected="false">Substituições</button>
+                    </li>
+					<li class="nav-item">
+                        <button class="nav-link" id="penaltis-tab" data-bs-toggle="tab" data-bs-target="#penaltis" type="button" role="tab" aria-controls="penaltis" aria-selected="false">Penáltis</button>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+					<!-- Golos -->
+					<div class="tab-pane fade show active" id="golos" role="tabpanel" aria-labelledby="golos-tab">
+						<div class="row">
+							<div class="col-md-6">
+								<h5 class="text-center">Clube Casa</h5>
+								<ul class="list-group">
+									{% for golo in golos_casa %}
+										<li class="list-group-item">
+											<b>
+												{{ golo.minuto }}'
+												{% if golo.compensacao %}
+													+ {{ golo.compensacao }}'
+												{% endif %}
+											</b>
+											- {{ golo.jogador.num_camisola }}. {{ golo.jogador.nome }} 
+											{% if golo.penalti %}
+												<b class="float-end">P</b>
+											{% endif %}
+										</li>
+									{% empty %}
+										<li class="list-group-item text-center text-muted">Sem golos</li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<h5 class="text-center">Clube Fora</h5>
+								<ul class="list-group">
+									{% for golo in golos_fora %}
+										<li class="list-group-item">
+											<b>
+												{{ golo.minuto }}'
+												{% if golo.compensacao %}
+													+ {{ golo.compensacao }}'
+												{% endif %}
+											</b>
+											- {{ golo.jogador.num_camisola }}. {{ golo.jogador.nome }} 
+											{% if golo.penalti %}
+												<b class="float-end">P</b>
+											{% endif %}
+										</li>
+									{% empty %}
+										<li class="list-group-item text-center text-muted">Sem golos</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+
+                    <!-- Faltas -->
+                    <div class="tab-pane fade" id="faltas" role="tabpanel" aria-labelledby="faltas-tab">
+                        <div class="row">
+							<div class="col-md-6">
+								<h5 class="text-center">Clube Casa</h5>
+								<ul class="list-group">
+									{% for falta in faltas_casa %}
+										<li class="list-group-item">
+											<b>
+												{{ falta.minuto }}'
+												{% if falta.compensacao %}
+													+ {{ falta.compensacao }}'
+												{% endif %}
+											</b>
+											- {{ falta.jogador.num_camisola }}. {{ falta.jogador.nome }} 
+											{% if falta.cartao %}
+												<b class="float-end"> {{falta.cartao_cor}}</b>
+											{% endif %}
+										</li>
+									{% empty %}
+										<li class="list-group-item text-center text-muted">Sem faltas</li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<h5 class="text-center">Clube Fora</h5>
+								<ul class="list-group">
+									{% for falta in faltas_fora %}
+										<li class="list-group-item">
+											<b>
+												{{ falta.minuto }}'
+												{% if falta.compensacao %}
+													+ {{ falta.compensacao }}'
+												{% endif %}
+											</b>
+											- {{ falta.jogador.num_camisola }}. {{ falta.jogador.nome }} 
+											{% if falta.cartao %}
+												<b class="float-end"> {{falta.cartao_cor}}</b>
+											{% endif %}
+										</li>
+									{% empty %}
+										<li class="list-group-item text-center text-muted">Sem faltas</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+                    </div>
+					
+					<!-- Substituições -->
+					<div class="tab-pane fade" id="substituicoes" role="tabpanel" aria-labelledby="substituicoes-tab">
+						<div class="row">
+							<div class="col-md-6">
+								<h5 class="text-center">Clube Casa</h5>
+								<ul class="list-group">
+									{% for substituicao in substituicoes_casa %}
+										<li class="list-group-item">
+											<b>{{ substituicao.minuto }}'</b>
+											{% if substituicao.compensacao %}
+												+ {{ substituicao.compensacao }}'
+											{% endif %}
+											- <span>
+												<i class="bi bi-arrow-up-circle text-success"></i>
+												{{ substituicao.jogador_sai.num_camisola }}. {{ substituicao.jogador_sai.nome }}
+											</span>
+											<span class="float-end">
+												<i class="bi bi-arrow-down-circle text-danger"></i>
+												{{ substituicao.jogador_entra.num_camisola }}. {{ substituicao.jogador_entra.nome }}
+											</span>
+										</li>
+									{% empty %}
+										<li class="list-group-item text-center text-muted">Sem substituições</li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<h5 class="text-center">Clube Fora</h5>
+								<ul class="list-group">
+									{% for substituicao in substituicoes_fora %}
+										<li class="list-group-item">
+											<b>{{ substituicao.minuto }}'</b>
+											{% if substituicao.compensacao %}
+												+ {{ substituicao.compensacao }}'
+											{% endif %}
+											- <span>
+												<i class="bi bi-arrow-up-circle text-success"></i>
+												{{ substituicao.jogador_sai.num_camisola }}. {{ substituicao.jogador_sai.nome }}
+											</span>
+											<span class="float-end">
+												<i class="bi bi-arrow-down-circle text-danger"></i>
+												{{ substituicao.jogador_entra.num_camisola }}. {{ substituicao.jogador_entra.nome }}
+											</span>
+										</li>
+									{% empty %}
+										<li class="list-group-item text-center text-muted">Sem substituições</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					<!--Penáltis-->
+					<div class="tab-pane fade" id="penaltis" role="tabpanel" aria-labelledby="penaltis-tab">
+						<div class="row">
+							<div class="col-md-6">
+								<h5 class="text-center">Clube Casa</h5>
+								<ul class="list-group">
+									{% for penalti in penaltis_casa %}
+										<li class="list-group-item">
+											<b>{{ penalti.jogador.num_camisola }}.</b> {{ penalti.jogador.nome }}
+											<span class="float-end">
+												{% if penalti.golo %}
+													<i class="bi bi-cookie"></i> Golo
+												{% else %}
+													❌ Falhado
+												{% endif %}
+											</span>
+										</li>
+									{% empty %}
+										<li class="list-group-item text-center text-muted">Sem pênaltis</li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<h5 class="text-center">Clube Fora</h5>
+								<ul class="list-group">
+									{% for penalti in penaltis_fora %}
+										<li class="list-group-item">
+											<b>{{ penalti.jogador.num_camisola }}.</b> {{ penalti.jogador.nome }}
+											<span class="float-end">
+												{% if penalti.golo %}
+													<i class="bi bi-cookie"></i> Golo
+												{% else %}
+													❌ Falhado
+												{% endif %}
+											</span>
+										</li>
+									{% empty %}
+										<li class="list-group-item text-center text-muted">Sem pênaltis</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
+
+
+~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,148 @@
+{% extends 'header.html' %}
+
+{% block title %}Clubes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Lista de Clubes</h1>
+    
+    <!-- Barra de Pesquisa -->
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome do clube..." onkeyup="filtrarPorNome()">
+    </div>
+
+    <div class="text-end mb-3">
+        <a href="{% url 'adicionar_clube' %}" class="btn btn-primary">Adicionar Clube</a>
+        <a href="{% url 'listar_equipas' %}" class="btn btn-info">Ver Equipas</a>
+    </div>
+    
+    {% if clubes %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" id="clubesTabela">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nome</th>
+                    <th>Ano Fundação</th>
+                    <th>Localidade</th>
+                    <th>Estado</th>
+                    <th>Associação & Estádio</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for clube in clubes %}
+                <tr class="clube-item" data-clube-nome="{{ clube.nome|lower }}">
+                    <td>{{ clube.nome }}</td>
+                    <td>{{ clube.ano_fundacao }}</td>
+                    <td>{{ clube.pais }}, {{ clube.cidade }}</td>
+                    <td>
+                        {{ clube.estado }}
+                        {% if clube.estado == "Extinto" %}
+                            <br>{{ clube.ano_extinto }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if clube.associacao %}
+                            {{ clube.associacao.nome }}
+                            {% if clube.estadio %}<br>{% endif %}
+                        {% endif %}
+                        {% if clube.estadio %}
+                            {{ clube.estadio.nome }}
+                        {% else %}
+                            {% if not clube.associacao %}
+                                Sem associação nem estádio
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'detalhes_clube' clube.get_id %}" class="btn btn-info btn-sm me-2">Ver</a>
+                        <a href="{% url 'editar_clube' clube.get_id %}" class="btn btn-warning btn-sm me-2">Editar</a>
+                        
+                        <!-- Botão para abrir o modal -->
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ clube.get_id }}">
+                            Apagar
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal{{ clube.get_id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ clube.get_id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="deleteModalLabel{{ clube.get_id }}">Confirmar Exclusão</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Tem certeza de que deseja apagar o clube <strong>{{ clube.nome }}</strong> ({{ clube.ano_fundacao }})?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="post" action="{% url 'apagar_clube' clube.get_id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Apagar</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        Nenhum clube encontrado.
+    </div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script para filtrar clubes pelo nome -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function filtrarPorNome() {
+        let searchTerm = document.getElementById("searchInput").value.toLowerCase();
+        let clubes = document.querySelectorAll(".clube-item");
+
+        clubes.forEach(clube => {
+            let clubeNome = clube.getAttribute("data-clube-nome").toLowerCase();
+
+            if (clubeNome.includes(searchTerm)) {
+                clube.classList.remove("d-none"); // Mostrar clube
+            } else {
+                clube.classList.add("d-none"); // Esconder clube
+            }
+        });
+    }
+
+    // Inicializar o filtro para quando a página carregar
+    document.getElementById("searchInput").addEventListener("keyup", filtrarPorNome);
+});
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

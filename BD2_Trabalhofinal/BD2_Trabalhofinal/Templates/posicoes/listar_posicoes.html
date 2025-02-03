@@ -1,0 +1,91 @@
+{% extends 'header.html' %}
+
+{% block title %}Posições de Campo{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Lista de Posições</h1>
+    <div class="text-end mb-3">
+        <a href="{% url 'adicionar_posicao' %}" class="btn btn-primary">Adicionar Posição</a>
+    </div>
+    {% if posicoes %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for posicao in posicoes %}
+                <tr>
+                    <td>
+					{{ posicao.nome }}
+					{% if posicao.descricao %}
+							({{posicao.descricao}})
+					{% endif %}
+						</td>
+                    <td>
+                        <a href="{% url 'editar_posicao' posicao.get_id %}" class="btn btn-warning btn-sm me-2">Editar</a>
+                        <!-- Botão para abrir o modal -->
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ posicao.get_id }}">
+                            Apagar
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal{{ posicao.get_id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ posicao.get_id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="deleteModalLabel{{ posicao.get_id }}">Confirmar Exclusão</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Tem certeza de que deseja apagar esta Posição de Campo <strong>({{ posicao.nome }})</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="post" action="{% url 'apagar_posicao' posicao.get_id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Apagar</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        Nenhuma posição encontrada.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

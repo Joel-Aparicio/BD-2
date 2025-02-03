@@ -1,0 +1,61 @@
+{% extends 'header.html' %}
+{% block title %}Adicionar Penálti{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Adicionar Penálti</h1>
+    <div class="card p-4">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-end">
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <a href="{% url 'listar_estatisticas' jogo.get_id %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+	document.getElementById('clube-select').addEventListener('change', function() {
+		const clubeId = this.value;
+		const jogoId = '{{ jogo.get_id }}';
+		const jogadorSelect = document.getElementById('jogador-select');
+		
+		// Clear current options
+		jogadorSelect.innerHTML = '<option value="">Escolha o jogador</option>';
+		
+		if (clubeId) {
+			// Fetch players for selected club's team
+			fetch(`/api/jogadores-por-clube/?clube_id=${clubeId}&jogo_id=${jogoId}`)
+				.then(response => response.json())
+				.then(data => {
+					if (data.players) {
+						data.players.forEach(player => {
+							const option = new Option(player.name, player.id);
+							jogadorSelect.add(option);
+						});
+					}
+				})
+				.catch(error => console.error('Error:', error));
+		}
+	});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
