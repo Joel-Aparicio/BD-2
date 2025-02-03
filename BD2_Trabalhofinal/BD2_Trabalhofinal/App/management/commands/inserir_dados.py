@@ -878,18 +878,11 @@ class Command(BaseCommand):
                 formatosComp_data = [
                     {
                         'nome': "Liga ",
-                        'descricao': "Liga Portuguesa",
-                        'valor_de_mercado': 1980,
+                        'descricao': "campeonato"
                     },
                     {
                         'nome': "Taça",
-                        'descricao': "Taça de Portugual",
-                        'valor_de_mercado': 1980,
-                    },
-                    {
-                        'nome': "Taça da Liga",
-                        'descricao': "Taça da Liga",
-                        'valor_de_mercado': 1980,
+                        'descricao': "Eliminatorias",
                     },
                 ]
                 
@@ -900,21 +893,38 @@ class Command(BaseCommand):
                 ## Vencedor: coloca-se None se não houver
                 competicoes_data = [
                     {
-                        'nome': "Liga Portuguesa 2024-2025",
+                        'nome': "Liga Portuguesa 2024/25",
                         'imagem': "https://upload.wikimedia.org/wikipedia/commons/5/5a/S%C3%ADmbolo_da_Liga_Portuguesa_de_Futebol_Profissional.png",
                         'data_inicio': datetime(2024, 8, 17).date(),
                         'data_fim': datetime(2025, 6, 29).date(),
                         'finalizado': False,
-                        'formato': formatosComp[0],  # Formato Liga Portuguesa
+                        'formato': formatosComp[0],  
                     },
                     {
-                        'nome': "Taça da Liga 2024",
+                        'nome': "Allianz Cup 2024/2025",
                         'data_inicio': datetime(2024, 8, 17).date(),
-                         'imagem': "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/S%C3%ADmbolo_da_Allianz_Cup.png/800px-S%C3%ADmbolo_da_Allianz_Cup.png",                      
+                         'imagem': "https://www.zerozero.pt/img/logos/edicoes/125253_imgbank_.png",                      
                         'data_fim': datetime(2024, 12, 29).date(),
                         'finalizado': True,
-                        'formato': formatosComp[2],  # Formato Liga Portuguesa
-                        'vencedor': clubes[4],  # Clube Naval 1893
+                        'formato': formatosComp[1],  
+                        'vencedor': clubes[4],  
+                    },
+                    {
+                        'nome': "Taça de Portugal Generali Tranquilidade 24/25",
+                        'data_inicio': datetime(2024, 8, 17).date(),
+                         'imagem': "https://www.zerozero.pt/img/logos/edicoes/188527_imgbank_.png",                      
+                        'data_fim': datetime(2025, 5, 5).date(),
+                        'finalizado': False,
+                        'formato': formatosComp[1],   
+                    },
+                    {
+                        'nome': "Supertaça Cândido de Oliveira 2024",
+                        'data_inicio': datetime(2024, 8, 3).date(),
+                        'imagem': "https://www.zerozero.pt/img/logos/competicoes/49_imgbank_st_20150709162635.png",                      
+                        'data_fim': datetime(2024, 8, 3).date(),
+                        'finalizado': True,
+                        'formato': formatosComp[1],  
+                        'vencedor': clubes[0],  
                     },
                 ]
 
@@ -2904,7 +2914,7 @@ class Command(BaseCommand):
                     {
                         'nome': "Leonardo Ferreira",
                         'idade': 17,
-                        'imagem': "https://www.zerozero.pt/jogador/leonardo-ferreira/877441" ,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/74/41/877441_leonardo_ferreira_20250120144016.png" ,
                         'nacionalidade': "Portugal",
                         'num_camisola': 85, 
                         'situacao': "Ativo",
@@ -3014,7 +3024,7 @@ class Command(BaseCommand):
                 ## O Vencedor, se não houver, coloca-se None
                 jogos_data = [
                     {
-                        'dia': datetime(2024, 8, 29).date(),
+                        'dia': datetime(2024, 12 , 29).date(),
                         'hora': "14:00",
                         'estado': "Terminado" ,
                         'duracao': 90,
@@ -3026,7 +3036,37 @@ class Command(BaseCommand):
                         'clube_fora': clubes[3], # Clube Sporting
                         'equipa_casa': equipas[3], # Equipa Principal Benfica
                         'equipa_fora': equipas[5], # Equipa Principal Sporting
-                        'vencedor': clubes[2], # Benfica
+                        'vencedor': clubes[4], # Benfica
+                    },
+                    {
+                        'dia': datetime(2024, 12 , 25).date(),
+                        'hora': "14:00",
+                        'estado': "Terminado" ,
+                        'duracao': 90,
+                        'prolongamento': False,
+                        'penaltis': False,
+                        'competicao': competicoes[1], # Competição Liga Portuguesa
+                        'estadio': estadios[24], # Estádio  leiria
+                        'clube_casa': clubes[5], 
+                        'clube_fora': clubes[3], # Clube Sporting
+                        'equipa_casa': equipas[7],
+                        'equipa_fora': equipas[5], # Equipa Principal Sporting
+                        'vencedor': clubes[3],
+                    },
+                    {
+                        'dia': datetime(2024, 12 , 24).date(),
+                        'hora': "14:00",
+                        'estado': "Terminado" ,
+                        'duracao': 90,
+                        'prolongamento': False,
+                        'penaltis': False,
+                        'competicao': competicoes[1], # Competição Liga Portuguesa
+                        'estadio': estadios[24], # Estádio  leiria
+                        'clube_casa': clubes[4], # Clube Benfica
+                        'clube_fora': clubes[0], 
+                        'equipa_casa': equipas[3], # Equipa Principal Benfica
+                        'equipa_fora': equipas[0],
+                        'vencedor': clubes[4], # Benfica
                     },
                 ]
                 
@@ -3038,19 +3078,115 @@ class Command(BaseCommand):
                     {
                         'minuto': 36,
                         'compensacao': 0,
-                        'penalti': False,
+                        'penalti': True,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
-                        'jogador': jogadores[1], # Jogador Ángel Di María
+                        'jogador': jogadores[41], # Jogador Ángel Di María
                         'clube': clubes[4], # Clube Benfica
                     },
                     {
-                        'minuto': 90,
+                        'minuto': 45,
                         'compensacao': 3,
                         'penalti': False,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
-                        'jogador': jogadores[0], # Jogador Viktor Gyökeres
+                        'jogador': jogadores[26], # Jogador Viktor Gyökeres
                         'clube': clubes[3], # Clube Sporting
                     },
+                    {
+                        'minuto': 63,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[0], # Jogo Benfica - Sporting
+                        'jogador': jogadores[26], # Jogador Viktor Gyökeres
+                        'clube': clubes[3], # Clube Sporting
+                    },
+                    {
+                        'minuto': 88,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[0], # Jogo Benfica - Sporting
+                        'jogador': jogadores[49], 
+                        'clube': clubes[4], # Clube Benfica
+                    },            
+                    {
+                        'minuto': 90,
+                        'compensacao': 5,
+                        'penalti': False,
+                        'jogo': jogos[1], 
+                        'jogador': jogadores[26], 
+                        'clube': clubes[3], 
+                    },
+                    {
+                        'minuto': 2,
+                        'compensacao': 0,
+                        'penalti': True,
+                        'jogo': jogos[2], # Jogo Benfica - Sporting
+                        'jogador': jogadores[41], # Jogador Ángel Di María
+                        'clube': clubes[4], # Clube Benfica
+                    },
+                    {
+                        'minuto': 11,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[2], 
+                        'jogador': jogadores[41], 
+                        'clube': clubes[4], 
+                    },
+                   {
+                        'minuto': 45,
+                        'compensacao': 2,
+                        'penalti': False,
+                        'jogo': jogos[2], # Jogo Benfica - Sporting
+                        'jogador': jogadores[49], 
+                        'clube': clubes[4], # Clube Benfica
+                    },   
+                    {
+                        'minuto': 46,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[2],
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },  
+                    {
+                        'minuto': 53,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[2],
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },  
+                    {
+                        'minuto': 66,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[2],
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },  
+                   {
+                        'minuto': 77,
+                        'compensacao': 2,
+                        'penalti': False,
+                        'jogo': jogos[2], 
+                        'jogador': jogadores[49], 
+                        'clube': clubes[4],
+                    },  
+                    {
+                        'minuto': 88,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[2],
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },  
+                    {
+                        'minuto': 90,
+                        'compensacao': 7,
+                        'penalti': False,
+                        'jogo': jogos[2], 
+                        'jogador': jogadores[52], 
+                        'clube': clubes[4],
+                    },  
                 ]
                 
                 golos = [P_Golo.objects.create(**data) for data in golos_data]
@@ -3062,21 +3198,49 @@ class Command(BaseCommand):
                         'numero': 1,
                         'golo': True,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
-                        'jogador': jogadores[1], # Jogador Ángel Di María
+                        'jogador': jogadores[41], # Jogador Ángel Di María
                         'clube': clubes[4], # Clube Benfica
                     },
                     {
                         'numero': 2,
-                        'golo': True,
+                        'golo': False,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
-                        'jogador': jogadores[0], # Jogador Viktor Gyökeres
+                        'jogador': jogadores[26], # Jogador Viktor Gyökeres
                         'clube': clubes[3], # Clube Sporting
                     },
                     {
                         'numero': 3,
                         'golo': True,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
-                        'jogador': jogadores[2], # Jogador Nuno Félix
+                        'jogador': jogadores[45], # Jogador Nuno Félix
+                        'clube': clubes[4], # Clube Benfica
+                    },
+                    {
+                        'numero': 2,
+                        'golo': True,
+                        'jogo': jogos[0], # Jogo Benfica - Sporting
+                        'jogador': jogadores[25], # Jogador Viktor Gyökeres
+                        'clube': clubes[3], # Clube Sporting
+                    },
+                    {
+                        'numero': 1,
+                        'golo': True,
+                        'jogo': jogos[0], # Jogo Benfica - Sporting
+                        'jogador': jogadores[47], # Jogador Ángel Di María
+                        'clube': clubes[4], # Clube Benfica
+                    },
+                    {
+                        'numero': 2,
+                        'golo': False,
+                        'jogo': jogos[0], # Jogo Benfica - Sporting
+                        'jogador': jogadores[23], # Jogador Viktor Gyökeres
+                        'clube': clubes[3], # Clube Sporting
+                    },
+                    {
+                        'numero': 1,
+                        'golo': True,
+                        'jogo': jogos[0], # Jogo Benfica - Sporting
+                        'jogador': jogadores[50], # Jogador Ángel Di María
                         'clube': clubes[4], # Clube Benfica
                     },
                 ]
@@ -3091,10 +3255,28 @@ class Command(BaseCommand):
                         'minuto': 56,
                         'compensacao': 0,
                         'cartao': True,
-                        'cartao_cor': "",
+                        'cartao_cor': "Amarelo",
                         'jogo': jogos[0], # Jogo Benfica - Sporting
-                        'jogador': jogadores[1], # Jogador Ángel Di María
+                        'jogador': jogadores[46], 
                         'clube': clubes[4], # Clube Benfica
+                    },
+                    {
+                        'minuto': 2,
+                        'compensacao': 0,
+                        'cartao': True,
+                        'cartao_cor': "Vermelho",
+                        'jogo': jogos[2],
+                        'jogador': jogadores[5], 
+                        'clube': clubes[0],
+                    },
+                    {
+                        'minuto': 41,
+                        'compensacao': 0,
+                        'cartao': False,
+                        'cartao_cor': "",
+                        'jogo': jogos[2],
+                        'jogador': jogadores[3], 
+                        'clube': clubes[0],
                     },
                 ]
                     
@@ -3107,10 +3289,43 @@ class Command(BaseCommand):
                         'minuto': 88,
                         'compensacao': 0,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
-                        'jogador_sai': jogadores[1], # Jogador Ángel Di María
-                        'jogador_entra': jogadores[2], # Jogador Nuno Félix
+                        'jogador_sai': jogadores[52], # Jogador Ángel Di María
+                        'jogador_entra': jogadores[51], # Jogador Nuno Félix
                         'clube': clubes[4], # Clube Benfica
                     },
+                    {
+                        'minuto': 3,
+                        'compensacao': 0,
+                        'jogo': jogos[2], # Jogo Benfica - Sporting
+                        'jogador_sai': jogadores[3], # Jogador Ángel Di María
+                        'jogador_entra': jogadores[15], # Jogador Nuno Félix
+                        'clube': clubes[0], # Clube Benfica
+                    },
+                    {
+                        'minuto': 46,
+                        'compensacao': 0,
+                        'jogo': jogos[2], # Jogo Benfica - Sporting
+                        'jogador_sai': jogadores[0], # Jogador Ángel Di María
+                        'jogador_entra': jogadores[14], # Jogador Nuno Félix
+                        'clube': clubes[0], # Clube Benfica
+                    },
+                    {
+                        'minuto': 46,
+                        'compensacao': 0,
+                        'jogo': jogos[2], # Jogo Benfica - Sporting
+                        'jogador_sai': jogadores[20], # Jogador Ángel Di María
+                        'jogador_entra': jogadores[15], # Jogador Nuno Félix
+                        'clube': clubes[0], # Clube Benfica
+                    },
+                                        {
+                        'minuto': 42,
+                        'compensacao': 0,
+                        'jogo': jogos[2], # Jogo Benfica - Sporting
+                        'jogador_sai': jogadores[49], # Jogador Ángel Di María
+                        'jogador_entra': jogadores[41], # Jogador Nuno Félix
+                        'clube': clubes[4], # Clube Benfica
+                    },
+                    
                 ]
                     
                 substituicoes = [P_Substituicao.objects.create(**data) for data in substituicoes_data]
