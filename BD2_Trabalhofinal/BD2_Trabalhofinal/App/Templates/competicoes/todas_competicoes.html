@@ -6,10 +6,15 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Lista de Competições</h1>
 
+    <!-- Barra de Pesquisa -->
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar competição..." onkeyup="filtrarCompeticoes()">
+    </div>
+
     {% if competicoes %}
-    <div class="list-group">
+    <div class="list-group" id="competicoesLista">
         {% for competicao in competicoes %}
-        <div class="list-group-item list-group-item-action d-flex align-items-center py-3">
+        <div class="list-group-item list-group-item-action d-flex align-items-center py-3 competicao-item">
             <!-- Ícone ou Logo -->
             {% if competicao.imagem %}
             <img src="{{ competicao.imagem }}" alt="{{ competicao.nome }}" class="rounded-circle me-4 shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
@@ -21,35 +26,70 @@
 
             <!-- Informações da Competição -->
             <div class="flex-grow-1">
-                <h5 class="mb-1">{{ competicao.nome }}
-					{% if competicao.finalizado == True %}
-						- <span class="text-danger">Terminado</span>
-					{% endif %}
-				</h5>
+                <h5 class="mb-1 competicao-nome">{{ competicao.nome }}
+                    {% if competicao.finalizado == True %}
+                    - <span class="text-danger">Terminado</span>
+                    {% endif %}
+                </h5>
                 <p class="mb-0 text-muted">
-                    <i class="bi bi-calendar3"><!--Icon Evento--></i> Início: {{ competicao.data_inicio|date:"d/m/Y" }}
+                    <i class="bi bi-calendar3"></i> Início: {{ competicao.data_inicio|date:"d/m/Y" }}
                 </p>
                 <p class="mb-0 text-muted">
-                    <i class="bi bi-calendar-event"><!--Icon Calendario Evento--></i> Fim: {{ competicao.data_fim|date:"d/m/Y" }}
+                    <i class="bi bi-calendar-event"></i> Fim: {{ competicao.data_fim|date:"d/m/Y" }}
                 </p>
             </div>
 
             <!-- Botão de Ação -->
             <a href="{% url 'detalhes_competicao' competicao.get_id %}" class="btn btn-primary">
-                <i class="bi bi-info-circle"><!--Icon Informação--></i> Ver Detalhes
+                <i class="bi bi-info-circle"></i> Ver Detalhes
             </a>
         </div>
         {% endfor %}
     </div>
     {% else %}
-		<div class="alert alert-info text-center mt-4">Nenhuma competição disponível no momento.</div>
+    <div class="alert alert-info text-center mt-4">Nenhuma competição disponível no momento.</div>
     {% endif %}
 </div>
 
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script para filtrar competições -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let searchInput = document.getElementById("searchInput");
+
+    searchInput.addEventListener("keyup", function () {
+        let input = this.value.toLowerCase();
+        let competicoes = document.querySelectorAll(".competicao-item");
+
+        competicoes.forEach(competicao => {
+            let nome = competicao.querySelector(".competicao-nome").textContent.toLowerCase();
+            
+            if (nome.includes(input)) {
+                competicao.classList.remove("d-none"); // Mostrar
+            } else {
+                competicao.classList.add("d-none"); // Esconder
+            }
+        });
+    });
+});
+</script>
+
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

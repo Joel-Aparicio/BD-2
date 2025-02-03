@@ -5,43 +5,50 @@
 {% block content %}
 <div class="container mt-4">
     <h1 class="text-center">Lista de Estádios</h1>
+
+    <!-- Barra de Pesquisa -->
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar estádio..." onkeyup="filtrarEstadios()">
+    </div>
+
     <div class="text-end mb-3">
         <a href="{% url 'adicionar_estadio' %}" class="btn btn-primary">Adicionar Estádio</a>
     </div>
+
     {% if estadios %}
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>Nome</th>
-					<th>Localidade</th>
-					<th>Dados</th>
-					<th>Estado</th>
+                    <th>Localidade</th>
+                    <th>Dados</th>
+                    <th>Estado</th>
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="estadiosTabela">
                 {% for estadio in estadios %}
-                <tr>
+                <tr class="estadio-item">
                     <td>
-						{{ estadio.nome }}
-					</td>
-					<td>
-						{{ estadio.pais}}, {{ estadio.cidade }}
-					</td>
-					<td>
-						Inauguração: {{ estadio.inauguracao }}
-						<br>
-						Lotação:
-						{% if estadio.lotacao %}
-							{{ estadio.lotacao }}
-						{% else %}
-							Não Disponível
-						{% endif %}
-					</td>
-					<td>{{ estadio.estado }}</td>
+                        {{ estadio.nome }}
+                    </td>
                     <td>
-						<a href="{% url 'detalhes_estadio' estadio.get_id %}" class="btn btn-info btn-sm me-2">Ver</a>
+                        {{ estadio.pais}}, {{ estadio.cidade }}
+                    </td>
+                    <td>
+                        Inauguração: {{ estadio.inauguracao }}
+                        <br>
+                        Lotação:
+                        {% if estadio.lotacao %}
+                            {{ estadio.lotacao }}
+                        {% else %}
+                            Não Disponível
+                        {% endif %}
+                    </td>
+                    <td>{{ estadio.estado }}</td>
+                    <td>
+                        <a href="{% url 'detalhes_estadio' estadio.get_id %}" class="btn btn-info btn-sm me-2">Ver</a>
                         <a href="{% url 'editar_estadio' estadio.get_id %}" class="btn btn-warning btn-sm me-2">Editar</a>
                         <!-- Botão para abrir o modal -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ estadio.get_id }}">
@@ -81,7 +88,31 @@
     </div>
     {% endif %}
 </div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script para filtrar estádios -->
+<script>
+function filtrarEstadios() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let estadios = document.querySelectorAll('.estadio-item');
+
+    estadios.forEach(function(estadio) {
+        let nomeEstadio = estadio.querySelector('td').textContent.toLowerCase();
+        
+        if (nomeEstadio.includes(input)) {
+            estadio.style.display = '';
+        } else {
+            estadio.style.display = 'none';
+        }
+    });
+}
+</script>
+
 {% endblock %}
+
 
 
 

@@ -5,11 +5,16 @@
 {% block content %}
 <div class="container mt-4">
     <h1 class="text-center mb-4">Lista de Jogos</h1>
-    
+
+    <!-- Filtro de Data -->
+    <div class="mb-3">
+        <input type="date" id="dateInput" class="form-control" onchange="filtrarPorData()">
+    </div>
+
     {% if jogos %}
-    <div class="list-group">
+    <div class="list-group" id="jogosLista">
         {% for jogo in jogos %}
-        <div class="list-group-item list-group-item-action d-flex align-items-center py-3">
+        <div class="list-group-item list-group-item-action d-flex align-items-center py-3 jogo-item" data-jogo-data="{{ jogo.dia|date:'Y-m-d' }}">
             <!-- Imagem do time da casa -->
             <div class="d-flex align-items-center me-4">
                 {% if jogo.clube_casa.imagem %}
@@ -50,7 +55,6 @@
                 {% endif %}
             </div>
         </div>
-
         {% endfor %}
     </div>
     {% else %}
@@ -61,7 +65,46 @@
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script para filtrar jogos pela data -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function filtrarPorData() {
+        let selectedDate = document.getElementById("dateInput").value;
+        let jogos = document.querySelectorAll(".jogo-item");
+
+        jogos.forEach(jogo => {
+            let jogoData = jogo.getAttribute("data-jogo-data");
+            
+            if (selectedDate === "" || jogoData === selectedDate) {
+                jogo.classList.remove("d-none"); // Mostrar jogo
+            } else {
+                jogo.classList.add("d-none"); // Esconder jogo
+            }
+        });
+    }
+
+    // Inicializar o filtro para quando a página carregar
+    document.getElementById("dateInput").addEventListener("change", filtrarPorData);
+});
+</script>
+
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
