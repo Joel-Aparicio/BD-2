@@ -877,7 +877,7 @@ class Command(BaseCommand):
                 ## Valor de Mercado: se não houver, metes zero (para garantir que não dá erro) e é em milhões
                 formatosComp_data = [
                     {
-                        'nome': "Liga ",
+                        'nome': "Liga",
                         'descricao': "campeonato"
                     },
                     {
@@ -939,7 +939,7 @@ class Command(BaseCommand):
                 ## Altura em cm, Valor de Mercado em milhões
                 jogadores_data = [
                     {
-                        'nome': "Marco Vicente Rodrigues",
+                        'nome': "Marco Vicente",
                         'idade': 20,
                         'imagem': "https://lh3.googleusercontent.com/pw/AP1GczOhRWLfVhuSlZeqBsd7Y0CYoJV7ub68l8zg4EOAmRL1NiY_b-tkSw4Cszs5W2NdZ-6nBwXZvHCC0NKysMewwj2LRSYudkvakCCo5yoeGwYJZC-viSeGK8TRI-55sq7ffk81uKj7ha-z0ZKl8JMQNAQKCg=w604-h841-s-no?authuser=0" ,
                         'altura': 177,
@@ -3068,6 +3068,63 @@ class Command(BaseCommand):
                         'equipa_fora': equipas[0],
                         'vencedor': clubes[4], # Benfica
                     },
+                    {
+                        'dia': datetime(2024, 8 , 3).date(),
+                        'hora': "14:00",
+                        'estado': "Terminado" ,
+                        'duracao': 90,
+                        'prolongamento': False,
+                        'penaltis': False,
+                        'competicao': competicoes[3], 
+                        'estadio': estadios[22], # Estádio  Aveiro
+                        'clube_casa': clubes[0], 
+                        'clube_fora': clubes[5], 
+                        'equipa_casa': equipas[0], 
+                        'equipa_fora': equipas[7],
+                        'vencedor': clubes[0], 
+                    },     
+
+
+                    {
+                        'dia': datetime(2024, 8 , 29).date(),
+                        'hora': "14:00",
+                        'estado': "Terminado" ,
+                        'duracao': 90,
+                        'prolongamento': False,
+                        'penaltis': False,
+                        'competicao': competicoes[0], 
+                        'estadio': estadios[3], # Estádio  Aveiro
+                        'clube_casa': clubes[0], 
+                        'clube_fora': clubes[2], 
+                        'equipa_casa': equipas[0], 
+                        'equipa_fora': equipas[2],
+                        'vencedor': clubes[0], 
+                    },  
+
+
+
+
+                    {
+                        'dia': datetime(2024, 8 , 29).date(),
+                        'hora': "14:00",
+                        'estado': "Terminado" ,
+                        'duracao': 90,
+                        'prolongamento': False,
+                        'penaltis': False,
+                        'competicao': competicoes[0], # Competição Liga Portuguesa
+                        'estadio': estadios[24], # Estádio  leiria
+                        'clube_casa': clubes[5], 
+                        'clube_fora': clubes[3], # Clube Sporting
+                        'equipa_casa': equipas[7],
+                        'equipa_fora': equipas[5], # Equipa Principal Sporting
+                        'vencedor': None,
+                    },   
+                    
+                    
+                   
+
+
+                    
                 ]
                 
                 jogos = [P_Jogo.objects.create(**data) for data in jogos_data]
@@ -3165,7 +3222,7 @@ class Command(BaseCommand):
                     },  
                    {
                         'minuto': 77,
-                        'compensacao': 2,
+                        'compensacao': 0,
                         'penalti': False,
                         'jogo': jogos[2], 
                         'jogador': jogadores[49], 
@@ -3187,6 +3244,142 @@ class Command(BaseCommand):
                         'jogador': jogadores[52], 
                         'clube': clubes[4],
                     },  
+                    {
+                        'minuto': 11,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[59], 
+                        'clube': clubes[5],
+                    }, 
+                    {
+                        'minuto': 26,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[58], 
+                        'clube': clubes[5],
+                    }, 
+                    {
+                        'minuto': 31,
+                        'compensacao': 0,
+                        'penalti': True,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[59], 
+                        'clube': clubes[5],
+                    },
+                    {
+                        'minuto': 33,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },
+                    {
+                        'minuto': 45,
+                        'compensacao': 2,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[59], 
+                        'clube': clubes[5],
+                    },
+                    {
+                        'minuto': 47,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },
+                    {
+                        'minuto': 52,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },
+                    
+                    {
+                        'minuto': 64,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },
+                    
+                    {
+                        'minuto': 78,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },
+                    
+                   {
+                        'minuto': 78,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[3], 
+                        'jogador': jogadores[3], 
+                        'clube': clubes[0],
+                    },
+                    
+                    
+                    {
+                        'minuto': 22,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[4], 
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },
+                    
+                    
+                    
+                    {
+                        'minuto': 45,
+                        'compensacao': 2,
+                        'penalti': False,
+                        'jogo': jogos[4], 
+                        'jogador': jogadores[143], 
+                        'clube': clubes[2],
+                    },
+                    
+                    
+                    {
+                        'minuto': 56,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[4], 
+                        'jogador': jogadores[143], 
+                        'clube': clubes[2],
+                    },
+                    
+                    
+                    {
+                        'minuto': 60,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[4], 
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },
+                    
+                    
+                    
+                    
+                    {
+                        'minuto': 88,
+                        'compensacao': 0,
+                        'penalti': False,
+                        'jogo': jogos[4], 
+                        'jogador': jogadores[0], 
+                        'clube': clubes[0],
+                    },
                 ]
                 
                 golos = [P_Golo.objects.create(**data) for data in golos_data]
@@ -3278,6 +3471,15 @@ class Command(BaseCommand):
                         'jogador': jogadores[3], 
                         'clube': clubes[0],
                     },
+                    {
+                        'minuto': 31,
+                        'compensacao': 0,
+                        'cartao': True,
+                        'cartao_cor': "Amarelo",
+                        'jogo': jogos[3],
+                        'jogador': jogadores[5], 
+                        'clube': clubes[0],
+                    },
                 ]
                     
                 faltas = [P_Falta.objects.create(**data) for data in faltas_data]
@@ -3324,6 +3526,34 @@ class Command(BaseCommand):
                         'jogador_sai': jogadores[49], # Jogador Ángel Di María
                         'jogador_entra': jogadores[41], # Jogador Nuno Félix
                         'clube': clubes[4], # Clube Benfica
+                    },
+                    
+                    {
+                        'minuto': 42,
+                        'compensacao': 0,
+                        'jogo': jogos[3], # Jogo Benfica - Sporting
+                        'jogador_sai': jogadores[57], # Jogador Ángel Di María
+                        'jogador_entra': jogadores[56], # Jogador Nuno Félix
+                        'clube': clubes[5], # Clube Benfica
+                    },
+                    
+                    {
+                        'minuto': 50,
+                        'compensacao': 0,
+                        'jogo': jogos[3], # Jogo Benfica - Sporting
+                        'jogador_sai': jogadores[20], # Jogador Ángel Di María
+                        'jogador_entra': jogadores[15], # Jogador Nuno Félix
+                        'clube': clubes[0], # Clube Benfica
+                    },
+                    
+                    
+                    {
+                        'minuto': 30,
+                        'compensacao': 0,
+                        'jogo': jogos[3], # Jogo Benfica - Sporting
+                        'jogador_sai': jogadores[0], # Jogador Ángel Di María
+                        'jogador_entra': jogadores[14], # Jogador Nuno Félix
+                        'clube': clubes[0], # Clube Benfica
                     },
                     
                 ]

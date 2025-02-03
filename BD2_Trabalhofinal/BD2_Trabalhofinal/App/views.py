@@ -683,11 +683,14 @@ def todas_competicoes(request):
     
 def detalhes_competicao(request, id):
     competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
-    jogos = P_Jogo.objects.filter(competicao=competicao).order_by('dia', 'hora'), #Obter os jogos da competição e ordenar por Dia e Hora
+    jogos = P_Jogo.objects.filter(competicao=competicao).order_by('dia', 'hora') #Obter os jogos da competição e ordenar por Dia e Hora
+    classificacao = calcular_classificacao(competicao)
+    
     
     return render(request, 'competicoes/detalhes_competicao.html', {
         'competicao': competicao,
-        'jogos': jogos
+        'jogos': jogos,
+        'classificacao': classificacao,
     })
     
     
@@ -1156,6 +1159,79 @@ def get_jogadores_por_clube(request):
     
     
     
+
+from collections import defaultdict
+
+
+def calcular_classificacao(competicao):
+    # Dicionário para armazenar estatísticas dos clubes
+    classificacao = defaultdict(lambda: {
+        'nome': '',
+        'pontos': 0,
+        'jogos': 0,
+        'vitorias': 0,
+        'empates': 0,
+        'derrotas': 0,
+        'gols_pro': 0,
+        'gols_contra': 0,
+        'saldo_gols': 0
+    })
+
+    # Percorrer todos os jogos finalizados
+    for jogo in competicao.jogos.filter(estado="Terminado"):
+        clube_casa = jogo.clube_casa
+        clube_fora = jogo.clube_fora
+
+        # Contar gols baseando-se nos registros da tabela P_Golo
+        gols_casa = P_Golo.objects.filter(jogo=jogo, clube=clube_casa).count()
+        gols_fora = P_Golo.objects.filter(jogo=jogo, clube=clube_fora).count()
+
+        # Inicializar nomes dos clubes na classificação
+        classificacao[clube_casa.pk]['nome'] = clube_casa.nome
+        classificacao[clube_fora.pk]['nome'] = clube_fora.nome
+
+        # Atualizar estatísticas de jogos
+        classificacao[clube_casa.pk]['jogos'] += 1
+        classificacao[clube_fora.pk]['jogos'] += 1
+
+        # Atualizar gols
+        classificacao[clube_casa.pk]['gols_pro'] += gols_casa
+        classificacao[clube_casa.pk]['gols_contra'] += gols_fora
+        classificacao[clube_fora.pk]['gols_pro'] += gols_fora
+        classificacao[clube_fora.pk]['gols_contra'] += gols_casa
+
+        # Calcular saldo de gols
+        classificacao[clube_casa.pk]['saldo_gols'] = (
+            classificacao[clube_casa.pk]['gols_pro'] - classificacao[clube_casa.pk]['gols_contra']
+        )
+        classificacao[clube_fora.pk]['saldo_gols'] = (
+            classificacao[clube_fora.pk]['gols_pro'] - classificacao[clube_fora.pk]['gols_contra']
+        )
+
+        # Definir resultado do jogo
+        if gols_casa > gols_fora:
+            classificacao[clube_casa.pk]['vitorias'] += 1
+            classificacao[clube_casa.pk]['pontos'] += 3
+            classificacao[clube_fora.pk]['derrotas'] += 1
+        elif gols_casa < gols_fora:
+            classificacao[clube_fora.pk]['vitorias'] += 1
+            classificacao[clube_fora.pk]['pontos'] += 3
+            classificacao[clube_casa.pk]['derrotas'] += 1
+        else:
+            classificacao[clube_casa.pk]['empates'] += 1
+            classificacao[clube_fora.pk]['empates'] += 1
+            classificacao[clube_casa.pk]['pontos'] += 1
+            classificacao[clube_fora.pk]['pontos'] += 1
+
+    # Converter para lista e ordenar por pontos, saldo de gols e gols pró
+    tabela = sorted(
+        classificacao.values(),
+        key=lambda x: (x['pontos'], x['saldo_gols'], x['gols_pro']),
+        reverse=True
+    )
+
+    return tabela
+
 
 
 
