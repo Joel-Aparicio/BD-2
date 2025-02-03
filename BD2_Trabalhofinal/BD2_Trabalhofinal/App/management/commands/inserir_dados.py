@@ -3011,6 +3011,23 @@ class Command(BaseCommand):
                         'clube': clubes[22], 
                         'posicao': posicoes[12], 
                     },
+                    
+                    
+                                        
+                    {
+                        'nome': "João Rego",
+                        'idade': 19,
+                        'imagem': "https://www.zerozero.pt/img/jogadores/new/05/84/690584_joao_rego_20241019234009.png" ,
+                        'altura': 182,
+                        'peso': 69.0,
+                        'nacionalidade': "Portugal",
+                        'num_camisola':84, 
+                        'valor_de_mercado': 1.5,
+                        'situacao': "Ativo",
+                        'clube': clubes[4], # Clube Benfica
+                        'posicao': posicoes[25], # Posição Médio (Médio Defensivo)
+                        'equipa': equipas[4],
+                    },
 
                     
                     
