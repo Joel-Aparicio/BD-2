@@ -1099,23 +1099,21 @@ def remover_favorito(request, clube_id):
 # --- OUTROS ---
 def get_equipas_por_clube(request, clube_id):
     try:
-        print(f"Recebida requisição para clube_id: {clube_id}")  # Debug
-        clube = P_Clube.objects.get(_id=ObjectId(clube_id))
-        print(f"Clube encontrado: {clube.nome}")  # Debug
+        # Obtém o clube usando o ObjectId (se necessário)
+        clube = get_object_or_404(P_Clube, _id=ObjectId(clube_id))
         
-        # Filtrar apenas equipas ativas do clube
+        # Filtra as equipas ativas relacionadas ao clube
         equipas = P_Equipa.objects.filter(clube=clube, estado="Ativa")
-        print(f"Equipas encontradas: {equipas.count()}")  # Debug
-        
+
+        # Prepara os dados das equipas para retorno em formato JSON
         data = [{
             'id': str(equipa._id),
             'nome': equipa.nome
         } for equipa in equipas]
-        
-        print(f"Dados retornados: {data}")  # Debug
+
         return JsonResponse(data, safe=False)
+    
     except Exception as e:
-        print(f"Erro: {str(e)}")  # Debug
         return JsonResponse({'error': str(e)}, status=400)
       
 

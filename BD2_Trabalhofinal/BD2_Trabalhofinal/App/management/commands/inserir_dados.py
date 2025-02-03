@@ -754,7 +754,7 @@ class Command(BaseCommand):
                 equipas_data = [
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[0],  # CD Santacruzense
                     },
                     {
@@ -764,107 +764,107 @@ class Command(BaseCommand):
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[2],  # Naval 1893
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[4],  # Clube Benfica
                     },
                     {
                         'nome': "Jun.A S19",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[4],  # Clube Benfica
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[3],  # Sporting
                     },
                     {
                         'nome': "Jun.A S19",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[3],  
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[5],  # Porto
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[6],  # SC Braga
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[7],  # Santa Clara
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[8],  # Casa Pia
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[9],  # Estoril Praia
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[10], # Vitória SC
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[11], # Famalicão
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[12], # Rio Ave
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[13], # Moreirense
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[14], # Gil Vicente
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[15], # Arouca
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[16], # Nacional
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[17], # AFS
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[18], # Est. Amadora
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[19], # Farense
                     },
                     {
                         'nome': "Equipa Principal",
-                        'estado': "Ativo",
+                        'estado': "Ativa",
                         'clube': clubes[20], # Boavista
                     },
                 ]
