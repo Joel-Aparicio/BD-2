@@ -541,29 +541,41 @@ def todos_clubes(request):
     
     
 def detalhes_clube(request, id):
+    # Obtém o clube
     clube = get_object_or_404(P_Clube, _id=ObjectId(id))
+
+    # Obtém as equipas do clube
     equipas = P_Equipa.objects.filter(clube=clube)
+
+    # Obtém os jogadores do clube, ordenados por posição e nome
     jogadores = P_Jogador.objects.filter(equipa__clube=clube).order_by('posicao__nome', 'nome')
+
+    # Definindo a ordem das posições
+    ordem_posicoes = ['Guarda-Redes', 'Defesa', 'Médio', 'Avançado', 'Sem Posição']
+
+    # Agrupa os jogadores por posição, mantendo a ordem definida
+    jogadores_por_posicao = {posicao: [] for posicao in ordem_posicoes}
     
-    # Agrupar jogadores por posição
-    jogadores_por_posicao = {}
     for jogador in jogadores:
         posicao_nome = jogador.posicao.nome if jogador.posicao else "Sem Posição"
-        if posicao_nome not in jogadores_por_posicao:
-            jogadores_por_posicao[posicao_nome] = []
-        jogadores_por_posicao[posicao_nome].append(jogador)
-    
-    # Verificar se o clube está nos favoritos do usuário
+        if posicao_nome in jogadores_por_posicao:
+            jogadores_por_posicao[posicao_nome].append(jogador)
+
+    # Verifica se o clube está nos favoritos do usuário
     is_favorito = False
     if request.user.is_authenticated:
         is_favorito = P_ClubeFavorito.objects.filter(utilizador_id=request.user.utilizador_id, clube=clube).exists()
 
+    # Retorna a resposta renderizada
     return render(request, 'clubes/detalhes_clube.html', {
         'clube': clube,
         'equipas': equipas,
-        'jogadores_por_posicao': dict(sorted(jogadores_por_posicao.items())),
+        'jogadores_por_posicao': jogadores_por_posicao,  # Passando o dicionário ordenado
         'is_favorito': is_favorito
     })
+
+
+
 
 
 
