@@ -48,7 +48,35 @@
 					</div>
 				</div>
 			</div>
-
+			
+			<!-- Clubes -->
+			<div class="col-sm-6 col-md-4 col-lg-3">
+				<div class="card shadow-sm h-100">
+					<div class="card-header bg-primary text-white text-center">
+						<h5 class="mb-0">Clubes</h5>
+					</div>
+					<div class="card-body text-center">
+						<i class="fas fa-futbol fa-3x text-primary mb-3"></i>
+						<p class="card-text">Gerencie a lista de clubes disponíveis.</p>
+						<a href="{% url 'listar_clubes' %}" class="btn btn-primary btn-sm">Ver Clubes</a>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Equipas -->
+			<div class="col-sm-6 col-md-4 col-lg-3">
+				<div class="card shadow-sm h-100">
+					<div class="card-header bg-primary text-white text-center">
+						<h5 class="mb-0">Equipas</h5>
+					</div>
+					<div class="card-body text-center">
+						<i class="fas fa-users-cog fa-3x text-primary mb-3"></i>
+						<p class="card-text">Veja e edite as Equipas disponíveis.</p>
+						<a href="{% url 'listar_equipas' %}" class="btn btn-primary btn-sm">Ver Equipas</a>
+					</div>
+				</div>
+			</div>
+			
 			<!-- Competições -->
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="card shadow-sm h-100">
@@ -91,30 +119,16 @@
 				</div>
 			</div>
 			
-			<!-- Clubes -->
+			<!-- Posições Jogadores -->
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="card shadow-sm h-100">
 					<div class="card-header bg-primary text-white text-center">
-						<h5 class="mb-0">Clubes</h5>
+						<h5 class="mb-0">Posições dos Jogadores</h5>
 					</div>
 					<div class="card-body text-center">
-						<i class="fas fa-futbol fa-3x text-primary mb-3"></i>
-						<p class="card-text">Gerencie a lista de clubes disponíveis.</p>
-						<a href="{% url 'listar_clubes' %}" class="btn btn-primary btn-sm">Ver Clubes</a>
-					</div>
-				</div>
-			</div>
-			
-			<!-- Equipas -->
-			<div class="col-sm-6 col-md-4 col-lg-3">
-				<div class="card shadow-sm h-100">
-					<div class="card-header bg-primary text-white text-center">
-						<h5 class="mb-0">Equipas</h5>
-					</div>
-					<div class="card-body text-center">
-						<i class="fas fa-users-cog fa-3x text-primary mb-3"></i>
-						<p class="card-text">Veja e edite as Equipas disponíveis.</p>
-						<a href="{% url 'listar_equipas' %}" class="btn btn-primary btn-sm">Ver Equipas</a>
+						<i class="fas fa-users fa-3x text-primary mb-3"></i>
+						<p class="card-text">Veja e edite as Posições dos Jogadores disponíveis.</p>
+						<a href="{% url 'listar_posicoes' %}" class="btn btn-primary btn-sm">Ver Posições</a>
 					</div>
 				</div>
 			</div>

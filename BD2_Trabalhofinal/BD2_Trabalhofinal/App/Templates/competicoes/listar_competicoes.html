@@ -35,7 +35,7 @@
                         {{ competicao.data_inicio }} a {{ competicao.data_fim }}
                     </td>
                     <td>
-                        {% if competicao.finalizado == True and competicao.vencedor %}
+                        {% if competicao.finalizado == True and competicao.vencedor %} <!--Garantir que, mesmo que "Terminado", exista o vencedor (para o caso de o clube ter sido apagado)-->
                             Vencedor: 
                             <a href="{% url 'detalhes_clube' competicao.vencedor.get_id %}">{{ competicao.vencedor.nome }}</a>
                         {% else %}

@@ -14,6 +14,7 @@
             <thead class="table-dark">
                 <tr>
                     <th>Descrição</th>
+					<th>Designação</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -21,11 +22,14 @@
                 {% for posicao in posicoes %}
                 <tr>
                     <td>
-					{{ posicao.nome }}
-					{% if posicao.descricao %}
+						{{ posicao.nome }}
+						{% if posicao.descricao %}
 							({{posicao.descricao}})
-					{% endif %}
-						</td>
+						{% endif %}
+					</td>
+					<td>
+						{{ posicao.desig }}
+					</td>
                     <td>
                         <a href="{% url 'editar_posicao' posicao.get_id %}" class="btn btn-warning btn-sm me-2">Editar</a>
                         <!-- Botão para abrir o modal -->

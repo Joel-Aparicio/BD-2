@@ -3426,28 +3426,28 @@ class Command(BaseCommand):
                         'clube': clubes[4], # Clube Benfica
                     },
                     {
-                        'numero': 2,
+                        'numero': 4,
                         'golo': True,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
                         'jogador': jogadores[25], # Jogador Viktor Gyökeres
                         'clube': clubes[3], # Clube Sporting
                     },
                     {
-                        'numero': 1,
+                        'numero': 5,
                         'golo': True,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
                         'jogador': jogadores[47], # Jogador Ángel Di María
                         'clube': clubes[4], # Clube Benfica
                     },
                     {
-                        'numero': 2,
+                        'numero': 6,
                         'golo': False,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
                         'jogador': jogadores[23], # Jogador Viktor Gyökeres
                         'clube': clubes[3], # Clube Sporting
                     },
                     {
-                        'numero': 1,
+                        'numero': 7,
                         'golo': True,
                         'jogo': jogos[0], # Jogo Benfica - Sporting
                         'jogador': jogadores[50], # Jogador Ángel Di María
