@@ -3625,8 +3625,11 @@ class Command(BaseCommand):
                 clubesFav_data = [
                     {
                         'utilizador_id': utilizadores[1].utilizador_id, # Utilizador Francisca
+                        'clube': clubes[0], # Clube CDSantacruzence
+                    },
+                    {
+                        'utilizador_id': utilizadores[1].utilizador_id, # Utilizador Francisca
                         'clube': clubes[3], # Clube Sporting
-                        'clube': clubes[0],
                     },
                 ]
                     
