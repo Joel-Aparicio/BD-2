@@ -1,0 +1,49 @@
+{% extends 'header.html' %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<div class="text-center my-5">
+    <h1 class="display-4">Bem-vindo ao FutebolStats!</h1>
+
+	{% if user.is_authenticated and user.is_staff %}
+		<p>Escolha uma das funções abaixo:</p>
+	{% else %}
+		<p>Pesquise por Jogadores, Clubes, Estádios, Competições e Jogos!</p>
+		{% if user.is_authenticated %}
+			<p>Aceda aos seus Clubes favoritos rápidamente pelo Perfil!</p>
+		{% else %}
+			<p>Inicie sessão para guardar os seus Clubes favoritos!</p>
+		{% endif %}
+	{% endif %}
+</div>
+
+{% if user.is_authenticated and user.is_staff %}
+	{% include 'index/home_admin.html' %}
+{% elif user.is_authenticated %}
+	<p>Body Utilizador</p>
+	{% include 'index/home_user.html' %}
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

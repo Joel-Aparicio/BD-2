@@ -41,28 +41,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-
-# Dashboard com proteção de login
-@login_required
-def dashboard(request):
-    return render(request, 'dashboard.html', {'user': request.user})
-
-
-
 # Página inicial
 def home(request):
-    return render(request, 'home.html')
-
-
-
+    return render(request, 'index/home.html')
 
 # Lista de utilizadores
 @login_required
 def lista_utilizadores(request):
     utilizadores = Utilizador.objects.all()
     return render(request, 'teste_conetividade.html', {'utilizadores': utilizadores})
-
-
 
 
 
