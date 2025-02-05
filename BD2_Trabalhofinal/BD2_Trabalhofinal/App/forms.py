@@ -400,7 +400,7 @@ class P_CompeticaoForm(forms.ModelForm):
 
     # VENCEDOR
     vencedor = forms.ModelChoiceField(
-        queryset=P_Clube.objects.none(),
+        queryset=P_Clube.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'}),
         empty_label="Sem Vencedor / Empate",
         required=False
