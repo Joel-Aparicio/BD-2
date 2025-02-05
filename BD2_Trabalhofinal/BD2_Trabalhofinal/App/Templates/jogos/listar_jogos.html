@@ -24,7 +24,7 @@
                     <th>Clube Fora</th>
                     <th>Data</th>
                     <th>Hora</th>
-                    <th>Estado</th>
+                    <th>Estado / Vencedor</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -45,7 +45,17 @@
                     </td>
                     <td>{{ jogo.dia }}</td>
                     <td>{{ jogo.hora }}</td>
-                    <td> {{ jogo.estado }} </td>
+                    <td> 
+						{% if jogo.estado == "Terminado" %}
+							{% if jogo.vencedor %}
+								{{ jogo.vencedor.nome }} 
+							{% else %}
+								Sem Vencedor / Empate
+							{% endif %}
+						{% else %}
+							{{ jogo.estado }} 
+						{% endif %}
+					</td>
                     <td>
                         <a href="{% url 'detalhes_jogo' jogo.get_id %}" class="btn btn-info btn-sm me-2">Ver</a>
                         <a href="{% url 'editar_jogo' jogo.get_id %}" class="btn btn-warning btn-sm me-2">Editar</a>

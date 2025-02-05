@@ -27,53 +27,53 @@
         </div>
     </div>
 	<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const clubeCasaSelect = document.getElementById('id_clube_casa');
-    const clubeForaSelect = document.getElementById('id_clube_fora');
-    const equipaCasaSelect = document.getElementById('id_equipa_casa');
-    const equipaForaSelect = document.getElementById('id_equipa_fora');
+		document.addEventListener('DOMContentLoaded', function() {
+			const clubeCasaSelect = document.getElementById('id_clube_casa');
+			const clubeForaSelect = document.getElementById('id_clube_fora');
+			const equipaCasaSelect = document.getElementById('id_equipa_casa');
+			const equipaForaSelect = document.getElementById('id_equipa_fora');
 
-    async function atualizarEquipas(clubeId, equipaSelect) {
-        if (!clubeId) return;
-        
-        try {
-            const response = await fetch(`/api/equipas-por-clube/${clubeId}/`);
-            const equipas = await response.json();
-            
-            const currentValue = equipaSelect.value;
-            equipaSelect.innerHTML = '<option value="">Escolha a Equipa</option>';
-            
-            equipas.forEach(equipa => {
-                const option = document.createElement('option');
-                option.value = equipa.id;
-                option.textContent = equipa.nome;
-                if (equipa.id === currentValue) {
-                    option.selected = true;
-                }
-                equipaSelect.appendChild(option);
-            });
-        } catch (error) {
-            console.error('Erro ao carregar equipas:', error);
-        }
-    }
+			async function atualizarEquipas(clubeId, equipaSelect) {
+				if (!clubeId) return;
+				
+				try {
+					const response = await fetch(`/api/equipas-por-clube/${clubeId}/`);
+					const equipas = await response.json();
+					
+					const currentValue = equipaSelect.value;
+					equipaSelect.innerHTML = '<option value="">Escolha a Equipa</option>';
+					
+					equipas.forEach(equipa => {
+						const option = document.createElement('option');
+						option.value = equipa.id;
+						option.textContent = equipa.nome;
+						if (equipa.id === currentValue) {
+							option.selected = true;
+						}
+						equipaSelect.appendChild(option);
+					});
+				} catch (error) {
+					console.error('Erro ao carregar equipas:', error);
+				}
+			}
 
-    clubeCasaSelect.addEventListener('change', function() {
-        atualizarEquipas(this.value, equipaCasaSelect);
-    });
+			clubeCasaSelect.addEventListener('change', function() {
+				atualizarEquipas(this.value, equipaCasaSelect);
+			});
 
-    clubeForaSelect.addEventListener('change', function() {
-        atualizarEquipas(this.value, equipaForaSelect);
-    });
+			clubeForaSelect.addEventListener('change', function() {
+				atualizarEquipas(this.value, equipaForaSelect);
+			});
 
-    // Initialize teams if clubs are selected
-    if (clubeCasaSelect.value) {
-        atualizarEquipas(clubeCasaSelect.value, equipaCasaSelect);
-    }
-    if (clubeForaSelect.value) {
-        atualizarEquipas(clubeForaSelect.value, equipaForaSelect);
-    }
-});
-</script>
+			// Initialize teams if clubs are selected
+			if (clubeCasaSelect.value) {
+				atualizarEquipas(clubeCasaSelect.value, equipaCasaSelect);
+			}
+			if (clubeForaSelect.value) {
+				atualizarEquipas(clubeForaSelect.value, equipaForaSelect);
+			}
+		});
+	</script>
 
 	
 	
