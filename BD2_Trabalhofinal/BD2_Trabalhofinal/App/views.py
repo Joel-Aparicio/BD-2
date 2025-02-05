@@ -735,6 +735,7 @@ def adicionar_jogo(request):
 
 def editar_jogo(request, id):
     jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))
+    
     if request.method == 'POST':
         form = P_JogoForm(request.POST, instance=jogo)
         if form.is_valid():
@@ -742,7 +743,8 @@ def editar_jogo(request, id):
             return redirect('listar_jogos')
     else:
         form = P_JogoForm(instance=jogo)
-    return render(request, 'jogos/editar_jogo.html', {'form': form})
+        
+    return render(request, 'jogos/editar_jogo.html', {'form': form, 'jogo': jogo})
 
 
 
