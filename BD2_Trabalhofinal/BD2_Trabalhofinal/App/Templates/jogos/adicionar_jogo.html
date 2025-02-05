@@ -42,119 +42,91 @@
         </div>
     </div>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const clubeCasaSelect = document.getElementById('id_clube_casa');
-            const clubeForaSelect = document.getElementById('id_clube_fora');
-            const equipaCasaSelect = document.getElementById('id_equipa_casa');
-            const equipaForaSelect = document.getElementById('id_equipa_fora');
-            const vencedorSelect = document.getElementById('id_vencedor');
-            const estadoSelect = document.getElementById('id_estado');
-            const vencedorDiv = vencedorSelect.closest('p'); // Pega o elemento pai do select vencedor
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const clubeCasaSelect = document.getElementById('id_clube_casa');
+			const clubeForaSelect = document.getElementById('id_clube_fora');
+			const equipaCasaSelect = document.getElementById('id_equipa_casa');
+			const equipaForaSelect = document.getElementById('id_equipa_fora');
+			const estadoSelect = document.getElementById('id_estado');
+			const vencedorField = document.getElementById('vencedor-field');
+			const vencedorSelect = document.getElementById('id_vencedor');
 
-            // Função para controlar a visibilidade do campo vencedor
-            function toggleVencedorVisibility() {
-                if (estadoSelect.value === 'Terminado') {
-                    vencedorDiv.style.display = 'block';
-                    atualizarVencedor(); // Atualiza as opções do vencedor
-                } else {
-                    vencedorDiv.style.display = 'none';
-                    vencedorSelect.value = ''; // Limpa a seleção quando não está terminado
-                }
-            }
+			async function atualizarEquipas(clubeId, equipaSelect) {
+				if (!clubeId) return;
+				
+				try {
+					const response = await fetch(`/api/equipas-por-clube/${clubeId}/`);
+					const equipas = await response.json();
+					
+					const currentValue = equipaSelect.value;
+					equipaSelect.innerHTML = '<option value="">Escolha a Equipa</option>';
+					
+					equipas.forEach(equipa => {
+						const option = document.createElement('option');
+						option.value = equipa.id;
+						option.textContent = equipa.nome;
+						if (equipa.id === currentValue) {
+							option.selected = true;
+						}
+						equipaSelect.appendChild(option);
+					});
+				} catch (error) {
+					console.error('Erro ao carregar equipas:', error);
+				}
+			}
 
-            // Validar clubes diferentes
-            function validarClubes() {
-                if (clubeCasaSelect.value && clubeForaSelect.value) {
-                    if (clubeCasaSelect.value === clubeForaSelect.value) {
-                        alert('Os clubes casa e fora não podem ser iguais!');
-                        clubeForaSelect.value = '';
-                        atualizarVencedor();
-                    }
-                }
-            }
+			function atualizarVencedor() {
+				vencedorSelect.innerHTML = '<option value="">Sem Vencedor/Empate</option>';
+				
+				if (clubeCasaSelect.value) {
+					const option = document.createElement('option');
+					option.value = clubeCasaSelect.value;
+					option.textContent = clubeCasaSelect.selectedOptions[0].text;
+					vencedorSelect.appendChild(option);
+				}
+				
+				if (clubeForaSelect.value) {
+					const option = document.createElement('option');
+					option.value = clubeForaSelect.value;
+					option.textContent = clubeForaSelect.selectedOptions[0].text;
+					vencedorSelect.appendChild(option);
+				}
+			}
 
-            // Atualizar equipas com base no clube selecionado
-            function atualizarEquipas(clubeId, equipaSelect, tipo) {
-                // Resetar o select de equipa
-                equipaSelect.innerHTML = `<option value="">Escolha a Equipa ${tipo}</option>`;
-                
-                if (!clubeId) return;
+			function toggleVencedor() {
+				if (estadoSelect.value === 'Terminado') {
+					vencedorField.style.display = 'block';
+					atualizarVencedor();
+				} else {
+					vencedorField.style.display = 'none';
+					vencedorSelect.value = '';
+				}
+			}
 
-                // Obter token CSRF
-                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+			clubeCasaSelect.addEventListener('change', function() {
+				atualizarEquipas(this.value, equipaCasaSelect);
+				atualizarVencedor();
+			});
 
-                // Fazer a requisição AJAX para buscar as equipas do clube
-                fetch(`/api/equipas-por-clube/${clubeId}/`, {
-                    method: 'GET',
-                    headers: {
-                        'X-CSRFToken': csrftoken,
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    data.forEach(equipa => {
-                        const option = document.createElement('option');
-                        option.value = equipa.id;
-                        option.textContent = equipa.nome;
-                        equipaSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar equipas:', error);
-                });
-            }
+			clubeForaSelect.addEventListener('change', function() {
+				atualizarEquipas(this.value, equipaForaSelect);
+				atualizarVencedor();
+			});
 
-            // Atualizar o dropdown de vencedor
-            function atualizarVencedor() {
-                const clubeCasa = clubeCasaSelect.value;
-                const clubeFora = clubeForaSelect.value;
+			estadoSelect.addEventListener('change', toggleVencedor);
 
-                vencedorSelect.innerHTML = '<option value="">Sem Vencedor/Empate</option>';
+			if (clubeCasaSelect.value) {
+				atualizarEquipas(clubeCasaSelect.value, equipaCasaSelect);
+			}
+			if (clubeForaSelect.value) {
+				atualizarEquipas(clubeForaSelect.value, equipaForaSelect);
+			}
 
-                if (clubeCasa) {
-                    vencedorSelect.innerHTML += `<option value="${clubeCasa}">${clubeCasaSelect.options[clubeCasaSelect.selectedIndex].text}</option>`;
-                }
-                if (clubeFora) {
-                    vencedorSelect.innerHTML += `<option value="${clubeFora}">${clubeForaSelect.options[clubeForaSelect.selectedIndex].text}</option>`;
-                }
-            }
-
-            // Event Listeners
-            clubeCasaSelect.addEventListener('change', function() {
-                atualizarEquipas(this.value, equipaCasaSelect, 'Casa');
-                validarClubes();
-                atualizarVencedor();
-            });
-
-            clubeForaSelect.addEventListener('change', function() {
-                atualizarEquipas(this.value, equipaForaSelect, 'Fora');
-                validarClubes();
-                atualizarVencedor();
-            });
-
-            // Adicionar listener para mudança de estado
-            estadoSelect.addEventListener('change', toggleVencedorVisibility);
-
-            // Carregar equipas iniciais se estiver editando um jogo existente
-            if (clubeCasaSelect.value) {
-                atualizarEquipas(clubeCasaSelect.value, equipaCasaSelect, 'Casa');
-            }
-            if (clubeForaSelect.value) {
-                atualizarEquipas(clubeForaSelect.value, equipaForaSelect, 'Fora');
-            }
-
-            // Executar na inicialização para definir o estado inicial correto
-            toggleVencedorVisibility();
-        });
-    </script>
+			toggleVencedor();
+		});
+	</script>
+    
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

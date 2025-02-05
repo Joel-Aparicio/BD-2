@@ -646,10 +646,6 @@ class P_JogoForm(forms.ModelForm):
         self.fields['vencedor'].label_from_instance = lambda obj: f"{obj.nome}"
         self.fields['vencedor'].to_python = convert_to_clube
         
-        
-        
-        
-        
         # Se estivermos "EDITAR" um jogo
         if self.instance and hasattr(self.instance, 'pk') and self.instance.pk:
             try:
@@ -679,11 +675,7 @@ class P_JogoForm(forms.ModelForm):
                 self.fields['vencedor'].queryset = P_Clube.objects.none()
         else:  # No caso de "ADICIONAR", exibe todos os clubes
             self.fields['vencedor'].queryset = P_Clube.objects.all()
-            
-            
-            
-            
-            
+                        
 
     class Meta:
         model = P_Jogo
