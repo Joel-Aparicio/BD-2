@@ -21,7 +21,6 @@
 {% if user.is_authenticated and user.is_staff %}
 	{% include 'index/home_admin.html' %}
 {% elif user.is_authenticated %}
-	<p>Body Utilizador</p>
 	{% include 'index/home_user.html' %}
 {% endif %}
 {% endblock %}

@@ -42,8 +42,41 @@ logger = logging.getLogger(__name__)
 
 
 # Página inicial
+#def home(request):
+ #   return render(request, 'index/home.html')
+    
 def home(request):
-    return render(request, 'index/home.html')
+    if request.user.is_authenticated and not request.user.is_staff:
+        utilizador = request.user
+        
+        # Buscar clubes favoritos do utilizador
+        clubes_favoritos = P_ClubeFavorito.objects.filter(utilizador_id=utilizador.utilizador_id).select_related('clube')
+        clubes_ids = [ObjectId(cf.clube._id) for cf in clubes_favoritos]
+
+        print("Clubes Favoritos IDs:", clubes_ids)  # Verificar se retorna IDs
+
+        # Buscar jogos dos clubes favoritos
+
+
+
+        proximos_jogos = P_Jogo.objects.filter(estado="Em Breve", clube_casa_id__in=clubes_ids).order_by('dia')[:3]
+        jogo_a_decorrer = P_Jogo.objects.filter(estado="A Decorrer", clube_casa_id__in=clubes_ids).order_by('dia').first()
+        ultimos_jogos = P_Jogo.objects.filter(estado="Terminado", clube_casa_id__in=clubes_ids).order_by('-dia')[:3]
+
+
+        print("Próximos Jogos:", proximos_jogos)
+        print("Jogo a Decorrer:", jogo_a_decorrer)
+        print("Últimos Jogos:", ultimos_jogos)
+
+        return render(request, 'index/home.html', {
+            'proximos_jogos': proximos_jogos,
+            'jogo_a_decorrer': jogo_a_decorrer,
+            'ultimos_jogos': ultimos_jogos,
+        })
+
+    else:
+        return render(request, 'index/home.html')
+
 
 # Lista de utilizadores
 @login_required

@@ -1,3 +1,22 @@
 {% block home_user %}
-	
+    <h2>Próximos Jogos</h2>
+    <ul>
+        {% for jogo in proximos_jogos %}
+            <li>{{ jogo.dia }} - {{ jogo.clube_casa.nome }} vs {{ jogo.clube_fora.nome }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Jogo a Decorrer</h2>
+    {% if jogo_a_decorrer %}
+        <p>{{ jogo_a_decorrer.dia }} - {{ jogo_a_decorrer.clube_casa.nome }} vs {{ jogo_a_decorrer.clube_fora.nome }}</p>
+    {% else %}
+        <p>Nenhum jogo a decorrer.</p>
+    {% endif %}
+
+    <h2>Últimos Jogos</h2>
+    <ul>
+        {% for jogo in ultimos_jogos %}
+            <li>{{ jogo.dia }} - {{ jogo.clube_casa.nome }} vs {{ jogo.clube_fora.nome }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
