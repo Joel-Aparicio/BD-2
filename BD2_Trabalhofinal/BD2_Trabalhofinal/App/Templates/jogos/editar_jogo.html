@@ -32,7 +32,16 @@
 			const clubeForaSelect = document.getElementById('id_clube_fora');
 			const equipaCasaSelect = document.getElementById('id_equipa_casa');
 			const equipaForaSelect = document.getElementById('id_equipa_fora');
-
+			const estadoSelect = document.getElementById('id_estado');
+			const vencedorField = document.getElementById('id_vencedor').closest('p');
+			
+			function toggleVencedor() {
+				vencedorField.style.display = estadoSelect.value === 'Terminado' ? 'block' : 'none';
+			}
+			
+			estadoSelect.addEventListener('change', toggleVencedor);
+			toggleVencedor();
+	
 			async function atualizarEquipas(clubeId, equipaSelect) {
 				if (!clubeId) return;
 				
