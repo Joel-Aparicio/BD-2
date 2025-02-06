@@ -46,6 +46,7 @@ logger = logging.getLogger(__name__)
  #   return render(request, 'index/home.html')
     
 def home(request):
+    # Se utilizador iniciou sessão e não é admin
     if request.user.is_authenticated and not request.user.is_staff:
         utilizador = request.user
         
@@ -53,15 +54,21 @@ def home(request):
         clubes_favoritos = P_ClubeFavorito.objects.filter(utilizador_id=utilizador.utilizador_id).select_related('clube')
         clubes_ids = [ObjectId(cf.clube._id) for cf in clubes_favoritos]
 
-        print("Clubes Favoritos IDs:", clubes_ids)  # Verificar se retorna IDs
-
-        # Buscar jogos dos clubes favoritos
-
-
-
-        proximos_jogos = P_Jogo.objects.filter(estado="Em Breve", clube_casa_id__in=clubes_ids).order_by('dia')[:3]
-        jogo_a_decorrer = P_Jogo.objects.filter(estado="A Decorrer", clube_casa_id__in=clubes_ids).order_by('dia').first()
-        ultimos_jogos = P_Jogo.objects.filter(estado="Terminado", clube_casa_id__in=clubes_ids).order_by('-dia')[:3]
+        # Buscar jogos dos clubes favoritos, em casa ou fora
+        proximos_jogos = P_Jogo.objects.filter(
+            Q(clube_casa_id__in=clubes_ids) | Q(clube_fora_id__in=clubes_ids),
+            estado="Em Breve"
+        ).order_by('dia')[:3] #Top 3
+        
+        jogo_a_decorrer = P_Jogo.objects.filter(
+            Q(clube_casa_id__in=clubes_ids) | Q(clube_fora_id__in=clubes_ids),
+            estado="A Decorrer"
+        ).order_by('dia') #Todos
+        
+        ultimos_jogos = P_Jogo.objects.filter(
+            Q(clube_casa_id__in=clubes_ids) | Q(clube_fora_id__in=clubes_ids),
+            estado="Terminado"
+        ).order_by('-dia')[:3] #Top 3
 
 
         print("Próximos Jogos:", proximos_jogos)

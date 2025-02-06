@@ -1,22 +1,165 @@
 {% block home_user %}
-    <h2>Próximos Jogos</h2>
-    <ul>
-        {% for jogo in proximos_jogos %}
-            <li>{{ jogo.dia }} - {{ jogo.clube_casa.nome }} vs {{ jogo.clube_fora.nome }}</li>
-        {% endfor %}
-    </ul>
+	<!-- PROXIMOS 3 JOGOS -->
+	<div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3>Próximos 3 Jogos</h3>
+        </div>
+        <div class="card-body">
+			{% if proximos_jogos %}
+				<div class="list-group" id="jogosLista">
+					{% for jogo in proximos_jogos %}
+						<div class="list-group-item list-group-item-action d-flex align-items-center py-3 jogo-item" data-jogo-data="{{ jogo.dia|date:'Y-m-d' }}">
+							<!-- Imagem do time da casa -->
+							<div class="d-flex align-items-center me-4">
+								{% if jogo.clube_casa.imagem %}
+									<img src="{{ jogo.clube_casa.imagem }}" alt="{{ jogo.clube_casa.nome }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+								{% else %}
+									<div class="rounded-circle me-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+										⚽
+									</div>
+								{% endif %}
+								<h5 class="mb-0">{{ jogo.clube_casa.nome }}</h5>
+							</div>
 
-    <h2>Jogo a Decorrer</h2>
-    {% if jogo_a_decorrer %}
-        <p>{{ jogo_a_decorrer.dia }} - {{ jogo_a_decorrer.clube_casa.nome }} vs {{ jogo_a_decorrer.clube_fora.nome }}</p>
-    {% else %}
-        <p>Nenhum jogo a decorrer.</p>
-    {% endif %}
+							<!-- Estado, Dia, Hora e Botão -->
+							<div class="flex-grow-1 text-center">
+								<h5 class="mb-1">
+									<span class="text-muted">{{ jogo.estado }}</span>
+								</h5>
+								<p class="mb-0 text-muted">
+									<i class="bi bi-calendar3"></i> {{ jogo.dia|date:"d/m/Y" }}
+									<i class="bi bi-clock"></i>{{ jogo.hora }}
+								</p>
+								
+								<!-- Botão de Ver Detalhes-->
+								<a href="{% url 'detalhes_jogo' jogo.get_id %}" class="btn btn-primary btn-sm mt-2">
+									<i class="bi bi-info-circle"></i> Ver Detalhes
+								</a>
+							</div>
 
-    <h2>Últimos Jogos</h2>
-    <ul>
-        {% for jogo in ultimos_jogos %}
-            <li>{{ jogo.dia }} - {{ jogo.clube_casa.nome }} vs {{ jogo.clube_fora.nome }}</li>
-        {% endfor %}
-    </ul>
+							<!-- Imagem do time fora -->
+							<div class="d-flex align-items-center ms-4">
+								<h5 class="mb-0">{{ jogo.clube_fora.nome }}</h5>
+								{% if jogo.clube_fora.imagem %}
+									<img src="{{ jogo.clube_fora.imagem }}" alt="{{ jogo.clube_fora.nome }}" class="rounded-circle ms-3" style="width: 50px; height: 50px; object-fit: cover;">
+								{% else %}
+									<div class="rounded-circle ms-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+										⚽
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p>Nenhum jogo agendado.</p>
+			{% endif %}
+		</div>
+	</div>
+	<!-- JOGOS A DECORRER -->
+	<div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+            <h3>Jogos A Decorrer</h3>
+        </div>
+        <div class="card-body">
+			{% if jogo_a_decorrer %}
+				<div class="list-group" id="jogosLista">
+					{% for jogo in jogo_a_decorrer %}
+						<div class="list-group-item list-group-item-action d-flex align-items-center py-3 jogo-item" data-jogo-data="{{ jogo.dia|date:'Y-m-d' }}">
+							<!-- Imagem do time da casa -->
+							<div class="d-flex align-items-center me-4">
+								{% if jogo.clube_casa.imagem %}
+									<img src="{{ jogo.clube_casa.imagem }}" alt="{{ jogo.clube_casa.nome }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+								{% else %}
+									<div class="rounded-circle me-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+										⚽
+									</div>
+								{% endif %}
+								<h5 class="mb-0">{{ jogo.clube_casa.nome }}</h5>
+							</div>
+
+							<!-- Botão -->
+							<div class="flex-grow-1 text-center">						
+								<!-- Botão de Ver Detalhes-->
+								<a href="{% url 'detalhes_jogo' jogo.get_id %}" class="btn btn-primary btn-sm mt-2">
+									<i class="bi bi-info-circle"></i> Ver Detalhes
+								</a>
+							</div>
+
+							<!-- Imagem do time fora -->
+							<div class="d-flex align-items-center ms-4">
+								<h5 class="mb-0">{{ jogo.clube_fora.nome }}</h5>
+								{% if jogo.clube_fora.imagem %}
+									<img src="{{ jogo.clube_fora.imagem }}" alt="{{ jogo.clube_fora.nome }}" class="rounded-circle ms-3" style="width: 50px; height: 50px; object-fit: cover;">
+								{% else %}
+									<div class="rounded-circle ms-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+										⚽
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p>Nenhum jogo a decorrer.</p>
+			{% endif %}
+		</div>
+	</div>
+	
+	<!-- ULTIMOS 3 JOGOS -->
+	<div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3>Últimos 3 Jogos</h3>
+        </div>
+        <div class="card-body">
+			{% if ultimos_jogos %}
+				<div class="list-group" id="jogosLista">
+					{% for jogo in ultimos_jogos %}
+						<div class="list-group-item list-group-item-action d-flex align-items-center py-3 jogo-item" data-jogo-data="{{ jogo.dia|date:'Y-m-d' }}">
+							<!-- Imagem do time da casa -->
+							<div class="d-flex align-items-center me-4">
+								{% if jogo.clube_casa.imagem %}
+									<img src="{{ jogo.clube_casa.imagem }}" alt="{{ jogo.clube_casa.nome }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+								{% else %}
+									<div class="rounded-circle me-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+										⚽
+									</div>
+								{% endif %}
+								<h5 class="mb-0">{{ jogo.clube_casa.nome }}</h5>
+							</div>
+
+							<!-- Vencedor Dia e Botão -->
+							<div class="flex-grow-1 text-center">
+								<h5 class="mb-1">
+									<span class="text-muted">{{ jogo.vencedor.nome }}</span>
+								</h5>
+								<p class="mb-0 text-muted">
+									<i class="bi bi-calendar3"></i> {{ jogo.dia|date:"d/m/Y" }}
+								</p>
+								
+								<!-- Botão de Ver Detalhes-->
+								<a href="{% url 'detalhes_jogo' jogo.get_id %}" class="btn btn-primary btn-sm mt-2">
+									<i class="bi bi-info-circle"></i> Ver Detalhes
+								</a>
+							</div>
+
+							<!-- Imagem do time fora -->
+							<div class="d-flex align-items-center ms-4">
+								<h5 class="mb-0">{{ jogo.clube_fora.nome }}</h5>
+								{% if jogo.clube_fora.imagem %}
+									<img src="{{ jogo.clube_fora.imagem }}" alt="{{ jogo.clube_fora.nome }}" class="rounded-circle ms-3" style="width: 50px; height: 50px; object-fit: cover;">
+								{% else %}
+									<div class="rounded-circle ms-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+										⚽
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p>Nenhum jogo terminado.</p>
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}
