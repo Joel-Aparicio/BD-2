@@ -43,7 +43,6 @@ class Utilizador(AbstractBaseUser, PermissionsMixin):
         return self.nome
 
 
-
 # MONGODB 
 class P_Associacao(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
@@ -129,12 +128,11 @@ class P_Clube(models.Model): #FEITO
 
     def __str__(self):
         return self.nome
+        
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
      
-
-
 
      
 class P_Equipa(models.Model): #FEITO
@@ -184,12 +182,13 @@ class P_Competicao(models.Model): # FEITO
     data_inicio = models.DateField(blank=True, null=True)
     data_fim = models.DateField(blank=True, null=True)
     finalizado = models.BooleanField()
-    formato = models.ForeignKey(P_FormatoCompeticao, on_delete=models.CASCADE, related_name="competicoes")
-    vencedor = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="competicoes")
+    formato = models.ForeignKey(P_FormatoCompeticao, on_delete=models.PROTECT, related_name="competicoes")
+    vencedor = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, related_name="competicoes")
 
     class Meta:
         db_table = "p_competicoes"
         app_label = 'BD2_Trabalhofinal.App'
+        
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)

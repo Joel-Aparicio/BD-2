@@ -363,6 +363,12 @@ def editar_formato(request, id):
 
 def apagar_formato(request, id):
     formato = get_object_or_404(P_FormatoCompeticao, _id=ObjectId(id))
+    
+    # Verificar se há competições associadas
+    if P_Competicao.objects.filter(formato=formato).exists():
+        messages.error(request, "Não é possível apagar este formato porque ele está associado a competições.")
+        return redirect('listar_formatos')
+        
     if request.method == 'POST':
         formato.delete()
         return redirect('listar_formatos')
