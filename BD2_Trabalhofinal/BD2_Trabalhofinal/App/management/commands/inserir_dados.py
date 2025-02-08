@@ -11,7 +11,7 @@ from BD2_Trabalhofinal.App.models import (
 
 # Usa-se o comando python manage.py inserir_dados
 class Command(BaseCommand):
-    help = 'Inserts initial data for associations, stadiums, and positions'
+    help = 'Inserir dados iniciais para todos os Models'
 
     def handle(self, *args, **options):
         try:

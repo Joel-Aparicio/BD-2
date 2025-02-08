@@ -37,7 +37,7 @@ class Utilizador(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['nome']  # Campos obrigatórios além do `USERNAME_FIELD`
 
     class Meta:
-        db_table = 'p_utilizador'  # Nome exato da tabela no banco de dados
+        db_table = 'p_utilizador'  # Nome exato da tabela na base de dados
 
     def __str__(self):
         return self.nome
