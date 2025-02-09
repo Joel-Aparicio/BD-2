@@ -32,16 +32,24 @@
                 {% for jogo in jogos %}
                 <tr class="jogo-item">
                     <td>
-                        <a href="{% url 'detalhes_clube' jogo.clube_casa.get_id %}" class="text-decoration-none">
-                            {{ jogo.clube_casa.nome }}
-                            ({{ jogo.equipa_casa.nome }})
-                        </a>
+						{% if jogo.clube_casa %}
+							<a href="{% url 'detalhes_clube' jogo.clube_casa.get_id %}" class="text-decoration-none">
+								{{ jogo.clube_casa.nome }}
+								({{ jogo.equipa_casa.nome }})
+							</a>
+						{% else %}
+							Clube Não Encontrado
+						{% endif %}
                     </td>
                     <td>
-                        <a href="{% url 'detalhes_clube' jogo.clube_fora.get_id %}" class="text-decoration-none">
-                            {{ jogo.clube_fora.nome }}
-                            ({{ jogo.equipa_fora.nome }})
-                        </a>
+						{% if jogo.clube_fora %}
+							<a href="{% url 'detalhes_clube' jogo.clube_fora.get_id %}" class="text-decoration-none">
+								{{ jogo.clube_fora.nome }}
+								({{ jogo.equipa_fora.nome }})
+							</a>
+						{% else %}
+							Clube Não Encontrado
+						{% endif %}
                     </td>
                     <td>{{ jogo.dia }}</td>
                     <td>{{ jogo.hora }}</td>

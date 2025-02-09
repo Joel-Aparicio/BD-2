@@ -133,11 +133,9 @@ class P_Clube(models.Model): #FEITO
     def get_id(self):
         return str(self._id)
      
-
-     
 class P_Equipa(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
-    clube = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="equipas")
+    clube = models.ForeignKey(P_Clube, on_delete=models.PROTECT, related_name="equipas")
     nome = models.CharField(max_length=255)
     estado = models.CharField(max_length=10)
 
@@ -151,10 +149,7 @@ class P_Equipa(models.Model): #FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-    
-    
-    
-    
+
 class P_FormatoCompeticao(models.Model): # FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     nome = models.CharField(max_length=50)
@@ -171,9 +166,6 @@ class P_FormatoCompeticao(models.Model): # FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-
-
-
 
 class P_Competicao(models.Model): # FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
@@ -193,9 +185,6 @@ class P_Competicao(models.Model): # FEITO
     def get_id(self):
         return str(self._id)
 
-
-
-
 class P_Jogo(models.Model):
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
     dia = models.DateField(blank=True, null=True)
@@ -206,13 +195,13 @@ class P_Jogo(models.Model):
     penaltis = models.BooleanField(default=False)
     
     #Chaves Estrangeiras
-    competicao = models.ForeignKey(P_Competicao, on_delete=models.CASCADE, related_name="jogos")
-    estadio = models.ForeignKey(P_Estadio, on_delete=models.CASCADE, related_name="jogos")
-    clube_casa = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="jogos")
-    clube_fora = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="jogos")
-    equipa_casa = models.ForeignKey(P_Equipa, on_delete=models.CASCADE, related_name="jogos")
-    equipa_fora = models.ForeignKey(P_Equipa, on_delete=models.CASCADE, related_name="jogos")
-    vencedor = models.ForeignKey(P_Clube, on_delete=models.CASCADE, related_name="jogos")
+    competicao = models.ForeignKey(P_Competicao, on_delete=models.SET_NULL, related_name="jogos")
+    estadio = models.ForeignKey(P_Estadio, on_delete=models.SET_NULL, related_name="jogos")
+    clube_casa = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, related_name="jogos")
+    clube_fora = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, related_name="jogos")
+    equipa_casa = models.ForeignKey(P_Equipa, on_delete=models.SET_NULL, related_name="jogos")
+    equipa_fora = models.ForeignKey(P_Equipa, on_delete=models.SET_NULL, related_name="jogos")
+    vencedor = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, related_name="jogos")
     
     class Meta:
         db_table = "p_jogos"
@@ -229,7 +218,7 @@ class P_Jogo(models.Model):
 class P_Jogador(models.Model): #FEITO
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
     clube = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, null=True, related_name="jogadores")
-    posicao = models.ForeignKey(P_Posicao, on_delete=models.SET_NULL, null=True, related_name="jogadores")
+    posicao = models.ForeignKey(P_Posicao, on_delete=models.PROTECT, null=True, related_name="jogadores")
     equipa = models.ForeignKey(P_Equipa, on_delete=models.SET_NULL, null=True, blank=True, related_name='jogadores')
     nome = models.CharField(max_length=255)
     idade = models.IntegerField(blank=True)
@@ -251,8 +240,6 @@ class P_Jogador(models.Model): #FEITO
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-    
-
 
     
 class P_ClubeFavorito(models.Model):
@@ -270,14 +257,12 @@ class P_ClubeFavorito(models.Model):
     #ID DO MONGODB
     def get_id(self):
         return str(self._id)
-     
-
-
+    
      
 # --- ESTATÍSTICAS JOGOS
 class P_Golo(models.Model):
     _id = models.ObjectIdField(primary_key=True, default=ObjectId) #RECEBE ID DO MONGODB
-    jogo = models.ForeignKey(P_Jogo, on_delete=models.CASCADE, related_name="golos")
+    jogo = models.ForeignKey(P_Jogo, on_delete=models.SET_NULL, related_name="golos")
     jogador = models.ForeignKey(P_Jogador, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
     clube = models.ForeignKey(P_Clube, on_delete=models.SET_NULL, null=True, blank=True, related_name="golos")
     penalti = models.BooleanField(default=False)

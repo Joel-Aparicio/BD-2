@@ -18,10 +18,14 @@
             <div class="card-body d-flex align-items-center justify-content-around">
                 <!-- Imagem do Clube Casa -->
                 <div class="text-center">
-					<a href="/clubes/{{ jogo.clube_casa.pk }}/">
-						<img src="{{ jogo.clube_casa.imagem }}" alt="Logo do {{ jogo.clube_casa.nome }}" class="img-fluid mb-2" style="width: 150px; height: 150px;">
-					</a>
-					<h4>{{ jogo.clube_casa.nome }}</h4>
+					{% if jogo.clube_casa %}
+						<a href="/clubes/{{ jogo.clube_casa.pk }}/">
+							<img src="{{ jogo.clube_casa.imagem }}" alt="Logo do {{ jogo.clube_casa.nome }}" class="img-fluid mb-2" style="width: 150px; height: 150px;">
+						</a>
+						<h4>{{ jogo.clube_casa.nome }}</h4>
+					{% else %}
+						<h4>Clube Não Encontrado</h4>
+					{% endif %}
 				</div>
                 <!-- Resultado do jogo -->
                 <div class="text-center">					
@@ -42,10 +46,14 @@
 
                 <!-- Imagem do Clube Fora -->
 				<div class="text-center">
-					<a href="/clubes/{{ jogo.clube_fora.pk }}/">
-						<img src="{{ jogo.clube_fora.imagem }}" alt="Logo do {{ jogo.clube_fora.nome }}" class="img-fluid mb-2" style="width: 150px; height: 150px;">
-					</a>
-					<h4>{{ jogo.clube_fora.nome }}</h4>
+					{% if jogo.clube_fora %}
+						<a href="/clubes/{{ jogo.clube_fora.pk }}/">
+							<img src="{{ jogo.clube_fora.imagem }}" alt="Logo do {{ jogo.clube_fora.nome }}" class="img-fluid mb-2" style="width: 150px; height: 150px;">
+						</a>
+						<h4>{{ jogo.clube_fora.nome }}</h4>
+					{% else %}
+						<h4>Clube Não Encontrado</h4>
+					{% endif %}
 				</div>
             </div>
         </div>
@@ -113,7 +121,12 @@
 													+ {{ golo.compensacao }}'
 												{% endif %}
 											</b>
-											- {{ golo.jogador.num_camisola }}. {{ golo.jogador.nome }} 
+											- 
+											{% if golo.jogador %}
+												{{ golo.jogador.num_camisola }}. {{ golo.jogador.nome }} 
+											{% else %}
+												Jogador Não Encontrado
+											{% endif %}
 											{% if golo.penalti %}
 												<b class="float-end">P</b>
 											{% endif %}
@@ -134,7 +147,12 @@
 													+ {{ golo.compensacao }}'
 												{% endif %}
 											</b>
-											- {{ golo.jogador.num_camisola }}. {{ golo.jogador.nome }} 
+											- 
+											{% if golo.jogador %}
+												{{ golo.jogador.num_camisola }}. {{ golo.jogador.nome }} 
+											{% else %}
+												Jogador Não Encontrado
+											{% endif %}
 											{% if golo.penalti %}
 												<b class="float-end">P</b>
 											{% endif %}
@@ -161,7 +179,12 @@
 													+ {{ falta.compensacao }}'
 												{% endif %}
 											</b>
-											- {{ falta.jogador.num_camisola }}. {{ falta.jogador.nome }} 
+											- 
+											{% if falta.jogador %}
+												{{ falta.jogador.num_camisola }}. {{ falta.jogador.nome }}
+											{% else %}
+												Jogador Não Encontrado
+											{% endif %}
 											{% if falta.cartao %}
 												<b class="float-end"> {{falta.cartao_cor}}</b>
 											{% endif %}
@@ -182,7 +205,12 @@
 													+ {{ falta.compensacao }}'
 												{% endif %}
 											</b>
-											- {{ falta.jogador.num_camisola }}. {{ falta.jogador.nome }} 
+											- 
+											{% if falta.jogador %}
+												{{ falta.jogador.num_camisola }}. {{ falta.jogador.nome }} 
+											{% else %}
+												Jogador Não Encontrado
+											{% endif %}
 											{% if falta.cartao %}
 												<b class="float-end"> {{falta.cartao_cor}}</b>
 											{% endif %}
@@ -209,11 +237,19 @@
 											{% endif %}
 											- <span>
 												<i class="bi bi-arrow-up-circle text-success"></i>
-												{{ substituicao.jogador_sai.num_camisola }}. {{ substituicao.jogador_sai.nome }}
+												{% if substituicao.jogador_sai %}
+													{{ substituicao.jogador_sai.num_camisola }}. {{ substituicao.jogador_sai.nome }}
+												{% else %}
+													Jogador Não Encontrado
+												{% endif %}
 											</span>
 											<span class="float-end">
 												<i class="bi bi-arrow-down-circle text-danger"></i>
-												{{ substituicao.jogador_entra.num_camisola }}. {{ substituicao.jogador_entra.nome }}
+												{% if substituicao.jogador_entra %}
+													{{ substituicao.jogador_entra.num_camisola }}. {{ substituicao.jogador_entra.nome }}
+												{% else %}
+													Jogador Não Encontrado
+												{% endif %}
 											</span>
 										</li>
 									{% empty %}
@@ -232,11 +268,19 @@
 											{% endif %}
 											- <span>
 												<i class="bi bi-arrow-up-circle text-success"></i>
-												{{ substituicao.jogador_sai.num_camisola }}. {{ substituicao.jogador_sai.nome }}
+												{% if substituicao.jogador_sai %}
+													{{ substituicao.jogador_sai.num_camisola }}. {{ substituicao.jogador_sai.nome }}
+												{% else %}
+													Jogador Não Encontrado
+												{% endif %}
 											</span>
 											<span class="float-end">
 												<i class="bi bi-arrow-down-circle text-danger"></i>
-												{{ substituicao.jogador_entra.num_camisola }}. {{ substituicao.jogador_entra.nome }}
+												{% if substituicao.jogador_entra %}
+													{{ substituicao.jogador_entra.num_camisola }}. {{ substituicao.jogador_entra.nome }}
+												{% else %}
+													Jogador Não Encontrado
+												{% endif %}
 											</span>
 										</li>
 									{% empty %}
@@ -255,7 +299,11 @@
 								<ul class="list-group">
 									{% for penalti in penaltis_casa %}
 										<li class="list-group-item">
-											<b>{{ penalti.jogador.num_camisola }}.</b> {{ penalti.jogador.nome }}
+											{% if penlati.jogador %}
+												<b>{{ penalti.jogador.num_camisola }}.</b> {{ penalti.jogador.nome }}
+											{% else %}
+												Jogador Não Encontrado
+											{% endif %}
 											<span class="float-end">
 												{% if penalti.golo %}
 													<i class="bi bi-cookie"></i> Golo
@@ -274,7 +322,11 @@
 								<ul class="list-group">
 									{% for penalti in penaltis_fora %}
 										<li class="list-group-item">
-											<b>{{ penalti.jogador.num_camisola }}.</b> {{ penalti.jogador.nome }}
+											{% if penalti.jogador %}
+												<b>{{ penalti.jogador.num_camisola }}.</b> {{ penalti.jogador.nome }}
+											{% else %}
+												Jogador Não Encontrado
+											{% endif %}
 											<span class="float-end">
 												{% if penalti.golo %}
 													<i class="bi bi-cookie"></i> Golo

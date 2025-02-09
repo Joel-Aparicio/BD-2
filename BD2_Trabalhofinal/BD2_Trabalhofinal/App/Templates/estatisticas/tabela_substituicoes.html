@@ -13,9 +13,27 @@
             <tbody>
                 {% for estatistica in lista %}
                     <tr>
-                        <td>{{ estatistica.clube.nome }}</td>
-                        <td>{{ estatistica.jogador_sai.nome }}</td>
-                        <td>{{ estatistica.jogador_entra.nome }}</td>
+                        <td>
+							{% if estatistica.clube %}
+								{{ estatistica.clube.nome }}
+							{% else %}
+								Clube Não Encontrado
+							{% endif %}
+						</td>
+                        <td>
+							{% if estatistica.jogador_sai %}
+								{{ estatistica.jogador_sai.nome }}
+							{% else %}
+								Jogador Não Encontrado
+							{% endif %}
+						</td>
+                        <td>
+							{% if estatistica.jogador_entra %}
+								{{ estatistica.jogador_entra.nome }}
+							{% else %}
+								Jogador Não Encontrado
+							{% endif %}
+						</td>
                         <td>
                             {{ estatistica.minuto }}
                             {% if estatistica.compensacao %}

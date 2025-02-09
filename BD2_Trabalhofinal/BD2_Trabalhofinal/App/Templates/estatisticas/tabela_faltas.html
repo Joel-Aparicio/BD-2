@@ -13,8 +13,20 @@
             <tbody>
                 {% for estatistica in lista %}
                     <tr>
-                        <td>{{ estatistica.clube.nome }}</td>
-                        <td>{{ estatistica.jogador.nome }}</td>
+                        <td>
+							{% if estatistica.clube %}
+								{{ estatistica.clube.nome }}
+							{% else %}
+								Clube Não Encontrado
+							{% endif %}
+						</td>
+                        <td>
+							{% if estatistica.jogador %}
+								{{ estatistica.jogador.nome }}
+							{% else %}
+								Jogador Não Encontrado
+							{% endif %}
+						</td>
                         <td>
 							{% if estatistica.cartao %}
 								{{ estatistica.cartao_cor }}
