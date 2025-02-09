@@ -758,7 +758,7 @@ def detalhes_jogo(request, id):
         penaltis_casa = penaltis.filter(clube=clube_casa) if clube_casa else []
         penaltis_fora = penaltis.filter(clube=clube_fora) if clube_fora else []
         
-        # Count goals and penalties safely
+        # Conta os golos e penaltis com segurança
         total_golos_casa = len(list(golos_casa)) if golos_casa else 0
         total_golos_fora = len(list(golos_fora)) if golos_fora else 0
         total_penaltis_casa = sum(1 for p in penaltis_casa if p.golo) if penaltis_casa else 0
