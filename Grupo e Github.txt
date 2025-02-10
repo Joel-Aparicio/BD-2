@@ -1,0 +1,8 @@
+Grupo: 28 
+Alunos:
+-> Miguel Alexandre Ferreira Da Silva 25187
+-> Marco Vicente Rodrigues 25001
+-> Tiago Filipe Gonçalves Figueiredo
+-> Joel Aparício
+
+Link Git: https://github.com/Joel-Aparicio/BD-2
