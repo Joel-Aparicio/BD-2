@@ -16,6 +16,7 @@ from django.db.models import Q
 from itertools import groupby
 from operator import attrgetter
 
+from collections import defaultdict
 
 import logging
 
@@ -502,6 +503,11 @@ def editar_clube(request, id):
 def apagar_clube(request, id):
     clube = get_object_or_404(P_Clube, _id=ObjectId(id))
     
+    # Verificar se ele venceyu alguma competição
+    if P_Competicao.objects.filter(vencedor=clube).exists():
+        messages.error(request, "Não é possível apagar este Clube porque ele é vencedor de pelo menos uma competição")
+        return redirect('listar_clubes')
+        
     # Verificar se há equipas associadas
     if P_Equipa.objects.filter(clube=clube).exists():
         messages.error(request, "Não é possível apagar este Clube porque ele tem equipas associadas.")
@@ -654,14 +660,10 @@ def apagar_competicao(request, id):
     if request.method == 'POST':
         competicao.delete()
         return redirect('listar_competicoes')
-        
-        
-        
+           
 def todas_competicoes(request):
     competicoes = P_Competicao.objects.all().order_by('nome')  # Ordenar por Nome para melhor organização
-    return render(request, 'competicoes/todas_competicoes.html', {'competicoes': competicoes})
-    
-    
+    return render(request, 'competicoes/todas_competicoes.html', {'competicoes': competicoes})  
     
 def detalhes_competicao(request, id):
     competicao = get_object_or_404(P_Competicao, _id=ObjectId(id))
@@ -800,12 +802,6 @@ def listar_estatisticas(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
-
-
-
-
-
-
 #Golos
 def adicionar_golo(request, id):
     try:
@@ -859,12 +855,9 @@ def apagar_golo(request, id):
             return JsonResponse({'error': 'Método não permitido'}, status=405)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
-     
-
 
      
 #Penáltis
-
 def adicionar_penalti(request, id):
     try:
         jogo = get_object_or_404(P_Jogo, _id=ObjectId(id))  # Converte o id para ObjectId
@@ -913,11 +906,7 @@ def apagar_penalti(request, id):
             return JsonResponse({'error': 'Método não permitido'}, status=405)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
-        
-        
-        
-        
-        
+              
         
 #Faltas
 def adicionar_falta(request, id):
@@ -936,8 +925,6 @@ def adicionar_falta(request, id):
         return render(request, 'estatisticas/adicionar_falta.html', {'form': form, 'jogo': jogo})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
-
-
 
 
 def editar_falta(request, id):
@@ -1139,12 +1126,6 @@ def get_jogadores_por_clube(request):
             return JsonResponse({'error': f'Erro inesperado: {str(e)}'}, status=400)
             
     return JsonResponse({'error': 'Parâmetros obrigatórios faltando'}, status=400)
-    
-    
-    
-    
-
-from collections import defaultdict
 
 
 def calcular_classificacao(competicao):
@@ -1160,62 +1141,80 @@ def calcular_classificacao(competicao):
         'gols_contra': 0,
         'saldo_gols': 0
     })
-
+    
     # Percorrer todos os jogos finalizados
     for jogo in competicao.jogos.filter(estado="Terminado"):
-        clube_casa = jogo.clube_casa
-        clube_fora = jogo.clube_fora
-
+        # Verificar cada clube separadamente
+        try:
+            clube_casa = jogo.clube_casa
+            clube_casa_pk = clube_casa.pk
+            clube_casa_nome = clube_casa.nome
+            clube_casa_valido = True
+        except:
+            clube_casa_valido = False
+            
+        try:
+            clube_fora = jogo.clube_fora
+            clube_fora_pk = clube_fora.pk
+            clube_fora_nome = clube_fora.nome
+            clube_fora_valido = True
+        except:
+            clube_fora_valido = False
+            
+        # Se ambos os clubes são inválidos, pula este jogo
+        if not clube_casa_valido and not clube_fora_valido:
+            continue
+            
         # Contar gols baseando-se nos registros da tabela P_Golo
-        gols_casa = P_Golo.objects.filter(jogo=jogo, clube=clube_casa).count()
-        gols_fora = P_Golo.objects.filter(jogo=jogo, clube=clube_fora).count()
-
-        # Inicializar nomes dos clubes na classificação
-        classificacao[clube_casa.pk]['nome'] = clube_casa.nome
-        classificacao[clube_fora.pk]['nome'] = clube_fora.nome
-
-        # Atualizar estatísticas de jogos
-        classificacao[clube_casa.pk]['jogos'] += 1
-        classificacao[clube_fora.pk]['jogos'] += 1
-
-        # Atualizar gols
-        classificacao[clube_casa.pk]['gols_pro'] += gols_casa
-        classificacao[clube_casa.pk]['gols_contra'] += gols_fora
-        classificacao[clube_fora.pk]['gols_pro'] += gols_fora
-        classificacao[clube_fora.pk]['gols_contra'] += gols_casa
-
-        # Calcular saldo de gols
-        classificacao[clube_casa.pk]['saldo_gols'] = (
-            classificacao[clube_casa.pk]['gols_pro'] - classificacao[clube_casa.pk]['gols_contra']
-        )
-        classificacao[clube_fora.pk]['saldo_gols'] = (
-            classificacao[clube_fora.pk]['gols_pro'] - classificacao[clube_fora.pk]['gols_contra']
-        )
-
-        # Definir resultado do jogo
-        if gols_casa > gols_fora:
-            classificacao[clube_casa.pk]['vitorias'] += 1
-            classificacao[clube_casa.pk]['pontos'] += 3
-            classificacao[clube_fora.pk]['derrotas'] += 1
-        elif gols_casa < gols_fora:
-            classificacao[clube_fora.pk]['vitorias'] += 1
-            classificacao[clube_fora.pk]['pontos'] += 3
-            classificacao[clube_casa.pk]['derrotas'] += 1
-        else:
-            classificacao[clube_casa.pk]['empates'] += 1
-            classificacao[clube_fora.pk]['empates'] += 1
-            classificacao[clube_casa.pk]['pontos'] += 1
-            classificacao[clube_fora.pk]['pontos'] += 1
-
+        if clube_casa_valido:
+            gols_casa = P_Golo.objects.filter(jogo=jogo, clube=clube_casa).count()
+            # Atualizar estatísticas do clube da casa
+            classificacao[clube_casa_pk]['nome'] = clube_casa_nome
+            classificacao[clube_casa_pk]['jogos'] += 1
+            classificacao[clube_casa_pk]['gols_pro'] += gols_casa
+            
+        if clube_fora_valido:
+            gols_fora = P_Golo.objects.filter(jogo=jogo, clube=clube_fora).count()
+            # Atualizar estatísticas do clube visitante
+            classificacao[clube_fora_pk]['nome'] = clube_fora_nome
+            classificacao[clube_fora_pk]['jogos'] += 1
+            classificacao[clube_fora_pk]['gols_pro'] += gols_fora
+            
+        # Atualizar estatísticas que dependem de ambos os clubes
+        if clube_casa_valido and clube_fora_valido:
+            classificacao[clube_casa_pk]['gols_contra'] += gols_fora
+            classificacao[clube_fora_pk]['gols_contra'] += gols_casa
+            
+            # Calcular saldo de gols
+            classificacao[clube_casa_pk]['saldo_gols'] = (
+                classificacao[clube_casa_pk]['gols_pro'] - classificacao[clube_casa_pk]['gols_contra']
+            )
+            classificacao[clube_fora_pk]['saldo_gols'] = (
+                classificacao[clube_fora_pk]['gols_pro'] - classificacao[clube_fora_pk]['gols_contra']
+            )
+            
+            # Definir resultado do jogo
+            if gols_casa > gols_fora:
+                classificacao[clube_casa_pk]['vitorias'] += 1
+                classificacao[clube_casa_pk]['pontos'] += 3
+                classificacao[clube_fora_pk]['derrotas'] += 1
+            elif gols_casa < gols_fora:
+                classificacao[clube_fora_pk]['vitorias'] += 1
+                classificacao[clube_fora_pk]['pontos'] += 3
+                classificacao[clube_casa_pk]['derrotas'] += 1
+            else:
+                classificacao[clube_casa_pk]['empates'] += 1
+                classificacao[clube_fora_pk]['empates'] += 1
+                classificacao[clube_casa_pk]['pontos'] += 1
+                classificacao[clube_fora_pk]['pontos'] += 1
+    
     # Converter para lista e ordenar por pontos, saldo de gols e gols pró
     tabela = sorted(
-        classificacao.values(),
+        [item for item in classificacao.values() if item['nome'] != ''],
         key=lambda x: (x['pontos'], x['saldo_gols'], x['gols_pro']),
         reverse=True
     )
-
     return tabela
-
 
 
 

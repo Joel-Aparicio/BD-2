@@ -51,23 +51,19 @@ class P_SenhaForm(PasswordChangeForm):
 class P_PosicaoForm(forms.ModelForm):
     class Meta:
         model = P_Posicao
-        fields = ['nome', 'descricao', 'desig']  # Incluído 'desig' no formulário
+        fields = ['nome', 'descricao', 'desig']
         widgets = {
-            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o nome da posição'}),
-            'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Digite a descrição'}),
-            'desig': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o designador da posição'})  # Adicionado para 'desig'
+            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Insira o nome da posição'}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Insira a descrição'}),
+            'desig': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Insira a designação da posição'})
         }
         labels = {
             'nome': 'Nome da Posição',
             'descricao': 'Descrição',
-            'desig': 'Designador',  # Adicionado rótulo para o campo 'desig'
+            'desig': 'Designação',
         }
         
 
-        
-        
-        
-        
 class P_AssociacaoForm(forms.ModelForm):
     class Meta:
         model = P_Associacao
@@ -522,8 +518,7 @@ class P_JogoForm(forms.ModelForm):
             }
         ),
         label="Hora do Jogo"
-    )
-    
+    )  
     estado = forms.ChoiceField(
         choices=[
             ('', 'Selecione o Estado'),

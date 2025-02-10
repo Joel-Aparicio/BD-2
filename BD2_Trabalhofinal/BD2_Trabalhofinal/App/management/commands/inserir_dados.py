@@ -155,7 +155,7 @@ class Command(BaseCommand):
 
                 
                 associacoes = [P_Associacao.objects.create(**data) for data in associacoes_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(associacoes)} Associações created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(associacoes)} Associações criadas'))
 
                 # Inserir Estádios
                 ## Estados: Ativo / Em Obras / Demolido
@@ -405,7 +405,7 @@ class Command(BaseCommand):
                 ]
                 
                 estadios = [P_Estadio.objects.create(**data) for data in estadios_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(estadios)} Estádios created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(estadios)} Estádios criados'))
 
                 # Inserir Posições
                 posicoes_data = [
@@ -461,7 +461,7 @@ class Command(BaseCommand):
                 ]
                 
                 posicoes = [P_Posicao.objects.create(**data) for data in posicoes_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(posicoes)} Posições created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(posicoes)} Posições criadas'))
                     
                 
                  # Inserir Clubes
@@ -747,7 +747,7 @@ class Command(BaseCommand):
                 ]
                 
                 clubes = [P_Clube.objects.create(**data) for data in clubes_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(clubes)} Clubes created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(clubes)} Clubes criados'))
                 
 
                 # Inserir Equipas
@@ -870,7 +870,7 @@ class Command(BaseCommand):
                 ]
 
                 equipas = [P_Equipa.objects.create(**data) for data in equipas_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(equipas)} Equipas created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(equipas)} Equipas criadas'))
 
                 
                 # Inserir Formato Competição
@@ -887,7 +887,7 @@ class Command(BaseCommand):
                 ]
                 
                 formatosComp = [P_FormatoCompeticao.objects.create(**data) for data in formatosComp_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(formatosComp)} Formatos Competição created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(formatosComp)} Formatos Competição criados'))
                 
                 # Inserir Competição
                 ## Vencedor: coloca-se None se não houver
@@ -3034,7 +3034,7 @@ class Command(BaseCommand):
                 ]
                 
                 jogadores = [P_Jogador.objects.create(**data) for data in jogadores_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(jogadores)} Jogadores created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(jogadores)} Jogadores criados'))
                 
                 # Inserir Jogo
                 ## Estado: Em Breve / A Decorrer / Terminado / Cancelado
@@ -3145,7 +3145,7 @@ class Command(BaseCommand):
                 ]
                 
                 jogos = [P_Jogo.objects.create(**data) for data in jogos_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(jogos)} Jogos created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(jogos)} Jogos criados'))
                 
                 # Inserir Golo
                 golos_data = [
@@ -3400,7 +3400,7 @@ class Command(BaseCommand):
                 ]
                 
                 golos = [P_Golo.objects.create(**data) for data in golos_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(golos)} Golos created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(golos)} Golos criados'))
             
                 # Inserir Penálti
                 penaltis_data = [
@@ -3456,7 +3456,7 @@ class Command(BaseCommand):
                 ]
                     
                 penaltis = [P_Penalti.objects.create(**data) for data in penaltis_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(penaltis)} Penaltis created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(penaltis)} Penaltis criados'))
                 
                 # Inserir Falta
                 ## Cartão Cor: Amarelo / Vermelho / ""
@@ -3500,7 +3500,7 @@ class Command(BaseCommand):
                 ]
                     
                 faltas = [P_Falta.objects.create(**data) for data in faltas_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(faltas)} Faltas created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(faltas)} Faltas criadas'))
                 
                 # Inserir Substituição
                 substituicoes_data = [
@@ -3576,7 +3576,7 @@ class Command(BaseCommand):
                 ]
                     
                 substituicoes = [P_Substituicao.objects.create(**data) for data in substituicoes_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(substituicoes)} Substituições created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(substituicoes)} Substituições criadas'))
                 
                 # Inserir Utilizadores
                 ## Cuidado para não inserir o mesmo email
@@ -3619,7 +3619,7 @@ class Command(BaseCommand):
                     )
                     utilizadores.append(utilizador)
                 
-                self.stdout.write(self.style.SUCCESS(f'{len(utilizadores)} Utilizadores created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(utilizadores)} Utilizadores criados'))
                 
                 # Inserir Clube Favorito
                 clubesFav_data = [
@@ -3634,7 +3634,7 @@ class Command(BaseCommand):
                 ]
                     
                 clubesFav = [P_ClubeFavorito.objects.create(**data) for data in clubesFav_data]
-                self.stdout.write(self.style.SUCCESS(f'{len(clubesFav)} Clubes Favoritos created'))
+                self.stdout.write(self.style.SUCCESS(f'{len(clubesFav)} Clubes Favoritos criados'))
             
             
         except Exception as e:

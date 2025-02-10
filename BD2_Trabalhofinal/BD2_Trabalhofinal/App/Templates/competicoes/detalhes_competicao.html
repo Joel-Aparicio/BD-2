@@ -74,15 +74,27 @@
                         {% for clube in classificacao %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ clube.nome }}</td>
-                                <td>{{ clube.pontos }}</td>
-                                <td>{{ clube.jogos }}</td>
-                                <td>{{ clube.vitorias }}</td>
-                                <td>{{ clube.empates }}</td>
-                                <td>{{ clube.derrotas }}</td>
-                                <td>{{ clube.gols_pro }}</td>
-                                <td>{{ clube.gols_contra }}</td>
-                                <td>{{ clube.saldo_gols }}</td>
+								{% if clube %}
+									<td>{{ clube.nome }}</td>
+									<td>{{ clube.pontos }}</td>
+									<td>{{ clube.jogos }}</td>
+									<td>{{ clube.vitorias }}</td>
+									<td>{{ clube.empates }}</td>
+									<td>{{ clube.derrotas }}</td>
+									<td>{{ clube.gols_pro }}</td>
+									<td>{{ clube.gols_contra }}</td>
+									<td>{{ clube.saldo_gols }}</td>
+								{% else %}
+									<td>Clube Não Encontrado</td>
+									<td>---</td>
+									<td>---</td>
+									<td>---</td>
+									<td>---</td>
+									<td>---</td>
+									<td>---</td>
+									<td>---</td>
+									<td>---</td>
+								{% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -100,16 +112,22 @@
             {% if jogos %}
                 <div class="list-group" id="jogosList">
                     {% for jogo in jogos %}
-                        <a href="{% url 'detalhes_jogo' jogo.get_id %}" class="list-group-item list-group-item-action d-flex align-items-center py-3 jogo-item">
-                           <div class="d-flex align-items-center me-4">
-								{% if jogo.clube_casa.imagem %}
-									<img src="{{ jogo.clube_casa.imagem }}" alt="{{ jogo.clube_casa.nome }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+						<a href="{% url 'detalhes_jogo' jogo.get_id %}" class="list-group-item list-group-item-action d-flex align-items-center py-3 jogo-item">
+							
+							<!-- Verifica se clube_casa existe -->
+							<div class="d-flex align-items-center me-4">
+								{% if jogo.clube_casa %}
+									{% if jogo.clube_casa.imagem %}
+										<img src="{{ jogo.clube_casa.imagem }}" alt="{{ jogo.clube_casa.nome }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+									{% else %}
+										<div class="rounded-circle me-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+											⚽
+										</div>
+									{% endif %}
+									<h5 class="mb-0 clube-casa-nome">{{ jogo.clube_casa.nome }}</h5>
 								{% else %}
-									<div class="rounded-circle me-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
-										⚽
-									</div>
+									<h5 class="mb-0 text-muted">Clube Não Encontrado</h5>
 								{% endif %}
-								<h5 class="mb-0 clube-casa-nome">{{ jogo.clube_casa.nome }}</h5>  <!-- Mantivemos a classe -->
 							</div>
 
 							<div class="flex-grow-1 text-center">
@@ -120,19 +138,25 @@
 								</p>
 							</div>
 
+							<!-- Verifica se clube_fora existe -->
 							<div class="d-flex align-items-center ms-4">
-								<h5 class="mb-0 clube-fora-nome">{{ jogo.clube_fora.nome }}</h5>  <!-- Mantivemos a classe -->
-								{% if jogo.clube_fora.imagem %}
-									<img src="{{ jogo.clube_fora.imagem }}" alt="{{ jogo.clube_fora.nome }}" class="rounded-circle ms-3" style="width: 50px; height: 50px; object-fit: cover;">
+								{% if jogo.clube_fora %}
+									<h5 class="mb-0 clube-fora-nome">{{ jogo.clube_fora.nome }}</h5>
+									{% if jogo.clube_fora.imagem %}
+										<img src="{{ jogo.clube_fora.imagem }}" alt="{{ jogo.clube_fora.nome }}" class="rounded-circle ms-3" style="width: 50px; height: 50px; object-fit: cover;">
+									{% else %}
+										<div class="rounded-circle ms-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
+											⚽
+										</div>
+									{% endif %}
 								{% else %}
-									<div class="rounded-circle ms-3 bg-secondary text-light text-center" style="width: 50px; height: 50px; line-height: 50px; font-size: 20px;">
-										⚽
-									</div>
+									<h5 class="mb-0 text-muted">Clube Não Encontrado</h5>
 								{% endif %}
 							</div>
 
-                        </a>
-                    {% endfor %}
+						</a>
+					{% endfor %}
+
                 </div>
             {% else %}
                 <p class="text-center text-muted">Sem informações de jogos disponíveis.</p>
