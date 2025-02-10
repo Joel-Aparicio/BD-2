@@ -5,7 +5,6 @@ use projeto_BD2
 db.createCollection("p_associacoes", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "pais"],
          properties: {
             nome: { type: "string" },
             url: { type: ['string', 'null'] },
@@ -20,7 +19,6 @@ db.createCollection("p_associacoes", {
 db.createCollection("p_estadios", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "pais", "cidade", "inauguracao", "estado"],
          properties: {
             nome: { type: "string" },
 	    imagem: { type: "string" },
@@ -38,10 +36,10 @@ db.createCollection("p_estadios", {
 db.createCollection("p_posicoes", {
    validator: {
       $jsonSchema: {
-         required: ["nome"],
          properties: {
             nome: { type: "string" },
-            descricao: { type: "string" }
+            descricao: { type: "string" },
+	    desig: { type: "string" }
          }
       }
    }
@@ -52,11 +50,6 @@ db.createCollection("p_jogadores", {
    validator: {
       $jsonSchema: {
          bsonType: "object",
-         required: [
-            "nome",
-            "num_camisola",
-            "situacao"
-         ],
          properties: {
             nome: {
                bsonType: "string"
@@ -105,7 +98,6 @@ db.createCollection("p_jogadores", {
 db.createCollection("p_clubes", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "pais", "estado"],
          properties: {
             nome: { type: "string" },
 	    imagem: { type: "string" },
@@ -133,7 +125,6 @@ db.createCollection("p_equipas", {
    validator: {
       $jsonSchema: {
          bsonType: "object",
-         required: ["clube_id", "nome", "estado"],
          properties: {
             clube_id: {
                bsonType: "objectId"
@@ -155,7 +146,6 @@ db.createCollection("p_equipas", {
 db.createCollection("p_formatos_competicao", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "descricao"],
          properties: {
             nome: { type: "string" },
 	    descricao: { type: "string" },
@@ -169,7 +159,6 @@ db.createCollection("p_formatos_competicao", {
 db.createCollection("p_competicoes", {
    validator: {
       $jsonSchema: {
-         required: ["nome", "data_inicio", "data_fim"],
          properties: {
             nome: { type: "string" },
             imagem: { type: "string" },
@@ -192,7 +181,6 @@ db.createCollection("p_jogos", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["dia", "estado", "hora"],
       properties: {
         dia: {
           bsonType: "date"
@@ -245,7 +233,6 @@ db.createCollection("p_golos", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["jogo", "jogador", "minuto"],
       properties: {
         jogo: {
           bsonType: "objectId"
@@ -273,7 +260,6 @@ db.createCollection("p_faltas", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["jogo", "jogador", "minuto"],
       properties: {
         jogo: {
           bsonType: "objectId"
@@ -304,7 +290,6 @@ db.createCollection("p_substituicoes", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["jogo", "jogador_sai", "jogador_entra", "minuto"],
       properties: {
         jogo: {
           bsonType: "objectId"
@@ -332,7 +317,6 @@ db.createCollection("p_penaltis", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["golo", "numero"],
       properties: {
         jogo: {
           bsonType: "objectId"
@@ -360,7 +344,6 @@ db.createCollection("p_penaltis", {
 db.createCollection("p_clubes_favoritos", {
    validator: {
       $jsonSchema: {
-         required: ["utilizador_id"],
          properties: {
             utilizador_id: { type: "number" },
             clube_id: { bsonType: "objectId" },
