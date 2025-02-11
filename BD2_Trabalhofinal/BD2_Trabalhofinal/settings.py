@@ -220,6 +220,6 @@ AUTH_USER_MODEL = 'App.Utilizador'  # Substitui 'tua_app' pelo nome da tua app
 
 
 # para testar no tele
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.81']
+# ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.81']
 
 
