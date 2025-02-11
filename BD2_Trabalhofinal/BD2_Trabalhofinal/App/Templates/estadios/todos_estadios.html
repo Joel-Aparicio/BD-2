@@ -14,42 +14,46 @@
     {% if estadio %}
     <div class="list-group" id="estadiosLista">
         {% for estadio in estadio %}
-        <div class="list-group-item list-group-item-action d-flex align-items-center py-3 estadio-item">
+        <div class="list-group-item list-group-item-action d-flex flex-column flex-md-row align-items-center py-3 estadio-item">
             <!-- Logo ou Ícone -->
-            {% if estadio.imagem %}
-				<img src="{{ estadio.imagem }}" alt="{{ estadio.nome }}" class="rounded-circle me-4 shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
-            {% else %}
-				<div class="rounded-circle me-4 bg-secondary text-light text-center shadow-sm" style="width: 60px; height: 60px; line-height: 60px; font-size: 18px;">
-					⚽
-				</div>
-            {% endif %}
+            <div class="d-flex align-items-center mb-3 mb-md-0">
+                {% if estadio.imagem %}
+                    <img src="{{ estadio.imagem }}" alt="{{ estadio.nome }}" class="rounded-circle me-4 shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
+                {% else %}
+                    <div class="rounded-circle me-4 bg-secondary text-light text-center shadow-sm" style="width: 60px; height: 60px; line-height: 60px; font-size: 18px;">
+                        ⚽
+                    </div>
+                {% endif %}
+            </div>
 
             <!-- Informações do Estádio -->
-            <div class="flex-grow-1">
+            <div class="flex-grow-1 text-center text-md-start mb-3 mb-md-0">
                 <h5 class="mb-1 estadio-nome">{{ estadio.nome }}
-					{% if estadio.estado != "Ativo" %}
+                    {% if estadio.estado != "Ativo" %}
                         - <span class="text-danger">{{ estadio.estado }}</span>
                     {% endif %}
-				</h5>
+                </h5>
                 <p class="mb-0 text-muted">
                     <i class="bi bi-calendar3"></i> Fundado em: {{ estadio.inauguracao }}
                 </p>
                 {% if estadio.pais %}
-					<p class="mb-0 text-muted">
-						<i class="bi bi-geo-alt-fill"></i> Localização: {{ estadio.pais }}, {{ estadio.cidade }}
-					</p>
+                    <p class="mb-0 text-muted">
+                        <i class="bi bi-geo-alt-fill"></i> Localização: {{ estadio.pais }}, {{ estadio.cidade }}
+                    </p>
                 {% endif %}
             </div>
 
             <!-- Botão de Ação -->
-            <a href="{% url 'detalhes_estadio' estadio.get_id %}" class="btn btn-primary">
-                <i class="bi bi-info-circle"></i> Ver Detalhes
-            </a>
+            <div class="text-center text-md-end">
+                <a href="{% url 'detalhes_estadio' estadio.get_id %}" class="btn btn-primary">
+                    <i class="bi bi-info-circle"></i> Ver Detalhes
+                </a>
+            </div>
         </div>
         {% endfor %}
     </div>
     {% else %}
-		<div class="alert alert-info text-center mt-4">Nenhum estádio disponível no momento.</div>
+        <div class="alert alert-info text-center mt-4">Nenhum estádio disponível no momento.</div>
     {% endif %}
 </div>
 
@@ -60,10 +64,8 @@
 <!-- Script para filtrar estádios -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    let searchInput = document.getElementById("searchInput");
-
-    searchInput.addEventListener("keyup", function () {
-        let input = this.value.toLowerCase();
+    function filtrarEstadios() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
         let estadios = document.querySelectorAll(".estadio-item");
 
         estadios.forEach(estadio => {
@@ -75,7 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 estadio.classList.add("d-none"); // Esconder
             }
         });
-    });
+    }
+
+    // Inicializar o filtro para quando a página carregar
+    document.getElementById("searchInput").addEventListener("keyup", filtrarEstadios);
 });
 </script>
 

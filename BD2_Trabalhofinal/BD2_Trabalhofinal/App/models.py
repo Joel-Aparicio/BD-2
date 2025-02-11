@@ -222,7 +222,7 @@ class P_Jogador(models.Model): #FEITO
     equipa = models.ForeignKey(P_Equipa, on_delete=models.SET_NULL, null=True, blank=True, related_name='jogadores')
     nome = models.CharField(max_length=255)
     idade = models.IntegerField(blank=True)
-    imagem = models.URLField(blank=True, null=True, default='')
+    imagem = models.URLField(blank=True, null=True, default='https://cdn-icons-png.flaticon.com/512/46/46637.png')
     altura = models.IntegerField(blank=True)
     peso = models.FloatField(blank=True)
     nacionalidade = models.CharField(max_length=100, blank=True)

@@ -18,62 +18,68 @@
             <div class="card-header bg-primary text-white">
                 <h3>Detalhes do Clube</h3>
             </div>
-            <div class="card-body d-flex align-items-center">
-                <!-- Imagem do clube -->
-                <img src="{{ clube.imagem }}" alt="Logo do Clube" class="rounded me-3" style="width: 150px; height: 150px;">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <!-- Imagem do clube -->
+                    <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
+                        <img src="{{ clube.imagem }}" alt="Logo do Clube" class="rounded" style="width: 150px; height: 150px;">
+                    </div>
 
-                <!-- Informações do clube -->
-                <div>
-                    <h1 class="mb-1">{{ clube.nome }}
-                        {% if clube.estado == "Extinto" %}
-                            - <span class="text-danger">EXTINTO</span>
-                        {% endif %}
-                    </h1>
-                    <p class="mb-0"><b>Localização:</b> {{ clube.pais }}, {{ clube.cidade }}</p>
-                    <p class="mb-0"><b>Ano de Fundação:</b> {{ clube.ano_fundacao }}</p>
-                    {% if clube.estado == "Extinto" %}
-                        <p class="mb-0"><b>Extinto Em:</b> {{ clube.ano_extinto }}</p>
-                    {% endif %}
-                    {% if clube.alcunhas %}
-                        <p class="mb-0"><b>Alcunhas:</b> {{ clube.alcunhas }}</p>
-                    {% endif %}
-                </div>
-                
-                <!-- Caixa com Outras Informações -->
-                <div class="card bg-light ms-auto" style="width: 250px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Outras Informações</h5>
-                        <p class="card-text">
-                            <b>Associação:</b> 
-                                {% if clube.associacao %}
-                                    <a href="{% url 'detalhes_associacao' clube.associacao.get_id %}"> {{ clube.associacao.nome }} </a>
-                                {% else %}
-                                    Sem Associação
-                                {% endif %} 
-                                <br>
-                            <b>Estádio:</b> 
-                                {% if clube.estadio %}
-                                    <a href="{% url 'detalhes_estadio' clube.estadio.get_id %}"> {{ clube.estadio.nome }} </a>
-                                {% else %}
-                                    Sem Estádio
-                                {% endif %} 
-                                <br>
-
-                            <!-- Botão Favorito -->
-                            {% if user.is_authenticated and not user.is_staff %}
-                                {% if is_favorito %}
-                                    <a href="{% url 'favorito_clube' clube.get_id %}" class="btn btn-danger w-100 mt-3">Remover dos Favoritos</a>
-                                {% else %}
-                                    <a href="{% url 'favorito_clube' clube.get_id %}" class="btn btn-primary w-100 mt-3">Adicionar aos Favoritos</a>
-                                {% endif %}
-                            {% else %}
-                                {% if user.is_authenticated %}
-                                    <p class="text-warning mt-3">Como Administrador, não pode adicionar clubes aos favoritos</p>
-                                {% else %}
-                                    <p class="text-warning mt-3">Por favor, faça login para adicionar aos favoritos.</p>
-                                {% endif %}
+                    <!-- Informações do clube -->
+                    <div class="col-12 col-md-6 text-center text-md-start">
+                        <h1 class="mb-1">{{ clube.nome }}
+                            {% if clube.estado == "Extinto" %}
+                                - <span class="text-danger">EXTINTO</span>
                             {% endif %}
-                        </p>
+                        </h1>
+                        <p class="mb-0"><b>Localização:</b> {{ clube.pais }}, {{ clube.cidade }}</p>
+                        <p class="mb-0"><b>Ano de Fundação:</b> {{ clube.ano_fundacao }}</p>
+                        {% if clube.estado == "Extinto" %}
+                            <p class="mb-0"><b>Extinto Em:</b> {{ clube.ano_extinto }}</p>
+                        {% endif %}
+                        {% if clube.alcunhas %}
+                            <p class="mb-0"><b>Alcunhas:</b> {{ clube.alcunhas }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Caixa com Outras Informações -->
+                    <div class="col-12 col-md-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Outras Informações</h5>
+                                <p class="card-text">
+                                    <b>Associação:</b> 
+                                    {% if clube.associacao %}
+                                        <a href="{% url 'detalhes_associacao' clube.associacao.get_id %}"> {{ clube.associacao.nome }} </a>
+                                    {% else %}
+                                        Sem Associação
+                                    {% endif %} 
+                                    <br>
+                                    <b>Estádio:</b> 
+                                    {% if clube.estadio %}
+                                        <a href="{% url 'detalhes_estadio' clube.estadio.get_id %}"> {{ clube.estadio.nome }} </a>
+                                    {% else %}
+                                        Sem Estádio
+                                    {% endif %} 
+                                    <br>
+
+                                    <!-- Botão Favorito -->
+                                    {% if user.is_authenticated and not user.is_staff %}
+                                        {% if is_favorito %}
+                                            <a href="{% url 'favorito_clube' clube.get_id %}" class="btn btn-danger w-100 mt-3">Remover dos Favoritos</a>
+                                        {% else %}
+                                            <a href="{% url 'favorito_clube' clube.get_id %}" class="btn btn-primary w-100 mt-3">Adicionar aos Favoritos</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if user.is_authenticated %}
+                                            <p class="text-warning mt-3">Como Administrador, não pode adicionar clubes aos favoritos</p>
+                                        {% else %}
+                                            <p class="text-warning mt-3">Por favor, faça login para adicionar aos favoritos.</p>
+                                        {% endif %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -218,3 +224,13 @@
 </body>
 </html>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
